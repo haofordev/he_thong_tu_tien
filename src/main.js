@@ -10,32 +10,49 @@ let currentMobId = null;
 let scanCount = 0; // Đếm số lần quét hụt
 
 async function startCombatLoop(token, charId, config) {
-    // 1. Nếu không có mục tiêu, tiến hành thám thính
+    // 1. Nếu không có mục tiêu, thám thính
     if (!currentMobId) {
-        scanCount++;
-        bossMsg = `Chưa có mục tiêu. Đang quét Bí Cảnh (Lần ${scanCount})...`;
-
         try {
-            // Thử lấy snapshot mới
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
-            currentMobId = bicanh.findNewTarget(snapshot);
+            const target = bicanh.findNewTarget(snapshot, charId);
 
-            // Nếu quét 5 lần vẫn không có quái, thử xin vào lại Bí Cảnh (Reset Realm)
-            if (!currentMobId && scanCount >= 5) {
-                bossMsg = "Bí Cảnh trống hoặc lỗi Realm. Đang tiến hành vào lại...";
-                const realmData = await bicanh.joinSecretRealm(token, charId, config, "starter_01");
-                currentRealmId = realmData?.id || currentRealmId;
-                scanCount = 0; // Reset đếm
+            if (target) {
+                currentMobId = target.id;
+                scanCount = 0;
+                const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
+                process.stdout.write(`\r[BÍ CẢNH] Nhắm: ${currentMobId.substring(0, 8)}...${rangeLabel}          `);
+            } else {
+                scanCount++;
+                bossMsg = `Không tìm thấy bất kỳ quái nào. Đang quét lại... (Lần ${scanCount})`;
             }
-        } catch (e) {
-            bossMsg = "Lỗi kết nối Bí Cảnh. Đang thử lại...";
-        }
 
-        setTimeout(() => startCombatLoop(token, charId, config), 5000); // Chờ 5s quét lại
-        return;
+            if (scanCount >= 5) {
+                bossMsg = "Vùng thám thính không có quái. Đang reset bí cảnh...";
+                const realmData = await bicanh.joinSecretRealm(token, charId, config, "starter_01");
+                currentRealmId = realmData?.realm_id || currentRealmId;
+                scanCount = 0;
+            }
+
+            setTimeout(() => startCombatLoop(token, charId, config), currentMobId ? 0 : 5000);
+            return;
+        } catch (e) {
+            bossMsg = "Lỗi kết nối snapshot. Thử lại sau 5s...";
+            setTimeout(() => startCombatLoop(token, charId, config), 5000);
+            return;
+        }
     }
 
-    // 2. Nếu đã có mục tiêu, tiến hành tấn công
+    // 2. Nếu đã có quái (currentMobId != null) hoặc vừa tìm được, tiến hành tấn công
+    // Code tấn công sẽ tiếp tục ở dưới
+    if (scanCount >= 5) {
+        bossMsg = "Mục tiêu cũ quá xa. Đang reset vùng thám thính...";
+        const realmData = await bicanh.joinSecretRealm(token, charId, config, "starter_01");
+        currentRealmId = realmData?.realm_id || currentRealmId;
+        currentMobId = null;
+        scanCount = 0;
+        setTimeout(() => startCombatLoop(token, charId, config), 1000);
+        return;
+    }
     try {
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId);
         let nextWait = 3200;
@@ -43,26 +60,48 @@ async function startCombatLoop(token, charId, config) {
         if (res && res.ok) {
             scanCount = 0; // Reset đếm khi có mục tiêu chuẩn
             const critLabel = res.is_crit ? "[BẠO KÍCH!] " : "";
-            bossMsg = `${critLabel}Gây: -${res.damage} HP | Boss còn: ${res.mob_hp_after}\n > Nhân vật: HP: ${res.hp_after} | MP: ${res.mp_after}`;
+            const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
+            bossMsg = `${critLabel}Gây: -${res.damage} HP ${hpLeft}\n > Nhân vật: HP: ${res.hp_after} | MP: ${res.mp_after}`;
 
             if (res.atk_speed_sec) nextWait = (res.atk_speed_sec * 1000) + 200;
 
             if (res.mob_hp_after <= 0) {
-                bossMsg = `[!] Boss đã tử trận! Đang tìm mục tiêu mới...`;
-                currentMobId = null; // Để vòng lặp sau tự động quét lại
+                bossMsg = `[!] Đã tiêu diệt mục tiêu! Đang tìm con khác...`;
+                currentMobId = null;
                 nextWait = 1000;
             }
         } else {
-            // Nếu lỗi (Ví dụ: "Mob not found")
-            bossMsg = `[!] Lỗi: ${res?.message || "Mục tiêu không hợp lệ"}.`;
-            currentMobId = null;
-            nextWait = 2000;
+            const errorMap = {
+                'attack_cooldown': 'Đang hồi chiêu',
+                'mob_dead': 'Mục tiêu đã tử trận',
+                'target_out_of_range': 'Mục tiêu ngoài tầm đánh',
+                'not_found': 'Không tìm thấy mục tiêu'
+            };
+            const errorReason = errorMap[res?.reason] || res?.reason || res?.message || "Lỗi kết nối";
+
+            if (res?.reason === 'attack_cooldown') {
+                const waitSec = res.remain_sec || 3;
+                bossMsg = `[!] Đang hồi chiêu (Chờ ${waitSec}s)...`;
+                nextWait = (waitSec * 1000) + 200;
+                // Không xóa currentMobId để đánh tiếp con này sau khi hết cooldown
+            } else {
+                bossMsg = `[!] Thất bại: ${errorReason}.`;
+                // Luôn xóa mục tiêu cũ khi thất bại (trừ khi cooldown)
+                currentMobId = null;
+                scanCount++;
+
+                if (!res || errorReason.toLowerCase().includes("range") || errorReason.toLowerCase().includes("tầm") || errorReason.includes("not found")) {
+                    nextWait = 500;
+                } else {
+                    nextWait = 2000;
+                }
+            }
         }
 
         setTimeout(() => startCombatLoop(token, charId, config), nextWait);
 
     } catch (e) {
-        bossMsg = `Lỗi kết nối: ${e.message}`;
+        bossMsg = `Lỗi hệ thống: ${e.message}`;
         currentMobId = null;
         setTimeout(() => startCombatLoop(token, charId, config), 5000);
     }
@@ -77,7 +116,7 @@ async function start() {
 
         // Khởi tạo Bí Cảnh
         const realmData = await bicanh.joinSecretRealm(token, charId, config, "starter_01");
-        currentRealmId = realmData?.id;
+        currentRealmId = realmData?.realm_id;
 
         // Khởi tạo Kỳ Ngộ
         await kyngo.enterKiNgo(token, charId, config);
@@ -92,15 +131,19 @@ async function start() {
                 const data = await tracker.getStatus(token, charId, config);
                 if (!data || !data.cultivation_status) return;
 
+                const stats = await tracker.getCharacterStats(token, charId, config);
+
                 const status = data.cultivation_status;
                 const totalExp = status.cultivation_exp_progress + status.claimable_exp;
+                
+                const myHP = stats?.final?.hp || 0;
+                const myMP = stats?.final?.mana || 0;
 
                 console.clear();
                 console.log(`===========================================================`);
-                console.log(`   SAMSARA SUPREME BOT v4.7 - OPTIMIZED RECURSION         `);
-                console.log(`===========================================================`);
                 console.log(` Đạo hữu:    ${data.home.character.name}`);
                 console.log(` Cảnh giới:  ${data.home.stats.base.realm_name}`);
+                console.log(` HP:         ${myHP} | MP: ${myMP}`);
                 console.log(`-----------------------------------------------------------`);
                 console.log(` EXP Hiện tại: ${status.cultivation_exp_progress} / ${status.exp_to_next}`);
                 console.log(` EXP Chờ nhận: ${status.claimable_exp}`);
@@ -114,7 +157,11 @@ async function start() {
                 console.log(`-----------------------------------------------------------`);
 
                 if (totalExp >= status.exp_to_next) {
-                    await tracker.claimExp(token, charId, config);
+                    if (status.claimable_exp > 0) {
+                        await tracker.claimExp(token, charId, config);
+                    } else {
+                        await tracker.doBreakthrough(token, charId, config);
+                    }
                 }
                 console.log(` Cập nhật lúc: ${new Date().toLocaleTimeString()}`);
                 console.log(`===========================================================`);

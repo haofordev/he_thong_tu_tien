@@ -1,36 +1,43 @@
 /**
- * Tìm mục tiêu mới từ bản thám thính Bí Cảnh
- * @param {Object} snapshot - Dữ liệu trả về từ rpc_get_secret_realm_snapshot
- * @returns {String|null} mob_id của con quái còn sống hoặc null
- */
-/**
  * Tìm mục tiêu tối ưu từ Snapshot Bí Cảnh
+ * Trả về { id, inRange, distance }
  */
-export function findNewTarget(snapshot) {
+export function findNewTarget(snapshot, charId) {
     if (!snapshot || !snapshot.mobs || snapshot.mobs.length === 0) {
         return null;
     }
 
-    // 1. Lọc ra danh sách quái vật thực sự còn sống (hp > 0 và status là alive)
-    const aliveMobs = snapshot.mobs.filter(m => m.status === 'alive' && m.hp > 0);
+    const me = snapshot.participants?.find(p => p.character_id === charId)
+        || snapshot.top_players?.find(p => p.character_id === charId);
 
+    const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
+    const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);
+    const range = snapshot.realm?.skill_range_px || 300;
+
+    const aliveMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0);
     if (aliveMobs.length === 0) return null;
 
-    // 2. Tìm Boss nếu có (thường boss có mob_kind là 'boss' hoặc 'elite')
-    const boss = aliveMobs.find(m => m.mob_kind === 'boss' || m.mob_kind === 'elite');
-    if (boss) return boss.id;
+    aliveMobs.forEach(m => {
+        m.distance = Math.sqrt(Math.pow(myX - m.x, 2) + Math.pow(myY - m.y, 2));
+        m.inRange = m.distance <= range;
+    });
 
-    // 3. Nếu không có Boss, sắp xếp quái thường theo HP tăng dần
-    // Việc này giúp đạo hữu ưu tiên giết con quái sắp chết trước để lấy phần thưởng
-    aliveMobs.sort((a, b) => a.hp - b.hp);
+    // 1. Ưu tiên Boss/Elite TRONG TẦM
+    const bossInRange = aliveMobs.find(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite') && m.inRange);
+    if (bossInRange) return { id: bossInRange.id, inRange: true, distance: bossInRange.distance };
 
-    return aliveMobs[0].id; // Trả về con quái yếu nhất đang sống
+    // 2. Ưu tiên Quái thường yếu nhất TRONG TẦM
+    const normalInRange = aliveMobs.filter(m => m.mob_kind === 'normal' && m.inRange);
+    if (normalInRange.length > 0) {
+        normalInRange.sort((a, b) => a.hp - b.hp);
+        return { id: normalInRange[0].id, inRange: true, distance: normalInRange[0].distance };
+    }
+
+    // 3. Nếu không có gì trong tầm, tìm con gần nhất (để reset realm sau này)
+    aliveMobs.sort((a, b) => a.distance - b.distance);
+    return { id: aliveMobs[0].id, inRange: false, distance: aliveMobs[0].distance };
 }
 
-
-/**
- * Tham gia vào một Bí Cảnh dựa trên mã code (ví dụ: 'starter_01')
- */
 export async function joinSecretRealm(token, charId, config, realmCode = "starter_01") {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_join_secret_realm`, {
@@ -39,6 +46,7 @@ export async function joinSecretRealm(token, charId, config, realmCode = "starte
                 'apikey': config.API_KEY,
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
+                'content-profile': 'public',
                 'x-client-info': 'supabase-flutter/2.12.0',
             },
             body: JSON.stringify({
@@ -49,21 +57,17 @@ export async function joinSecretRealm(token, charId, config, realmCode = "starte
 
         const data = await res.json();
         if (res.ok) {
-            console.log(`[BÍ CẢNH] Đã tiến vào: ${realmCode}`);
-            return data;
+            const actualData = Array.isArray(data) ? data[0] : data;
+            return actualData;
         }
-        console.error('[BÍ CẢNH] Không thể vào Bí Cảnh:', data.message);
     } catch (e) {
         console.error('[BÍ CẢNH ERROR]', e.message);
     }
     return null;
 }
 
-/**
- * Thám thính tình hình Bí Cảnh (Snapshot)
- * Lấy danh sách quái vật và người chơi hiện tại
- */
 export async function getRealmSnapshot(token, charId, config, realmId) {
+    if (!realmId) return null;
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_get_secret_realm_snapshot`, {
             method: 'POST',
@@ -71,6 +75,7 @@ export async function getRealmSnapshot(token, charId, config, realmId) {
                 'apikey': config.API_KEY,
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
+                'content-profile': 'public',
             },
             body: JSON.stringify({
                 p_character_id: charId,
@@ -78,16 +83,14 @@ export async function getRealmSnapshot(token, charId, config, realmId) {
                 p_limit_players: 200
             })
         });
-        return await res.json();
+        const data = await res.json();
+        return data;
     } catch (e) {
         console.error('[SNAPSHOT ERROR]', e.message);
     }
     return null;
 }
 
-/**
- * Tấn công quái vật (Mob) trong Bí Cảnh
- */
 export async function attackMob(token, charId, config, realmId, mobId) {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_attack_realm_mob_v2`, {
@@ -96,6 +99,7 @@ export async function attackMob(token, charId, config, realmId, mobId) {
                 'apikey': config.API_KEY,
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
+                'content-profile': 'public',
                 'x-client-info': 'supabase-flutter/2.12.0',
             },
             body: JSON.stringify({
@@ -107,13 +111,13 @@ export async function attackMob(token, charId, config, realmId, mobId) {
         });
 
         const data = await res.json();
-        // Trả về toàn bộ data để main.js xử lý HP/MP sau đòn đánh
+        const actualData = Array.isArray(data) ? data[0] : data;
+        
         if (res.ok) {
-            return data;
-        } else {
-            console.error('[ATTACK FAILED]', data.message);
-            return data;
+            console.log("[DATA KEYS]:", Object.keys(actualData).join(", "));
         }
+        
+        return { ...actualData, ok: res.ok };
     } catch (e) {
         console.error('[ATTACK ERROR]', e.message);
     }
