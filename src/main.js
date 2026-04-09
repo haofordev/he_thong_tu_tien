@@ -133,8 +133,10 @@ async function manageChests(token, charId, config) {
 
 async function start() {
     try {
-        const { token, charId, config } = await loginAndGetInfo();
-        activeMapCode = mapSequence[mapIndex];
+        const accountIndex = parseInt(process.argv[2] || "0");
+        const { token, charId, config, userData } = await loginAndGetInfo(accountIndex);
+        activeMapCode = userData.map_code || mapSequence[0];
+        const charName = userData.char_name || "Đạo hữu";
 
         // 1. CHẠY DASHBOARD
         setInterval(async () => {
@@ -158,7 +160,7 @@ async function start() {
 
                     console.clear();
                     console.log(`===========================================================`);
-                    console.log(` Đạo hữu:    ${data.home.character.name}`);
+                    console.log(` Đạo hữu:    ${data.home.character.name} (Tài khoản ${accountIndex})`);
                     console.log(` HP:         ${latestHP} | MP: ${latestMP}`);
                     console.log(` Thể lực:    ${latestStamina} | Thân hồn: ${latestSpirit}`);
                     console.log(` Linh thạch: ${spiritStones.toLocaleString()}`);
