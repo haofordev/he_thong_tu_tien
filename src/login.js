@@ -47,6 +47,8 @@ export async function loginAndGetInfo() {
     userData.char_id = charId;
     fs.writeFileSync(dataPath, JSON.stringify(userData, null, 2));
 
+    const map_code = userData.map_code || "starter_01";
+
     // QUAN TRỌNG: Phải có dòng return này
-    return { token, charId, config };
+    return { token, charId, config, map_code };
 }

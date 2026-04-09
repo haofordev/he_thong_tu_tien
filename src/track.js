@@ -196,3 +196,25 @@ export async function startOfflineAFK(token, charId, config, realmCode = "starte
     }
     return null;
 }
+
+export async function openContainer(token, charId, config, itemCode) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_open_container_guarded`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_item_code: itemCode
+            })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[OPEN CHEST ERROR]', e.message);
+    }
+    return null;
+}

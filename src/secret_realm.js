@@ -38,7 +38,7 @@ export function findNewTarget(snapshot, charId) {
     return { id: aliveMobs[0].id, inRange: false, distance: aliveMobs[0].distance, mobKind: aliveMobs[0].mob_kind };
 }
 
-export async function joinSecretRealm(token, charId, config, realmCode = "starter_01") {
+export async function joinSecretRealm(token, charId, config, realmCode = "train_lk_01") {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_join_secret_realm`, {
             method: 'POST',
