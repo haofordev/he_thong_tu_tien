@@ -1,8 +1,16 @@
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function loginAndGetInfo() {
-    const config = JSON.parse(fs.readFileSync('../data/config.json', 'utf8'));
-    let userData = JSON.parse(fs.readFileSync('../data/data.json', 'utf8'));
+    const configPath = path.resolve(__dirname, '../data/config.json');
+    const dataPath = path.resolve(__dirname, '../data/data.json');
+
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    let userData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
     // 1. Đăng nhập
     const authRes = await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
@@ -37,7 +45,7 @@ export async function loginAndGetInfo() {
     // 3. Lưu dữ liệu
     userData.access_token = token;
     userData.char_id = charId;
-    fs.writeFileSync('../data/data.json', JSON.stringify(userData, null, 2));
+    fs.writeFileSync(dataPath, JSON.stringify(userData, null, 2));
 
     // QUAN TRỌNG: Phải có dòng return này
     return { token, charId, config };
