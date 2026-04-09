@@ -38,6 +38,32 @@ export function findNewTarget(snapshot, charId) {
     return { id: aliveMobs[0].id, inRange: false, distance: aliveMobs[0].distance, mobKind: aliveMobs[0].mob_kind };
 }
 
+/**
+ * Chỉ tìm Boss hoặc Elite
+ */
+export function findOnlyBossElite(snapshot, charId) {
+    if (!snapshot || !snapshot.mobs || snapshot.mobs.length === 0) return null;
+
+    const me = snapshot.participants?.find(p => p.character_id === charId)
+        || snapshot.top_players?.find(p => p.character_id === charId);
+
+    const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
+    const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);
+    const range = snapshot.realm?.skill_range_px || 300;
+
+    const eliteMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0 && (m.mob_kind === 'boss' || m.mob_kind === 'elite'));
+    if (eliteMobs.length === 0) return null;
+
+    eliteMobs.forEach(m => {
+        m.distance = Math.sqrt(Math.pow(myX - m.x, 2) + Math.pow(myY - m.y, 2));
+        m.inRange = m.distance <= range;
+    });
+
+    // Ưu tiên con gần nhất
+    eliteMobs.sort((a, b) => a.distance - b.distance);
+    return { id: eliteMobs[0].id, inRange: eliteMobs[0].inRange, distance: eliteMobs[0].distance, mobKind: eliteMobs[0].mob_kind };
+}
+
 export async function joinSecretRealm(token, charId, config, realmCode = "train_lk_01") {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_join_secret_realm`, {
