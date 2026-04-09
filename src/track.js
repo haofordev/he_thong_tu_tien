@@ -51,3 +51,69 @@ export async function doBreakthrough(token, charId, config) {
     }
     return null;
 }
+
+export async function getCharacterStats(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_get_character_stats`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({ p_character_id: charId })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[STATS ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function useItem(token, charId, config, itemCode) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_use_item`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_item_code: itemCode
+            })
+        });
+        const data = await res.json();
+        return { ...data, ok: res.ok };
+    } catch (e) {
+        console.error('[USE ITEM ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function listInventory(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_list_inventory`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_locale: "vi"
+            })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[INVENTORY ERROR]', e.message);
+    }
+    return null;
+}

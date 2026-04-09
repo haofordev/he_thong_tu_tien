@@ -24,18 +24,18 @@ export function findNewTarget(snapshot, charId) {
 
     // 1. Ưu tiên Boss/Elite TRONG TẦM
     const bossInRange = aliveMobs.find(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite') && m.inRange);
-    if (bossInRange) return { id: bossInRange.id, inRange: true, distance: bossInRange.distance };
+    if (bossInRange) return { id: bossInRange.id, inRange: true, distance: bossInRange.distance, mobKind: bossInRange.mob_kind };
 
     // 2. Ưu tiên Quái thường yếu nhất TRONG TẦM
     const normalInRange = aliveMobs.filter(m => m.mob_kind === 'normal' && m.inRange);
     if (normalInRange.length > 0) {
         normalInRange.sort((a, b) => a.hp - b.hp);
-        return { id: normalInRange[0].id, inRange: true, distance: normalInRange[0].distance };
+        return { id: normalInRange[0].id, inRange: true, distance: normalInRange[0].distance, mobKind: 'normal' };
     }
 
-    // 3. Nếu không có gì trong tầm, tìm con gần nhất (để reset realm sau này)
+    // 3. Nếu không có gì trong tầm, tìm con gần nhất
     aliveMobs.sort((a, b) => a.distance - b.distance);
-    return { id: aliveMobs[0].id, inRange: false, distance: aliveMobs[0].distance };
+    return { id: aliveMobs[0].id, inRange: false, distance: aliveMobs[0].distance, mobKind: aliveMobs[0].mob_kind };
 }
 
 export async function joinSecretRealm(token, charId, config, realmCode = "starter_01") {
@@ -112,12 +112,8 @@ export async function attackMob(token, charId, config, realmId, mobId) {
 
         const data = await res.json();
         const actualData = Array.isArray(data) ? data[0] : data;
-        
-        if (res.ok) {
-            console.log("[DATA KEYS]:", Object.keys(actualData).join(", "));
-        }
-        
-        return { ...actualData, ok: res.ok };
+
+        return { ...actualData, httpOk: res.ok };
     } catch (e) {
         console.error('[ATTACK ERROR]', e.message);
     }
