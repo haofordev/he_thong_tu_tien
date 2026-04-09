@@ -1,8 +1,9 @@
 import * as bicanh from './secret_realm.js';
 
-export async function manageWorldBoss(token, charId, config) {
+export async function manageWorldBoss(token, charId, config, onProgress) {
     try {
-        // 1. Kiểm tra trạng thái Boss qua rpc_get_realm_by_code
+        if (onProgress) onProgress("Đang kiểm tra Boss...");
+        
         const statusRes = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_get_realm_by_code`, {
             method: 'POST',
             headers: {
@@ -19,14 +20,10 @@ export async function manageWorldBoss(token, charId, config) {
         const bossInfo = await statusRes.json();
 
         if (!bossInfo || bossInfo.ok === false) {
-            return {
-                foundBoss: false,
-                msg: `Lỗi API: ${bossInfo?.message || 'Không xác định'}`
-            };
+            return { foundBoss: false, msg: `Lỗi API: ${bossInfo?.message || 'Không xác định'}` };
         }
 
         if (!bossInfo.is_open || !bossInfo.can_join) {
-            // Nếu không mở, kiểm tra bảng xếp hạng để lấy chỉ số cũ
             const leaderboard = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_wb_weekly_leaderboard`, {
                 method: 'POST',
                 headers: {
@@ -46,9 +43,6 @@ export async function manageWorldBoss(token, charId, config) {
             };
         }
 
-        console.log(`[!] BOSS THẾ GIỚI ĐANG MỞ: ${bossInfo.name}`);
-        console.log(`[!] Máu Boss: ${bossInfo.boss_hp_current} / ${bossInfo.boss_hp_max}`);
-
         // 2. Vào vùng Boss
         const realmCode = "worldboss_lk";
         const joinRes = await bicanh.joinSecretRealm(token, charId, config, realmCode);
@@ -56,36 +50,45 @@ export async function manageWorldBoss(token, charId, config) {
         let lastBossHP = bossInfo.boss_hp_current;
 
         if (joinRes && joinRes.realm_id) {
-            const snapshot = await bicanh.getRealmSnapshot(token, charId, config, joinRes.realm_id);
-            
-            if (snapshot && snapshot.mobs) {
-                const boss = snapshot.mobs.find(m => 
-                    m.kind === 'boss' || 
-                    m.name.toLowerCase().includes('boss') || 
+            let stayInFight = true;
+            while (stayInFight) {
+                const snapshot = await bicanh.getRealmSnapshot(token, charId, config, joinRes.realm_id);
+                const aliveMobs = snapshot?.mobs?.filter(m => m && m.status === 'alive' && m.hp > 0) || [];
+                let boss = aliveMobs.find(m => 
+                    m.mob_kind === 'boss' || m.mob_kind === 'world_boss' || m.mob_kind === 'elite' ||
                     m.name.toLowerCase().includes('long thi')
                 );
 
+                if (!boss && aliveMobs.length > 0) boss = aliveMobs[0];
+
                 if (boss) {
                     foundBoss = true;
-                    // Tấn công liên tục cho đến khi boss chết hoặc hết thời gian
-                    while (true) {
-                        const attack = await bicanh.attackMob(token, charId, config, joinRes.realm_id, boss.id);
-                        if (attack.httpOk && attack.ok) {
-                            lastBossHP = attack.mob_hp_after;
-                            console.log(`[WORLD BOSS] Gây: -${attack.damage || 0} HP. Boss còn: ${lastBossHP}`);
-                            if (lastBossHP <= 0) break;
-                        } else {
-                            break;
+                    const time = () => new Date().toLocaleTimeString();
+                    if (onProgress) onProgress(`[${time()}] Chiến đấu: ${boss.name}`);
+                    
+                    const attack = await bicanh.attackMob(token, charId, config, joinRes.realm_id, boss.id);
+                    if (attack && attack.httpOk && (attack.ok || attack.damage !== undefined)) {
+                        lastBossHP = attack.mob_hp_after ?? lastBossHP;
+                        if (onProgress) onProgress(`[${time()}] Huyết: ${lastBossHP.toLocaleString()} HP`);
+                        if (lastBossHP <= 0 || (attack.ok === false && attack.reason === 'mob_dead')) {
+                            stayInFight = false;
                         }
-                        await new Promise(r => setTimeout(r, 3200)); 
+                    } else {
+                        if (attack?.reason === 'attack_cooldown') {
+                            const waitSec = attack.remain_sec || 3;
+                            await new Promise(r => setTimeout(r, (waitSec * 1000) + 200));
+                            continue;
+                        }
+                        stayInFight = false;
                     }
+                    await new Promise(r => setTimeout(r, 3200)); 
+                } else {
+                    stayInFight = false; // Không còn mục tiêu
                 }
             }
-            // Sau khi đánh xong hoặc không thấy, rời đi
             await bicanh.leaveSecretRealm(token, charId, config, joinRes.realm_id);
         }
 
-        // 3. Lấy lại rank sau khi đánh
         const leaderboardFinal = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_wb_weekly_leaderboard`, {
             method: 'POST',
             headers: {
@@ -101,12 +104,10 @@ export async function manageWorldBoss(token, charId, config) {
             foundBoss, 
             myDmg: leaderboardFinal.my_damage || 0, 
             myRank: leaderboardFinal.my_rank || 'Chưa có',
-            msg: foundBoss ? "Đang chiến đấu!" : "Mở nhưng không tìm thấy boss",
+            msg: foundBoss ? "Săn xong!" : "Mở nhưng không tìm thấy boss",
             bossHp: lastBossHP
         };
-
     } catch (e) {
-        console.error(`[WORLD BOSS ERROR]`, e.message);
         return { foundBoss: false, msg: `Lỗi: ${e.message.substring(0, 20)}` };
     }
 }

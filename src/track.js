@@ -197,7 +197,7 @@ export async function startOfflineAFK(token, charId, config, realmCode = "starte
     return null;
 }
 
-export async function openContainer(token, charId, config, itemCode) {
+export async function openContainer(token, charId, config, itemCode, qty = 1) {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_open_container_guarded`, {
             method: 'POST',
@@ -209,7 +209,8 @@ export async function openContainer(token, charId, config, itemCode) {
             },
             body: JSON.stringify({
                 p_character_id: charId,
-                p_item_code: itemCode
+                p_container_code: itemCode,
+                p_qty: qty
             })
         });
         return await res.json();

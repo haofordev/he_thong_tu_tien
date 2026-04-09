@@ -18,22 +18,19 @@ Phân chia theo cảnh giới, dùng để treo máy cộng EXP.
 *   **Hóa Thần (HT)**: `train_ht_`
 *   **Luyện Hư (LH)**: `train_lh_`
 
-## 3. Bản Đồ Tông Môn (Sect Realms)
+## 4. Bản Đồ Tông Môn (Sect Realms)
 Dành cho các hoạt động tông môn.
 *   `sect_lk`: Tông môn Luyện Khí
 *   `sect_tc`: Tông môn Trúc Cơ
 *   `sect_kd`: Tông môn Kết Đan
-*   `sect_na`: Tông môn Nguyên Anh
-*   `sect_ht`: Tông môn Hóa Thần
 
-## 4. Bản Đồ Boss Thế Giới (World Boss Realms)
+## 5. Bản Đồ Boss Thế Giới (World Boss Realms)
 Nơi xuất hiện Boss Thế Giới theo khung giờ.
 *   `worldboss_lk`: Boss Thế Giới Luyện Khí (Thiên Đạo Long Thi)
 *   `worldboss_tc`: Boss Thế Giới Trúc Cơ
-*   `worldboss_kd`: Boss Thế Giới Kết Đan
 
-## 5. Các Vùng Đặc Biệt Khác
-*   `mavuc`: Ma Vực (Vùng PK/Săn Boss nâng cao)
+## 6. Các Vùng Đặc Biệt Khác
+*   `mavuc`: Ma Vực (Vùng PK/Săn Boss nâng cao - Rớt đồ hiếm & Linh Thạch)
 *   `nh_city`: Ngoại Hải Thành
 *   `arena`: Đấu Trường
 *   `tower`: Tháp Thông Thiên

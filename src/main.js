@@ -111,6 +111,12 @@ async function startCombatLoop(token, charId, config) {
             } else if (res?.reason === 'not_joined' || res?.reason === 'not_found' || res?.reason === 'target_out_of_range') {
                 if (isBoss && res?.reason === 'target_out_of_range') {
                     nextWait = 5000;
+                    scanCount++; // Đếm để reset nếu cứ đứng xa mãi
+                } else if (res?.reason === 'target_out_of_range') {
+                    bossMsg = `[!] Quái ngoài tầm. Đang tìm con khác...`;
+                    currentMobId = null;
+                    scanCount++;
+                    nextWait = 1000;
                 } else {
                     currentMobId = null;
                     nextWait = 1000;
@@ -141,10 +147,12 @@ async function manageWorldBossTask(token, charId, config) {
     try {
         isHuntingWB = true;
         wbMsg = "Đang kiểm tra Boss...";
-        const res = await manageWorldBoss(token, charId, config);
+        const res = await manageWorldBoss(token, charId, config, (msg) => {
+            wbMsg = msg;
+        });
         wbDmg = res.myDmg || 0;
         wbRank = res.myRank || 'Chưa có';
-        wbMsg = res.bossHp !== undefined ? `Máu Boss: ${res.bossHp}` : (res.msg || "Không có Boss");
+        wbMsg = res.bossHp !== undefined ? `Máu Boss: ${res.bossHp.toLocaleString()} HP` : (res.msg || "Không có Boss");
         isHuntingWB = false;
     } catch (e) { isHuntingWB = false; }
 }
@@ -154,9 +162,12 @@ async function manageChests(token, charId, config) {
         const chestItems = Object.keys(inventoryCounts).filter(code => 
             (code.startsWith('chest_') || code.includes('mob_chest')) && inventoryCounts[code] > 0
         );
-        for (const code of chestItems) {
-            console.log(`\n[HỆ THỐNG] Đang mở rương: ${code}...`);
-            await tracker.openContainer(token, charId, config, code);
+        if (chestItems.length > 0) {
+            latestMsg = `[HỆ THỐNG] Đang mở ${chestItems.length} loại rương...`;
+            for (const code of chestItems) {
+                await tracker.openContainer(token, charId, config, code, inventoryCounts[code]);
+            }
+            latestMsg = `[HỆ THỐNG] Đã mở rương xong.`;
         }
     } catch (e) { }
 }
@@ -177,27 +188,28 @@ async function start() {
         setInterval(() => manageOfflineAFK(token, charId, config), 600000);
         manageOfflineAFK(token, charId, config);
         
-        setInterval(() => manageWorldBossTask(token, charId, config), 900000);
+        setInterval(() => manageWorldBossTask(token, charId, config), 120000);
         manageWorldBossTask(token, charId, config);
 
-        setInterval(() => manageChests(token, charId, config), 60000);
+        setInterval(() => manageChests(token, charId, config), 30000);
         manageChests(token, charId, config);
 
         setInterval(async () => {
             try {
                 const data = await tracker.getStatus(token, charId, config);
-                const stats = await tracker.getCharacterStats(token, charId, config);
                 const inv = await tracker.listInventory(token, charId, config);
-                const wallet = await tracker.getWallet(token, charId, config);
                 
-                if (data?.cultivation_status) {
+                if (data?.cultivation_status && data?.home) {
                     const status = data.cultivation_status;
+                    const res = data.home.resources || {};
+                    const wallet = data.home.wallet || {};
                     const totalExp = status.cultivation_exp_progress + status.claimable_exp;
-                    latestHP = stats?.final?.hp || 0;
-                    latestMP = stats?.final?.mana || 0;
-                    latestStamina = stats?.final?.stamina || 0;
-                    latestSpirit = stats?.final?.spirit || 0;
-                    spiritStones = wallet?.spirit_stones || 0;
+                    
+                    latestHP = res.hp || 0;
+                    latestMP = res.mp || 0;
+                    latestStamina = res.stamina || 0;
+                    latestSpirit = res.spirit || 0;
+                    spiritStones = wallet.spirit_stones || 0;
                     
                     inventoryCounts = {};
                     if (Array.isArray(inv)) inv.forEach(item => inventoryCounts[item.code] = item.qty);
@@ -211,16 +223,28 @@ async function start() {
                     console.log(`-----------------------------------------------------------`);
                     console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${((totalExp / status.exp_to_next) * 100).toFixed(2)}%)`);
                     console.log(`-----------------------------------------------------------`);
-                    console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
+                    console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${isHuntingWB ? "[ĐANG ƯU TIÊN SĂN BOSS]" : bossMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
                     console.log(` [OFFLINE AFK]: ${afkMsg}`);
-                    console.log(` [WORLD BOSS]: ${wbMsg} ${wbDmg > 0 ? `| Dmg: ${wbDmg}` : ""}`);
+                    console.log(` [WORLD BOSS]: ${wbMsg} ${wbDmg > 0 ? `| Dmg: ${wbDmg.toLocaleString()}` : ""}`);
                     console.log(`-----------------------------------------------------------`);
 
-                    if (latestHP < 10 && (inventoryCounts['pill_lk_hp'] > 0)) await tracker.useItem(token, charId, config, 'pill_lk_hp');
-                    if (latestMP < 10 && (inventoryCounts['pill_lk_mp'] > 0)) await tracker.useItem(token, charId, config, 'pill_lk_mp');
-                    if (latestStamina < 5 && (inventoryCounts['pill_lk_sta'] > 0)) await tracker.useItem(token, charId, config, 'pill_lk_sta');
-                    if (latestSpirit < 5 && (inventoryCounts['pill_lk_spirit'] > 0)) await tracker.useItem(token, charId, config, 'pill_lk_spirit');
+                    if (latestHP < 1000 && (inventoryCounts['pill_lk_hp'] > 0)) {
+                        await tracker.useItem(token, charId, config, 'pill_lk_hp');
+                        inventoryCounts['pill_lk_hp']--;
+                    }
+                    if (latestMP < 20 && (inventoryCounts['pill_lk_mp'] > 0)) {
+                        await tracker.useItem(token, charId, config, 'pill_lk_mp');
+                        inventoryCounts['pill_lk_mp']--;
+                    }
+                    if (latestStamina < 20 && (inventoryCounts['pill_lk_sta'] > 0)) {
+                        await tracker.useItem(token, charId, config, 'pill_lk_sta');
+                        inventoryCounts['pill_lk_sta']--;
+                    }
+                    if (latestSpirit < 20 && (inventoryCounts['pill_lk_spirit'] > 0)) {
+                        await tracker.useItem(token, charId, config, 'pill_lk_spirit');
+                        inventoryCounts['pill_lk_spirit']--;
+                    }
 
                     if (totalExp >= status.exp_to_next) {
                         if (status.claimable_exp > 0) await tracker.claimExp(token, charId, config);
