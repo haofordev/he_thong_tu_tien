@@ -210,11 +210,16 @@ async function start() {
         manageChests(token, charId, config);
 
         setInterval(async () => {
-            if (latestStamina >= 30 && latestSpirit >= 30 && latestHP >= 30) {
+            const reasons = [];
+            if (latestHP < 30) reasons.push("Sinh lực");
+            if (latestStamina < 30) reasons.push("Thể lực");
+            if (latestSpirit < 30) reasons.push("Thân hồn");
+
+            if (reasons.length === 0) {
                 await kyngo.triggerKiNgo(token, charId, config);
                 setTimeout(async () => { latestMsg = await kyngo.getLatestLog(token, charId, config); }, 2000);
             } else {
-                latestMsg = `[HỆ THỐNG] Sinh lực thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
+                latestMsg = `[HỆ THỐNG] ${reasons.join("/")} thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
             }
         }, 31000);
 
