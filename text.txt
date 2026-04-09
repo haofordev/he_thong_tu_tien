@@ -1,0 +1,32 @@
+Tôi đã phân tích thành công tệp main.dart.js (đây là mã nguồn đã biên dịch của trò chơi) và trích xuất được rất nhiều tính năng ẩn cũng như các cổng API (RPC) mà trò chơi đang sử dụng nhưng hiện tại kịch bản Node.js của bạn chưa khai thác hết.
+
+Dưới đây là danh sách các tính năng và API "xịn" nhất mà tôi tìm thấy:
+
+1. Quản lý Rương và Túi đồ (Mở rương tự động)
+API: rpc_open_container_guarded
+Tính năng: Bạn có các vật phẩm như "Mob Chest 1" trong túi đồ. API này cho phép mở chúng tự động để lấy phần thưởng bên trong.
+2. Chợ và Cửa hàng (Marketplace)
+API: rpc_nh_market_list, rpc_nh_market_buy_listing, rpc_nh_market_create_listing
+Tính năng: Bạn có thể xem danh sách vật phẩm người chơi khác đang bán và tự động mua hoặc treo bán vật phẩm của mình.
+3. Nhiệm vụ Hằng ngày & Tông môn (Sect Missions)
+API: rpc_list_sect_daily_missions, rpc_claim_sect_daily_mission
+Tính năng: Tự động nhận và trả nhiệm vụ tông môn hằng ngày để lấy điểm cống hiến.
+4. Cường hóa Trang bị
+API: rpc_enhance_equipment_instance, rpc_upgrade_equipment_star, rpc_unlock_equipment_stat
+Tính năng: Cường hóa trang bị, nâng sao và mở khóa các dòng chỉ số ẩn.
+5. Hệ thống Hòm thư (Tự nhận quà)
+API: rpc_list_mailbox, rpc_claim_mail_gift_v2, rpc_delete_read_mails
+Tính năng: Tự động đọc và nhận tất cả quà tặng từ hệ thống gửi qua thư.
+6. Trồng trọt & Thu hoạch (Farming)
+API: rpc_list_farm_plots, rpc_plant_crop_guarded, rpc_harvest_crop_guarded
+Tính năng: Tự động trồng linh thảo và thu hoạch khi chín.
+7. Tháp và Đấu trường (Tower & Arena)
+API: rpc_tower_challenge_floor, rpc_tower_sweep (Quét tháp), rpc_arena_attack
+Tính năng: Tự động leo tháp hoặc quét tháp hằng ngày để lấy nguyên liệu hiếm.
+8. Thú cưng (Pet System)
+API: rpc_pet_hunt, rpc_pet_attempt_taming (Bắt thú), rpc_pet_interact
+Tính năng: Tự động đi săn thú cưng và thuần phục chúng.
+9. Quà tặng VIP và Điểm danh
+API: rpc_coin_shop_claim_daily, rpc_battle_pass_claim, rpc_coin_shop_claim_milestone
+Tính năng: Tự động điểm danh hằng ngày và nhận quà từ Battle Pass hoặc shop.
+Gợi ý: Nếu bạn muốn, tôi có thể giúp bạn viết thêm code vào main.js để tự động thực hiện các việc như: Nhận quà từ thư, Làm nhiệm vụ hằng ngày, hoặc Mở rương quái vật tự động. Bạn muốn ưu tiên tính năng nào trước?

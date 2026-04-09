@@ -119,3 +119,27 @@ export async function attackMob(token, charId, config, realmId, mobId) {
     }
     return null;
 }
+
+export async function leaveSecretRealm(token, charId, config, realmId) {
+    if (!realmId) return null;
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_leave_secret_realm`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_realm_id: realmId
+            })
+        });
+        const data = await res.json();
+        return data;
+    } catch (e) {
+        console.error('[LEAVE REALM ERROR]', e.message);
+    }
+    return null;
+}

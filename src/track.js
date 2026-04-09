@@ -117,3 +117,82 @@ export async function listInventory(token, charId, config) {
     }
     return null;
 }
+
+export async function getWallet(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_get_character_wallet`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({ p_character_id: charId })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[WALLET ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function checkOfflineAFK(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_check_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({ p_character_id: charId })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[CHECK AFK ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function claimOfflineAFK(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_claim_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({ p_character_id: charId })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[CLAIM AFK ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function startOfflineAFK(token, charId, config, realmCode = "starter_01") {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_start_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({ 
+                p_character_id: charId,
+                p_realm_code: realmCode 
+            })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[START AFK ERROR]', e.message);
+    }
+    return null;
+}

@@ -2,9 +2,15 @@ import { loginAndGetInfo } from './login.js';
 import * as tracker from './track.js';
 import * as kyngo from './ky_ngo.js';
 import * as bicanh from './secret_realm.js';
+import { manageWorldBoss } from './world_boss.js';
 
 let latestMsg = "Đang khởi tạo...";
 let bossMsg = "Đang tìm mục tiêu...";
+let afkMsg = "Chưa kiểm tra AFK";
+let wbMsg = "Chưa kiểm tra WB";
+let wbDmg = 0;
+let wbRank = 'Chưa có';
+let isHuntingWB = false;
 let currentRealmId = null;
 let currentMobId = null;
 let currentMobKind = null;
@@ -13,8 +19,14 @@ let latestHP = 0;
 let latestMP = 0;
 let latestStamina = 0;
 let latestSpirit = 0;
+let inventoryCounts = {}; // Lưu số lượng vật phẩm quan trọng
 
 async function startCombatLoop(token, charId, config) {
+    if (isHuntingWB) {
+        setTimeout(() => startCombatLoop(token, charId, config), 5000);
+        return;
+    }
+
     // 1. Nếu không có mục tiêu, thám thính
     if (!currentMobId) {
         try {
@@ -85,7 +97,7 @@ async function startCombatLoop(token, charId, config) {
             scanCount = 0; // Reset đếm khi có mục tiêu chuẩn
             const critLabel = res.is_crit ? "[BẠO KÍCH!] " : "";
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            
+
             // Cập nhật HP/MP từ response
             if (res.hp_after !== undefined) latestHP = res.hp_after;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
@@ -103,12 +115,22 @@ async function startCombatLoop(token, charId, config) {
 
             // Tự động hồi phục sau khi đánh (Dùng stats mới nhất)
             if (latestHP < 10) {
-                process.stdout.write("\n[HỆ THỐNG] HP thấp! Đang sử dụng pill_lk_hp...");
-                await tracker.useItem(token, charId, config, 'pill_lk_hp');
+                if ((inventoryCounts['pill_lk_hp'] || 0) > 0) {
+                    process.stdout.write("\n[HỆ THỐNG] HP thấp! Đang sử dụng pill_lk_hp...");
+                    await tracker.useItem(token, charId, config, 'pill_lk_hp');
+                    inventoryCounts['pill_lk_hp']--; // Giảm tạm thời
+                } else {
+                    process.stdout.write("\n[CẢNH BÁO] Hết pill_lk_hp!");
+                }
             }
             if (latestMP < 10) {
-                process.stdout.write("\n[HỆ THỐNG] MP thấp! Đang sử dụng pill_lk_mp...");
-                await tracker.useItem(token, charId, config, 'pill_lk_mp');
+                if ((inventoryCounts['pill_lk_mp'] || 0) > 0) {
+                    process.stdout.write("\n[HỆ THỐNG] MP thấp! Đang sử dụng pill_lk_mp...");
+                    await tracker.useItem(token, charId, config, 'pill_lk_mp');
+                    inventoryCounts['pill_lk_mp']--;
+                } else {
+                    process.stdout.write("\n[CẢNH BÁO] Hết pill_lk_mp!");
+                }
             }
         } else {
             const errorMap = {
@@ -116,7 +138,8 @@ async function startCombatLoop(token, charId, config) {
                 'mob_dead': 'Mục tiêu đã tử trận',
                 'target_out_of_range': 'Mục tiêu ngoài tầm đánh',
                 'not_found': 'Không tìm thấy mục tiêu',
-                'not_enough_mana': 'Không đủ Mana'
+                'not_enough_mana': 'Không đủ Mana',
+                'not_joined': 'Chưa vào Bí cảnh'
             };
             const errorReason = errorMap[res?.reason] || res?.reason || res?.message || "Lỗi kết nối";
 
@@ -125,9 +148,21 @@ async function startCombatLoop(token, charId, config) {
                 bossMsg = `[!] Đang hồi chiêu (Chờ ${waitSec}s)...`;
                 nextWait = (waitSec * 1000) + 200;
             } else if (res?.reason === 'not_enough_mana' || res?.mana_cost !== undefined) {
-                bossMsg = `[!] Cần ${res.mana_cost || 'thêm'} Mana. Đang cắn thuốc...`;
-                await tracker.useItem(token, charId, config, 'pill_lk_mp');
+                if ((inventoryCounts['pill_lk_mp'] || 0) > 0) {
+                    bossMsg = `[!] Cần ${res.mana_cost || 'thêm'} Mana. Đang cắn thuốc...`;
+                    await tracker.useItem(token, charId, config, 'pill_lk_mp');
+                    inventoryCounts['pill_lk_mp']--;
+                } else {
+                    bossMsg = `[!] Hết Mana và không còn thuốc hồi MP!`;
+                }
                 nextWait = 1000;
+            } else if (res?.reason === 'not_joined' || res?.reason === 'not_found') {
+                bossMsg = `[!] Lỗi: ${errorReason}. Đang tiến hành tham gia lại...`;
+                const realmData = await bicanh.joinSecretRealm(token, charId, config, "starter_01");
+                currentRealmId = realmData?.realm_id || currentRealmId;
+                currentMobId = null;
+                currentMobKind = null;
+                nextWait = 2000;
             } else {
                 bossMsg = `[!] Thất bại: ${errorReason}.`;
 
@@ -153,8 +188,50 @@ async function startCombatLoop(token, charId, config) {
     }
 }
 
-// Giữ nguyên hàm start() và các vòng lặp khác...
+async function manageOfflineAFK(token, charId, config) {
+    try {
+        afkMsg = "Đang kiểm tra AFK...";
+        const status = await tracker.checkOfflineAFK(token, charId, config);
+        
+        if (status && status.active) {
+            afkMsg = `Đang nhận EXP Offline...`;
+            await tracker.claimOfflineAFK(token, charId, config);
+        }
+
+        afkMsg = "Đang kích hoạt Offline AFK mới...";
+        const start = await tracker.startOfflineAFK(token, charId, config, "starter_01");
+        
+        if (start && start.ok) {
+            afkMsg = `Đang chạy (Hết hạn sau 4h)`;
+        } else {
+            afkMsg = `Lỗi: ${start?.message || 'Không thể bắt đầu'}`;
+        }
+    } catch (e) {
+        afkMsg = `Lỗi AFK: ${e.message}`;
+    }
+}
+
 // Chú ý: Nhớ gọi startCombatLoop(token, charId, config) trong hàm start()
+
+async function manageWorldBossTask(token, charId, config) {
+    try {
+        isHuntingWB = true;
+        wbMsg = "Đang kiểm tra Boss...";
+        const res = await manageWorldBoss(token, charId, config);
+        wbDmg = res.myDmg || 0;
+        wbRank = res.myRank || 'Chưa có';
+        
+        if (res.bossHp !== undefined) {
+            wbMsg = `Máu Boss: ${res.bossHp}`;
+        } else {
+            wbMsg = res.msg || (res.foundBoss ? "Đã săn được Boss!" : "Hiện tại không có Boss.");
+        }
+        isHuntingWB = false;
+    } catch (e) {
+        wbMsg = `Lỗi: ${e.message}`;
+        isHuntingWB = false;
+    }
+}
 
 async function start() {
     try {
@@ -171,6 +248,18 @@ async function start() {
         // Bắt đầu vòng lặp chiến đấu
         startCombatLoop(token, charId, config);
 
+        // Quản lý Offline AFK (Lần đầu và mỗi 10 phút)
+        await manageOfflineAFK(token, charId, config);
+        setInterval(async () => {
+            await manageOfflineAFK(token, charId, config);
+        }, 600000); 
+
+        // Quản lý World Boss (Lần đầu và mỗi 15 phút)
+        manageWorldBossTask(token, charId, config);
+        setInterval(async () => {
+            manageWorldBossTask(token, charId, config);
+        }, 900000); 
+
         // Vòng lặp Dashboard (3s)
         setInterval(async () => {
             try {
@@ -182,11 +271,19 @@ async function start() {
                 const status = data.cultivation_status;
                 const totalExp = status.cultivation_exp_progress + status.claimable_exp;
 
-                // Đồng bộ HP/MP từ Stats API cho toàn bộ hệ thống
+                // Đồng bộ HP/MP/Inventory từ Stats API & Inventory API
                 latestHP = stats?.final?.hp || 0;
                 latestMP = stats?.final?.mana || 0;
                 latestStamina = stats?.final?.stamina || 0;
                 latestSpirit = stats?.final?.spirit || 0;
+
+                const inv = await tracker.listInventory(token, charId, config);
+                if (Array.isArray(inv)) {
+                    inventoryCounts = {};
+                    inv.forEach(item => {
+                        inventoryCounts[item.code] = item.qty;
+                    });
+                }
 
                 console.clear();
                 console.log(`===========================================================`);
@@ -205,15 +302,32 @@ async function start() {
                 console.log(` [CƠ DUYÊN KỲ NGỘ]:`);
                 console.log(` > ${latestMsg}`);
                 console.log(`-----------------------------------------------------------`);
+                console.log(` [TRẠNG THÁI OFFLINE AFK]:`);
+                console.log(` > ${afkMsg}`);
+                console.log(`-----------------------------------------------------------`);
+                console.log(` [WORLD BOSS]:`);
+                console.log(` > ${wbMsg}`);
+                if (wbDmg > 0) console.log(` > Sát thương: ${wbDmg} | Hạng: ${wbRank}`);
+                console.log(`-----------------------------------------------------------`);
 
                 // Kiểm tra Thể lực và Thân hồn
                 if (latestStamina < 5) {
-                    process.stdout.write("\n[HỆ THỐNG] Thể lực thấp! Đang sử dụng pill_lk_sta...");
-                    await tracker.useItem(token, charId, config, 'pill_lk_sta');
+                    if ((inventoryCounts['pill_lk_sta'] || 0) > 0) {
+                        process.stdout.write("\n[HỆ THỐNG] Thể lực thấp! Đang sử dụng pill_lk_sta...");
+                        await tracker.useItem(token, charId, config, 'pill_lk_sta');
+                        inventoryCounts['pill_lk_sta']--;
+                    } else {
+                        process.stdout.write("\n[CẢNH BÁO] Hết pill_lk_sta!");
+                    }
                 }
                 if (latestSpirit < 5) {
-                    process.stdout.write("\n[HỆ THỐNG] Thân hồn thấp! Đang sử dụng pill_lk_spirit...");
-                    await tracker.useItem(token, charId, config, 'pill_lk_spirit');
+                    if ((inventoryCounts['pill_lk_spirit'] || 0) > 0) {
+                        process.stdout.write("\n[HỆ THỐNG] Thân hồn thấp! Đang sử dụng pill_lk_spirit...");
+                        await tracker.useItem(token, charId, config, 'pill_lk_spirit');
+                        inventoryCounts['pill_lk_spirit']--;
+                    } else {
+                        process.stdout.write("\n[CẢNH BÁO] Hết pill_lk_spirit!");
+                    }
                 }
 
                 if (totalExp >= status.exp_to_next) {
@@ -234,7 +348,7 @@ async function start() {
             setTimeout(async () => {
                 latestMsg = await kyngo.getLatestLog(token, charId, config);
             }, 2000);
-        }, 121000);
+        }, 31000);
 
     } catch (err) {
         console.error('[CRITICAL ERROR]', err.message);
