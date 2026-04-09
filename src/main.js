@@ -2,15 +2,13 @@ import { loginAndGetInfo } from './login.js';
 import * as tracker from './track.js';
 import * as kyngo from './ky_ngo.js';
 import * as bicanh from './secret_realm.js';
-import { manageWorldBoss } from './world_boss.js';
 
 let latestMsg = "Đang khởi tạo...";
 let bossMsg = "Đang tìm mục tiêu...";
 let afkMsg = "Chưa kiểm tra AFK";
-let wbMsg = "Chưa kiểm tra WB";
+let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let wbDmg = 0;
-let wbRank = 'Chưa có';
-let isHuntingWB = false;
+let isHuntingWB = false; 
 let currentRealmId = null;
 let activeMapCode = "starter_01";
 let currentMobId = null;
@@ -24,28 +22,13 @@ let spiritStones = 0;
 let inventoryCounts = {}; 
 
 async function startCombatLoop(token, charId, config) {
-    if (isHuntingWB) {
-        setTimeout(() => startCombatLoop(token, charId, config), 5000);
-        return;
-    }
-
     if (!currentMobId) {
         try {
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
             const aliveMobs = snapshot?.mobs?.filter(m => m && m.status === 'alive' && m.hp > 0) || [];
-            const boss = aliveMobs.find(m => m.mob_kind === 'boss' || m.mob_kind === 'elite');
-
-            let target = null;
-            if (boss) {
-                const me = snapshot.participants?.find(p => p.character_id === charId) || snapshot.top_players?.find(p => p.character_id === charId);
-                const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
-                const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);
-                const range = snapshot.realm?.skill_range_px || 300;
-                const distance = Math.sqrt(Math.pow(myX - boss.x, 2) + Math.pow(myY - boss.y, 2));
-                target = { id: boss.id, inRange: distance <= range, distance, mobKind: boss.mob_kind };
-            } else {
-                target = bicanh.findNewTarget(snapshot, charId);
-            }
+            
+            // Tìm mục tiêu: Ưu tiên Boss/Elite trong tầm đánh
+            let target = bicanh.findNewTarget(snapshot, charId);
 
             if (target) {
                 currentMobId = target.id;
@@ -56,7 +39,7 @@ async function startCombatLoop(token, charId, config) {
                 process.stdout.write(`\r[BÍ CẢNH] ${kindLabel}Nhắm: ${currentMobId.substring(0, 8)}...${rangeLabel}          `);
             } else {
                 scanCount++;
-                bossMsg = `Không tìm thấy bất kỳ quái nào. (Lần ${scanCount})`;
+                bossMsg = `Đang tìm mục tiêu... (Lần ${scanCount})`;
             }
 
             if (scanCount >= 5) {
@@ -74,17 +57,11 @@ async function startCombatLoop(token, charId, config) {
         }
     }
 
-    if (scanCount >= 5) {
-        const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
-        currentRealmId = realmData?.realm_id || currentRealmId;
-        currentMobId = null;
-        scanCount = 0;
-        setTimeout(() => startCombatLoop(token, charId, config), 1000);
-        return;
-    }
     try {
+        // Chiến thuật MP: > 50 dùng chiêu, <= 50 đánh thường
         const useNormalAttack = (latestMP <= 50);
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
+        
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
         let nextWait = isBoss ? 5000 : 3200;
 
@@ -92,9 +69,9 @@ async function startCombatLoop(token, charId, config) {
             scanCount = 0;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
             if (res.hp_after !== undefined) latestHP = res.hp_after;
-            
+
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            const mode = useNormalAttack ? "[ĐÁNH THƯỜNG] " : "[DÙNG CHIÊU] ";
+            const mode = useNormalAttack ? "[THƯỜNG] " : "[CHIÊU] ";
             bossMsg = `${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
             if (!isBoss && res.atk_speed_sec) nextWait = (res.atk_speed_sec * 1000) + 200;
@@ -107,22 +84,10 @@ async function startCombatLoop(token, charId, config) {
         } else {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
-            } else if (res?.reason === 'not_enough_mana') {
-                await tracker.useItem(token, charId, config, 'pill_lk_mp');
-                nextWait = 1000;
             } else if (res?.reason === 'not_joined' || res?.reason === 'not_found' || res?.reason === 'target_out_of_range') {
-                if (isBoss && res?.reason === 'target_out_of_range') {
-                    nextWait = 5000;
-                    scanCount++;
-                } else if (res?.reason === 'target_out_of_range') {
-                    bossMsg = `[!] Quái ngoài tầm. Đang tìm con khác...`;
-                    currentMobId = null;
-                    scanCount++;
-                    nextWait = 1000;
-                } else {
-                    currentMobId = null;
-                    nextWait = 1000;
-                }
+                currentMobId = null;
+                nextWait = 1000;
+                scanCount++;
             } else {
                 currentMobId = null;
                 nextWait = 1000;
@@ -137,33 +102,15 @@ async function startCombatLoop(token, charId, config) {
 
 async function manageOfflineAFK(token, charId, config) {
     try {
-        afkMsg = "Đang kiểm tra AFK...";
-        const status = await tracker.checkOfflineAFK(token, charId, config);
-        if (status && status.active) await tracker.claimOfflineAFK(token, charId, config);
         const start = await tracker.startOfflineAFK(token, charId, config, activeMapCode);
         afkMsg = (start && start.ok) ? `Đang chạy (Hết hạn sau 4h)` : `Lỗi AFK`;
-    } catch (e) { afkMsg = `Lỗi AFK: ${e.message}`; }
-}
-
-async function manageWorldBossTask(token, charId, config) {
-    try {
-        isHuntingWB = true;
-        wbMsg = "Đang kiểm tra Boss...";
-        const res = await manageWorldBoss(token, charId, config, (msg) => {
-            wbMsg = msg;
-        });
-        wbDmg = res.myDmg || 0;
-        wbRank = res.myRank || 'Chưa có';
-        wbMsg = res.bossHp !== undefined ? `Máu Boss: ${res.bossHp.toLocaleString()} HP` : (res.msg || "Không có Boss");
-        isHuntingWB = false;
-    } catch (e) { isHuntingWB = false; }
+    } catch (e) { afkMsg = `Lỗi AFK`; }
 }
 
 async function manageChests(token, charId, config) {
     try {
         const inv = await tracker.listInventory(token, charId, config);
         const containers = inv.filter(item => item.item_type === 'container' && item.qty > 0);
-        
         if (containers.length > 0) {
             latestMsg = `[HỆ THỐNG] Đang mở ${containers.length} loại rương...`;
             for (const item of containers) {
@@ -179,7 +126,7 @@ async function start() {
         const { token, charId, config, map_code } = await loginAndGetInfo();
         activeMapCode = map_code;
 
-        // 1. CHẠY DASHBOARD TRƯỚC TIÊN
+        // 1. CHẠY DASHBOARD
         setInterval(async () => {
             try {
                 const data = await tracker.getStatus(token, charId, config);
@@ -189,7 +136,6 @@ async function start() {
                     const status = data.cultivation_status;
                     const res = data.home.resources || {};
                     const wallet = data.home.wallet || {};
-                    const totalExp = status.cultivation_exp_progress + status.claimable_exp;
                     
                     latestHP = res.hp || 0;
                     latestMP = res.mp || 0;
@@ -207,32 +153,17 @@ async function start() {
                     console.log(` Thể lực:    ${latestStamina} | Thân hồn: ${latestSpirit}`);
                     console.log(` Linh thạch: ${spiritStones.toLocaleString()}`);
                     console.log(`-----------------------------------------------------------`);
-                    console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${((totalExp / status.exp_to_next) * 100).toFixed(2)}%)`);
+                    console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${(( (status.cultivation_exp_progress + status.claimable_exp) / status.exp_to_next) * 100).toFixed(2)}%)`);
                     console.log(`-----------------------------------------------------------`);
-                    console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${isHuntingWB ? "[ĐANG ƯU TIÊN SĂN BOSS]" : bossMsg}`);
+                    console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
                     console.log(` [OFFLINE AFK]: ${afkMsg}`);
-                    console.log(` [WORLD BOSS]: ${wbMsg} ${wbDmg > 0 ? `| Dmg: ${wbDmg.toLocaleString()}` : ""}`);
+                    console.log(` [WORLD BOSS]: ${wbMsg}`);
                     console.log(`-----------------------------------------------------------`);
 
-                    if (latestHP < 1000 && (inventoryCounts['pill_lk_hp'] > 0)) {
-                        await tracker.useItem(token, charId, config, 'pill_lk_hp');
-                        inventoryCounts['pill_lk_hp']--;
-                    }
-                    if (latestMP < 20 && (inventoryCounts['pill_lk_mp'] > 0)) {
-                        await tracker.useItem(token, charId, config, 'pill_lk_mp');
-                        inventoryCounts['pill_lk_mp']--;
-                    }
-                    if (latestStamina < 20 && (inventoryCounts['pill_lk_sta'] > 0)) {
-                        await tracker.useItem(token, charId, config, 'pill_lk_sta');
-                        inventoryCounts['pill_lk_sta']--;
-                    }
-                    if (latestSpirit < 20 && (inventoryCounts['pill_lk_spirit'] > 0)) {
-                        await tracker.useItem(token, charId, config, 'pill_lk_spirit');
-                        inventoryCounts['pill_lk_spirit']--;
-                    }
-
-                    if (totalExp >= status.exp_to_next) {
+                    if (latestHP < 1000 && inventoryCounts['pill_lk_hp'] > 0) await tracker.useItem(token, charId, config, 'pill_lk_hp');
+                    
+                    if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next) {
                         if (status.claimable_exp > 0) await tracker.claimExp(token, charId, config);
                         else await tracker.doBreakthrough(token, charId, config);
                     }
@@ -242,35 +173,28 @@ async function start() {
             } catch (e) { }
         }, 3000);
 
-        // 2. CHẠY VÒNG LẶP BOSS
-        async function wbLoop() {
-            await manageWorldBossTask(token, charId, config);
-            setTimeout(wbLoop, 5000); 
-        }
-        wbLoop();
-
-        // 3. VÀO BÍ CẢNH NẾU KHÔNG CÓ BOSS
-        setTimeout(async () => {
-            if (!isHuntingWB) {
-                const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
-                currentRealmId = realmData?.realm_id;
-            }
-            startCombatLoop(token, charId, config);
-        }, 2000);
-
-        // 4. CÁC TÁC VỤ KHÁC
+        // 2. VÀO BÍ CẢNH NGAY LẬP TỨC
+        const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
+        currentRealmId = realmData?.realm_id;
+        
         await kyngo.enterKiNgo(token, charId, config);
         latestMsg = await kyngo.getLatestLog(token, charId, config);
 
+        startCombatLoop(token, charId, config);
+        
         setInterval(() => manageOfflineAFK(token, charId, config), 600000);
         manageOfflineAFK(token, charId, config);
         
-        setInterval(() => manageChests(token, charId, config), 60000); 
+        setInterval(() => manageChests(token, charId, config), 60000);
         manageChests(token, charId, config);
 
         setInterval(async () => {
-            await kyngo.triggerKiNgo(token, charId, config);
-            setTimeout(async () => { latestMsg = await kyngo.getLatestLog(token, charId, config); }, 2000);
+            if (latestStamina >= 30 && latestSpirit >= 30) {
+                await kyngo.triggerKiNgo(token, charId, config);
+                setTimeout(async () => { latestMsg = await kyngo.getLatestLog(token, charId, config); }, 2000);
+            } else {
+                latestMsg = `[HỆ THỐNG] Sinh lực thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
+            }
         }, 31000);
 
     } catch (err) { console.error('[CRITICAL ERROR]', err.message); }

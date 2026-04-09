@@ -1,39 +1,33 @@
-# Danh Sách Bản Đồ Bí Cảnh (Realm Codes)
+# Danh Sách Bản Đồ Có Thể Vào (Dành cho Luyện Khí)
 
-Dưới đây là danh sách các mã vùng (Realm Codes) được tìm thấy trong hệ thống "Hệ Thống Tu Tiên", dùng để di chuyển và săn quái tự động.
+Dưới đây là danh sách đầy đủ các vùng đất đạo hữu có thể gia nhập để tu luyện và thu thập tài nguyên.
 
-## 1. Bản Đồ Tân Thủ (Starter Realms)
-Dành cho người mới bắt đầu hoặc để kiểm tra tính năng.
-*   `starter_01`: Vùng khởi đầu 1 (Thích hợp cấp 1-10)
-*   `starter_02`: Vùng khởi đầu 2
-*   `starter_03`: Vùng khởi đầu 3
-*   `starter_04`: Vùng khởi đầu 4
+## 1. Linh Địa Tông Môn (Sect Realms) - QUAN TRỌNG
+Nơi tu luyện dành riêng cho đệ tử tông môn. Có 10 tầng cố định.
+*   **`sect_lk_c01`** đến **`sect_lk_c10`**
+    *   **Vật phẩm**: 
+        *   Điểm cống hiến Tông môn (Dùng đổi đồ hiếm trong shop Tông môn).
+        *   Linh thạch (LK).
+        *   Gỗ Tông môn (`lk_wood`).
+        *   Nguyên liệu trận pháp (`lk_array_stone`, `lk_array_flag`).
 
-## 2. Bản Đồ Tu Luyện (Training Realms)
-Phân chia theo cảnh giới, dùng để treo máy cộng EXP.
-*   **Luyện Khí (LK)**: `train_lk_` (Ví dụ: `train_lk_01`, `train_lk_02`)
-*   **Trúc Cơ (TC)**: `train_tc_`
-*   **Kết Đan (KD)**: `train_kd_`
-*   **Nguyên Anh (NA)**: `train_na_`
-*   **Hóa Thần (HT)**: `train_ht_`
-*   **Luyện Hư (LH)**: `train_lh_`
+## 2. Bản Đồ Farm Linh Thạch & EXP (Tự Do)
+Bí cảnh công cộng dành cho tất cả tu sĩ.
+*   **`starter_01`** (Sơ Nhập): Map tân thủ cấp 1-10.
+*   **`train_lk_01`** đến **`train_lk_10`** (Linh Thạch · Luyện Khí):
+    *   **Vật phẩm**: Linh thạch, Thảo dược, Quặng, Da thú, Rương linh thạch.
 
-## 4. Bản Đồ Tông Môn (Sect Realms)
-Dành cho các hoạt động tông môn.
-*   `sect_lk`: Tông môn Luyện Khí
-*   `sect_tc`: Tông môn Trúc Cơ
-*   `sect_kd`: Tông môn Kết Đan
+## 3. Bản Đồ Boss Thế Giới (World Boss)
+Chỉ mở theo khung giờ cố định của hệ thống.
+*   **`worldboss_lk`** (Boss Luyện Khí: Thiên Đạo Long Thi)
+    *   **Vật phẩm**: Linh thạch (Cực lớn), Danh hiệu, Trang bị hiếm.
 
-## 5. Bản Đồ Boss Thế Giới (World Boss Realms)
-Nơi xuất hiện Boss Thế Giới theo khung giờ.
-*   `worldboss_lk`: Boss Thế Giới Luyện Khí (Thiên Đạo Long Thi)
-*   `worldboss_tc`: Boss Thế Giới Trúc Cơ
-
-## 6. Các Vùng Đặc Biệt Khác
-*   `mavuc`: Ma Vực (Vùng PK/Săn Boss nâng cao - Rớt đồ hiếm & Linh Thạch)
-*   `nh_city`: Ngoại Hải Thành
-*   `arena`: Đấu Trường
-*   `tower`: Tháp Thông Thiên
+## 4. Các Vùng Đất Đặc Biệt Khác
+*   **`mavuc`** (Ma Vực): Vùng PK tự do, Boss tinh anh rớt trang bị hiếm.
+*   **`nh_city`** (Ngoại Hải Thành): Trung tâm giao thương, chợ búa.
+*   **`arena`** (Đấu Trường): Nơi tỷ thí giữa các tu sĩ.
+*   **`tower`** (Tháp Thông Thiên): Thử thách leo tháp nhận đan phá cảnh.
+*   **`sect_lk`** (Tông Môn): Khu vực sảnh chính để nhận nhiệm vụ hằng ngày.
 
 ---
-> **Lưu ý**: Một số mã vùng có thể yêu cầu cảnh giới tương ứng hoặc vật phẩm đặc biệt để gia nhập. Khi sử dụng trong code, hãy đảm bảo nhân vật của bạn đạt đủ yêu cầu.
+> **Lời khuyên**: Nếu đạo hữu cần nguyên liệu xây dựng tông môn, hãy chọn **`sect_lk_cxx`**. Nếu cần nhu yếu phẩm cá nhân và linh thạch, hãy chọn **`train_lk_xx`**.
