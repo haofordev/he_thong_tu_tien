@@ -91,9 +91,22 @@ export async function getRealmSnapshot(token, charId, config, realmId) {
     return null;
 }
 
-export async function attackMob(token, charId, config, realmId, mobId) {
+/**
+ * Tấn công quái
+ * useV1 = true để đánh thường không tốn MANA (Dùng rpc_attack_realm_mob)
+ * useV1 = false để dùng kỹ năng (Dùng rpc_attack_realm_mob_v2)
+ */
+export async function attackMob(token, charId, config, realmId, mobId, useV1 = false) {
     try {
-        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_attack_realm_mob_v2`, {
+        const rpcName = useV1 ? 'rpc_attack_realm_mob' : 'rpc_attack_realm_mob_v2';
+        const payload = {
+            p_character_id: charId,
+            p_realm_id: realmId,
+            p_mob_id: mobId
+        };
+        if (!useV1) payload.p_apply_counter = true;
+
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/${rpcName}`, {
             method: 'POST',
             headers: {
                 'apikey': config.API_KEY,
@@ -102,12 +115,7 @@ export async function attackMob(token, charId, config, realmId, mobId) {
                 'content-profile': 'public',
                 'x-client-info': 'supabase-flutter/2.12.0',
             },
-            body: JSON.stringify({
-                p_character_id: charId,
-                p_realm_id: realmId,
-                p_mob_id: mobId,
-                p_apply_counter: true
-            })
+            body: JSON.stringify(payload)
         });
 
         const data = await res.json();

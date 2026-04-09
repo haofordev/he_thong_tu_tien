@@ -83,17 +83,19 @@ async function startCombatLoop(token, charId, config) {
         return;
     }
     try {
-        const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId);
+        const useNormalAttack = (latestMP <= 50);
+        const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
         let nextWait = isBoss ? 5000 : 3200;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             scanCount = 0;
-            if (res.hp_after !== undefined) latestHP = res.hp_after;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
-
+            if (res.hp_after !== undefined) latestHP = res.hp_after;
+            
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            bossMsg = `${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
+            const mode = useNormalAttack ? "[ĐÁNH THƯỜNG] " : "[DÙNG CHIÊU] ";
+            bossMsg = `${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
             if (!isBoss && res.atk_speed_sec) nextWait = (res.atk_speed_sec * 1000) + 200;
 
@@ -111,7 +113,7 @@ async function startCombatLoop(token, charId, config) {
             } else if (res?.reason === 'not_joined' || res?.reason === 'not_found' || res?.reason === 'target_out_of_range') {
                 if (isBoss && res?.reason === 'target_out_of_range') {
                     nextWait = 5000;
-                    scanCount++; // Đếm để reset nếu cứ đứng xa mãi
+                    scanCount++;
                 } else if (res?.reason === 'target_out_of_range') {
                     bossMsg = `[!] Quái ngoài tầm. Đang tìm con khác...`;
                     currentMobId = null;
@@ -159,13 +161,13 @@ async function manageWorldBossTask(token, charId, config) {
 
 async function manageChests(token, charId, config) {
     try {
-        const chestItems = Object.keys(inventoryCounts).filter(code => 
-            (code.startsWith('chest_') || code.includes('mob_chest')) && inventoryCounts[code] > 0
-        );
-        if (chestItems.length > 0) {
-            latestMsg = `[HỆ THỐNG] Đang mở ${chestItems.length} loại rương...`;
-            for (const code of chestItems) {
-                await tracker.openContainer(token, charId, config, code, inventoryCounts[code]);
+        const inv = await tracker.listInventory(token, charId, config);
+        const containers = inv.filter(item => item.item_type === 'container' && item.qty > 0);
+        
+        if (containers.length > 0) {
+            latestMsg = `[HỆ THỐNG] Đang mở ${containers.length} loại rương...`;
+            for (const item of containers) {
+                await tracker.openContainer(token, charId, config, item.code, item.qty);
             }
             latestMsg = `[HỆ THỐNG] Đã mở rương xong.`;
         }
@@ -176,24 +178,8 @@ async function start() {
     try {
         const { token, charId, config, map_code } = await loginAndGetInfo();
         activeMapCode = map_code;
-        const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
-        currentRealmId = realmData?.realm_id;
 
-        await kyngo.enterKiNgo(token, charId, config);
-        latestMsg = await kyngo.getLatestLog(token, charId, config);
-
-        startCombatLoop(token, charId, config);
-        
-        // Tác vụ định kỳ
-        setInterval(() => manageOfflineAFK(token, charId, config), 600000);
-        manageOfflineAFK(token, charId, config);
-        
-        setInterval(() => manageWorldBossTask(token, charId, config), 120000);
-        manageWorldBossTask(token, charId, config);
-
-        setInterval(() => manageChests(token, charId, config), 30000);
-        manageChests(token, charId, config);
-
+        // 1. CHẠY DASHBOARD TRƯỚC TIÊN
         setInterval(async () => {
             try {
                 const data = await tracker.getStatus(token, charId, config);
@@ -256,10 +242,37 @@ async function start() {
             } catch (e) { }
         }, 3000);
 
+        // 2. CHẠY VÒNG LẶP BOSS
+        async function wbLoop() {
+            await manageWorldBossTask(token, charId, config);
+            setTimeout(wbLoop, 5000); 
+        }
+        wbLoop();
+
+        // 3. VÀO BÍ CẢNH NẾU KHÔNG CÓ BOSS
+        setTimeout(async () => {
+            if (!isHuntingWB) {
+                const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
+                currentRealmId = realmData?.realm_id;
+            }
+            startCombatLoop(token, charId, config);
+        }, 2000);
+
+        // 4. CÁC TÁC VỤ KHÁC
+        await kyngo.enterKiNgo(token, charId, config);
+        latestMsg = await kyngo.getLatestLog(token, charId, config);
+
+        setInterval(() => manageOfflineAFK(token, charId, config), 600000);
+        manageOfflineAFK(token, charId, config);
+        
+        setInterval(() => manageChests(token, charId, config), 60000); 
+        manageChests(token, charId, config);
+
         setInterval(async () => {
             await kyngo.triggerKiNgo(token, charId, config);
             setTimeout(async () => { latestMsg = await kyngo.getLatestLog(token, charId, config); }, 2000);
         }, 31000);
+
     } catch (err) { console.error('[CRITICAL ERROR]', err.message); }
 }
 
