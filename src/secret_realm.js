@@ -13,6 +13,7 @@ export function findNewTarget(snapshot, charId) {
     const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
     const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);
     const range = snapshot.realm?.skill_range_px || 300;
+    const maxAttackDistance = range * 2.5; // Tối đa có thể di chuyển trong lúc attack (~750px nếu range=300px)
 
     const aliveMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0);
     if (aliveMobs.length === 0) return null;
@@ -33,21 +34,21 @@ export function findNewTarget(snapshot, charId) {
         return { id: normalInRange[0].id, inRange: true, distance: normalInRange[0].distance, mobKind: 'normal', x: normalInRange[0].x, y: normalInRange[0].y };
     }
 
-    // 3. Nếu không có gì trong tầm, tìm Boss/Elite gần nhất (để tấn công và di chuyển tự động)
-    const bossOutRange = aliveMobs.filter(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite') && !m.inRange);
-    if (bossOutRange.length > 0) {
-        bossOutRange.sort((a, b) => a.distance - b.distance);
-        return { id: bossOutRange[0].id, inRange: false, distance: bossOutRange[0].distance, mobKind: bossOutRange[0].mob_kind, x: bossOutRange[0].x, y: bossOutRange[0].y };
+    // 3. Boss/Elite ngoài tầm nhưng gần đủ để tấn công (tự động di chuyển)
+    const bossReachable = aliveMobs.filter(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite') && !m.inRange && m.distance <= maxAttackDistance);
+    if (bossReachable.length > 0) {
+        bossReachable.sort((a, b) => a.distance - b.distance);
+        return { id: bossReachable[0].id, inRange: false, distance: bossReachable[0].distance, mobKind: bossReachable[0].mob_kind, x: bossReachable[0].x, y: bossReachable[0].y };
     }
 
-    // 4. Nếu không có Boss/Elite, tìm quái thường gần nhất
-    const normalOutRange = aliveMobs.filter(m => m.mob_kind === 'normal' && !m.inRange);
-    if (normalOutRange.length > 0) {
-        normalOutRange.sort((a, b) => a.distance - b.distance);
-        return { id: normalOutRange[0].id, inRange: false, distance: normalOutRange[0].distance, mobKind: 'normal', x: normalOutRange[0].x, y: normalOutRange[0].y };
+    // 4. Quái thường ngoài tầm nhưng gần đủ để tấn công
+    const normalReachable = aliveMobs.filter(m => m.mob_kind === 'normal' && !m.inRange && m.distance <= maxAttackDistance);
+    if (normalReachable.length > 0) {
+        normalReachable.sort((a, b) => a.distance - b.distance);
+        return { id: normalReachable[0].id, inRange: false, distance: normalReachable[0].distance, mobKind: 'normal', x: normalReachable[0].x, y: normalReachable[0].y };
     }
 
-    // Không có target
+    // Không có target nào đủ gần - trả về null để chuyển map
     return null;
 }
 

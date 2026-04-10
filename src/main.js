@@ -23,9 +23,10 @@ let currentRealmId = null;
 let activeMapCode = "starter_01";
 let currentMobId = null;
 let currentMobKind = null;
+let currentMobInRange = true; // Lưu trạng thái target
 let scanCount = 0;
 
-const mapSequence = ["sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
+const mapSequence = ["starter_01", "sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
 //const mapSequence = ["starter_01"];
 
 let mapIndex = 0;
@@ -49,6 +50,7 @@ async function startCombatLoop() {
             if (target) {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
+                currentMobInRange = target.inRange; // Lưu status
                 scanCount = 0;
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
@@ -82,7 +84,8 @@ async function startCombatLoop() {
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        let nextWait = isBoss ? 5000 : 3200;
+        // Nếu target ngoài tầm, chờ lâu hơn để game di chuyển tự động
+        let nextWait = !currentMobInRange ? 3000 : (isBoss ? 5000 : 3200);
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             scanCount = 0;
@@ -101,23 +104,35 @@ async function startCombatLoop() {
             if (res.mob_hp_after <= 0) {
                 currentMobId = null;
                 currentMobKind = null;
+                currentMobInRange = true;
                 nextWait = 1000;
             }
         } else {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
-            } else if (res?.reason === 'not_joined' || res?.reason === 'not_found' || res?.reason === 'target_out_of_range') {
+            } else if (res?.reason === 'target_out_of_range') {
+                // Target quá xa - chuyển map
                 currentMobId = null;
+                currentMobInRange = true;
+                nextWait = 1000;
+                scanCount++;
+            } else if (res?.reason === 'not_joined' || res?.reason === 'not_found') {
+                currentMobId = null;
+                currentMobInRange = true;
                 nextWait = 1000;
                 scanCount++;
             } else {
+                // Lỗi khác
                 currentMobId = null;
+                currentMobInRange = true;
                 nextWait = 1000;
+                scanCount++;
             }
         }
         setTimeout(() => startCombatLoop(), nextWait);
     } catch (e) {
         currentMobId = null;
+        currentMobInRange = true;
         setTimeout(() => startCombatLoop(), 5000);
     }
 }
