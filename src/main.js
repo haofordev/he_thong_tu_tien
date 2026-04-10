@@ -55,7 +55,10 @@ async function startCombatLoop() {
                 currentMobKind = target.mobKind;
                 currentMobInRange = target.inRange; // Lưu status
                 currentMobRetryCount = 0;
-                scanCount = 0;
+                
+                // Nếu thấy quái trong tầm thì reset, ngoài tầm thì giữ nguyên để đếm dồn
+                if (target.inRange) scanCount = 0; 
+
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
                 process.stdout.write(`\r[SĂN BOSS] ${activeMapCode} -> ${kindLabel}${currentMobId.substring(0, 8)}...${rangeLabel}          `);
@@ -120,15 +123,15 @@ async function startCombatLoop() {
                 // Target quá xa: giữ target và thử lại vài lần để game di chuyển
                 currentMobInRange = false;
                 currentMobRetryCount++;
+                scanCount++; // Đếm cả lần thử lại này vào tổng số lần ngoài tầm liên tiếp
                 nextWait = 3000;
-                bossMsg = `Target quá xa, đang điều chỉnh vị trí... (Lần ${currentMobRetryCount})`;
-                if (currentMobRetryCount >= 3) {
+                bossMsg = `Quái ngoài tầm... (Lần ${currentMobRetryCount}, Tổng: ${scanCount}/5)`;
+                if (currentMobRetryCount >= 3 || scanCount >= 5) {
                     blockedMobId = currentMobId;
                     currentMobId = null;
                     currentMobKind = null;
                     currentMobInRange = true;
                     currentMobRetryCount = 0;
-                    scanCount++;
                 }
             } else if (res?.reason === 'not_joined' || res?.reason === 'not_found') {
                 currentMobId = null;
