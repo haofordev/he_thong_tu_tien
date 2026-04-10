@@ -239,6 +239,8 @@ async function start() {
 
         setInterval(() => manageChests(), 60000);
         manageChests();
+        // Run farm automation every 10 seconds
+        setInterval(() => farm.harvestAndPlant(token, charId, config), 10000);
 
         setInterval(async () => {
             const { token, charId, config } = auth;
