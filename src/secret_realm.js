@@ -24,18 +24,31 @@ export function findNewTarget(snapshot, charId) {
 
     // 1. Ưu tiên Boss/Elite TRONG TẦM
     const bossInRange = aliveMobs.find(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite') && m.inRange);
-    if (bossInRange) return { id: bossInRange.id, inRange: true, distance: bossInRange.distance, mobKind: bossInRange.mob_kind };
+    if (bossInRange) return { id: bossInRange.id, inRange: true, distance: bossInRange.distance, mobKind: bossInRange.mob_kind, x: bossInRange.x, y: bossInRange.y };
 
     // 2. Ưu tiên Quái thường yếu nhất TRONG TẦM
     const normalInRange = aliveMobs.filter(m => m.mob_kind === 'normal' && m.inRange);
     if (normalInRange.length > 0) {
         normalInRange.sort((a, b) => a.hp - b.hp);
-        return { id: normalInRange[0].id, inRange: true, distance: normalInRange[0].distance, mobKind: 'normal' };
+        return { id: normalInRange[0].id, inRange: true, distance: normalInRange[0].distance, mobKind: 'normal', x: normalInRange[0].x, y: normalInRange[0].y };
     }
 
-    // 3. Nếu không có gì trong tầm, tìm con gần nhất
-    aliveMobs.sort((a, b) => a.distance - b.distance);
-    return { id: aliveMobs[0].id, inRange: false, distance: aliveMobs[0].distance, mobKind: aliveMobs[0].mob_kind };
+    // 3. Nếu không có gì trong tầm, tìm Boss/Elite gần nhất (để tấn công và di chuyển tự động)
+    const bossOutRange = aliveMobs.filter(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite') && !m.inRange);
+    if (bossOutRange.length > 0) {
+        bossOutRange.sort((a, b) => a.distance - b.distance);
+        return { id: bossOutRange[0].id, inRange: false, distance: bossOutRange[0].distance, mobKind: bossOutRange[0].mob_kind, x: bossOutRange[0].x, y: bossOutRange[0].y };
+    }
+
+    // 4. Nếu không có Boss/Elite, tìm quái thường gần nhất
+    const normalOutRange = aliveMobs.filter(m => m.mob_kind === 'normal' && !m.inRange);
+    if (normalOutRange.length > 0) {
+        normalOutRange.sort((a, b) => a.distance - b.distance);
+        return { id: normalOutRange[0].id, inRange: false, distance: normalOutRange[0].distance, mobKind: 'normal', x: normalOutRange[0].x, y: normalOutRange[0].y };
+    }
+
+    // Không có target
+    return null;
 }
 
 /**

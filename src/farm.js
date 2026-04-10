@@ -13,13 +13,16 @@ async function harvestSlot(token, charId, config, slot) {
             p_character_id: charId,
             p_slot: slot,
         });
-        // The RPC returns an object with a `ready` flag (true when harvested).
-        if (res && res.ready) {
-            console.log(`[NÔNG TRẠI] Đã thu hoạch ô ${slot}`);
+        // API returns ok: true when successful, ok: false with message when failed
+        if (res && res.ok) {
+            console.log(`[NÔNG TRẠI] Thu hoạch thành công ô ${slot}`);
             return true;
+        } else if (res && res.message) {
+            // not_ready, slot_empty, etc. - skip silently in logs
+            return false;
         }
     } catch (e) {
-        // Silently ignore – some slots may be empty.
+        console.log(`[NÔNG TRẠI] Lỗi thu hoạch ô ${slot}:`, e.message);
     }
     return false;
 }
@@ -35,11 +38,13 @@ async function plantSlot(token, charId, config, slot, seedCode) {
             p_seed_code: seedCode,
         });
         if (res && res.ok) {
-            console.log(`[NÔNG TRẠI] Đã trồng ${seedCode} vào ô ${slot}`);
+            console.log(`[NÔNG TRẠI] Trồng thành công ${seedCode} vào ô ${slot}`);
             return true;
+        } else if (res && res.message) {
+            return false;
         }
     } catch (e) {
-        // ignore failures (e.g., not enough seeds)
+        console.log(`[NÔNG TRẠI] Lỗi trồng ô ${slot}:`, e.message);
     }
     return false;
 }
@@ -48,22 +53,32 @@ async function plantSlot(token, charId, config, slot, seedCode) {
  * Main routine: iterate over slots, harvest if ready, then plant if empty.
  */
 export async function harvestAndPlant(token, charId, config) {
-    // First, get current inventory to know how many seeds we have.
+    // 1. First, try to harvest all slots.
+    for (let slot = 1; slot <= 10; slot++) {
+        await harvestSlot(token, charId, config, slot);
+    }
+
+    // 2. Then, check inventory for seeds to plant.
     const inventory = await tracker.listInventory(token, charId, config);
     const seedItem = inventory.find(i => i.code === 'seed_lk_tu_linh_flower');
-    const seedQty = seedItem ? seedItem.qty : 0;
+    let seedQty = seedItem ? seedItem.qty : 0;
+
     if (seedQty === 0) {
         console.log('[NÔNG TRẠI] Không còn seed Tu Linh Flower để trồng.');
         return;
     }
 
-    // Assume slots 1‑10 (adjust if game uses a different range).
+    console.log(`[NÔNG TRẠI] Có ${seedQty} seed Tu Linh Flower sẵn sàng trồng`);
+
+    // 3. Plant seeds in empty slots.
+    let plantedCount = 0;
     for (let slot = 1; slot <= 10; slot++) {
-        // Try harvest first.
-        const harvested = await harvestSlot(token, charId, config, slot);
-        // After harvest (or if slot was already empty) attempt planting.
-        if (seedQty > 0) {
-            await plantSlot(token, charId, config, slot, 'seed_lk_tu_linh_flower');
+        if (seedQty <= 0) break;
+        const success = await plantSlot(token, charId, config, slot, 'seed_lk_tu_linh_flower');
+        if (success) {
+            seedQty--;
+            plantedCount++;
         }
     }
+    console.log(`[NÔNG TRẠI] Đã trồng xong ${plantedCount} ô`);
 }

@@ -58,7 +58,7 @@ async function startCombatLoop() {
                 bossMsg = `Map [${activeMapCode}] kô thấy boss... (Lần ${scanCount})`;
             }
 
-            if (scanCount >= 1) { // Đổi ngay nếu không thấy Boss/Elite
+            if (scanCount >= 5) { // Chuyển map sau 5 lần không tìm thấy target
                 mapIndex = (mapIndex + 1) % mapSequence.length;
                 activeMapCode = mapSequence[mapIndex];
                 bossMsg = `Chuyển map -> ${activeMapCode}`;
@@ -216,6 +216,9 @@ async function start() {
                         if (status.claimable_exp > 0) await tracker.claimExp(auth.token, auth.charId, auth.config);
                         else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
+
+                    // Farming: thu hoạch và trồng cây
+                    await farm.harvestAndPlant(auth.token, auth.charId, auth.config);
                 }
                 console.log(` Cập nhật lúc: ${new Date().toLocaleTimeString()}`);
                 console.log(`===========================================================`);

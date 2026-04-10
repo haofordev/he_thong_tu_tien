@@ -219,3 +219,24 @@ export async function openContainer(token, charId, config, itemCode, qty = 1) {
     }
     return null;
 }
+
+export async function rpcCall(token, charId, config, rpcName, payload) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/${rpcName}`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        return { ...data, ok: res.ok };
+    } catch (e) {
+        console.error(`[RPC ERROR ${rpcName}]`, e.message);
+    }
+    return null;
+}
