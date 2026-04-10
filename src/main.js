@@ -31,13 +31,11 @@ let isCrafting = true; // Bật luyện đan tự động
 let craftMsg = "Đang chuẩn bị...";
 
 const mapSequence = [
-    "sect_lk_c03",
     "sect_lk_c04",
     "sect_lk_c05",
     "sect_lk_c06",
     "sect_lk_c07",
     "sect_lk_c08",
-    "train_lk_03",
     "train_lk_04",
     "train_lk_05",
     "train_lk_06",
