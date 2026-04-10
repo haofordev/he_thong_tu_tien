@@ -22,12 +22,6 @@ Chỉ mở theo khung giờ cố định của hệ thống.
 *   **`worldboss_lk`** (Boss Luyện Khí: Thiên Đạo Long Thi)
     *   **Vật phẩm**: Linh thạch (Cực lớn), Danh hiệu, Trang bị hiếm.
 
-## 4. Các Vùng Đất Đặc Biệt Khác
-*   **`mavuc`** (Ma Vực): Vùng PK tự do, Boss tinh anh rớt trang bị hiếm.
-*   **`nh_city`** (Ngoại Hải Thành): Trung tâm giao thương, chợ búa.
-*   **`arena`** (Đấu Trường): Nơi tỷ thí giữa các tu sĩ.
-*   **`tower`** (Tháp Thông Thiên): Thử thách leo tháp nhận đan phá cảnh.
-*   **`sect_lk`** (Tông Môn): Khu vực sảnh chính để nhận nhiệm vụ hằng ngày.
 
----
-> **Lời khuyên**: Nếu đạo hữu cần nguyên liệu xây dựng tông môn, hãy chọn **`sect_lk_cxx`**. Nếu cần nhu yếu phẩm cá nhân và linh thạch, hãy chọn **`train_lk_xx`**.
+bf_tay_nam_c01
+bf_tay_bac_c01
