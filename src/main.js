@@ -25,6 +25,7 @@ let currentMobId = null;
 let currentMobKind = null;
 let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
+let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
 
 const mapSequence = ["starter_01", "sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
@@ -46,9 +47,10 @@ async function startCombatLoop() {
         try {
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
 
-            let target = bicanh.findNewTarget(snapshot, charId)
+            let target = bicanh.findNewTarget(snapshot, charId, blockedMobId)
 
             if (target) {
+                blockedMobId = null;
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobInRange = target.inRange; // Lưu status
@@ -113,13 +115,14 @@ async function startCombatLoop() {
         } else {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
-            } else if (res?.reason === 'target_out_of_range') {
+            } else if (res?.reason === 'target_out_of_range' || res?.message === 'target_out_of_range') {
                 // Target quá xa: giữ target và thử lại vài lần để game di chuyển
                 currentMobInRange = false;
                 currentMobRetryCount++;
                 nextWait = 3000;
                 bossMsg = `Target quá xa, đang điều chỉnh vị trí... (Lần ${currentMobRetryCount})`;
                 if (currentMobRetryCount >= 3) {
+                    blockedMobId = currentMobId;
                     currentMobId = null;
                     currentMobKind = null;
                     currentMobInRange = true;

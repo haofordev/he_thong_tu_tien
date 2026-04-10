@@ -2,7 +2,7 @@
  * Tìm mục tiêu tối ưu từ Snapshot Bí Cảnh
  * Trả về { id, inRange, distance }
  */
-export function findNewTarget(snapshot, charId) {
+export function findNewTarget(snapshot, charId, blockedMobId = null) {
     if (!snapshot || !snapshot.mobs || snapshot.mobs.length === 0) {
         return null;
     }
@@ -15,7 +15,7 @@ export function findNewTarget(snapshot, charId) {
     const range = snapshot.realm?.skill_range_px || 300;
     const maxAttackDistance = range * 2.5; // Tối đa có thể di chuyển trong lúc attack (~750px nếu range=300px)
 
-    const aliveMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0);
+    const aliveMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0 && m.id !== blockedMobId);
     if (aliveMobs.length === 0) return null;
 
     aliveMobs.forEach(m => {
