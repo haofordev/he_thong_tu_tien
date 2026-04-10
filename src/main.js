@@ -36,7 +36,19 @@ const mapSequence = [
     "train_lk_02",
     "train_lk_03",
     "train_lk_04",
-    "train_lk_05"
+    "train_lk_05",
+    "sect_lk_c06",
+    "sect_lk_c07",
+    "sect_lk_c08",
+    "sect_lk_c09",
+    "sect_lk_c10",
+    "train_lk_06",
+    "train_lk_07",
+    "train_lk_08",
+    "train_lk_09",
+    "train_lk_10",
+    "bf_tay_nam_c01",
+    "bf_tay_bac_c01",
 ];
 
 //const mapSequence = ["starter_01"];
