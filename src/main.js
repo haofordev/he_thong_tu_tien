@@ -2,6 +2,7 @@ import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
 import * as tracker from './track.js';
 import * as kyngo from './ky_ngo.js';
 import * as bicanh from './secret_realm.js';
+import * as farm from './farm.js';
 
 let auth = {
     token: null,
@@ -24,8 +25,8 @@ let currentMobId = null;
 let currentMobKind = null;
 let scanCount = 0;
 
-// const mapSequence = ["sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
-const mapSequence = ["starter_01"];
+const mapSequence = ["sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
+//const mapSequence = ["starter_01"];
 
 let mapIndex = 0;
 activeMapCode = mapSequence[0];
@@ -42,12 +43,8 @@ async function startCombatLoop() {
     if (!currentMobId) {
         try {
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
-            const aliveMobs = snapshot?.mobs?.filter(m => m && m.status === 'alive' && m.hp > 0) || [];
 
-            // Tìm mục tiêu: Ưu tiên Boss/Elite, nếu ở starter_01 thì cho phép đánh cả quái thường
-            let target = (mapSequence.length === 1 && activeMapCode === "starter_01")
-                ? bicanh.findNewTarget(snapshot, charId)
-                : bicanh.findOnlyBossElite(snapshot, charId);
+            let target = bicanh.findNewTarget(snapshot, charId)
 
             if (target) {
                 currentMobId = target.id;
