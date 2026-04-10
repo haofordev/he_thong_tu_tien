@@ -44,8 +44,10 @@ async function startCombatLoop() {
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
             const aliveMobs = snapshot?.mobs?.filter(m => m && m.status === 'alive' && m.hp > 0) || [];
 
-            // Tìm mục tiêu: CHỈ Boss/Elite
-            let target = bicanh.findOnlyBossElite(snapshot, charId);
+            // Tìm mục tiêu: Ưu tiên Boss/Elite, nếu ở starter_01 thì cho phép đánh cả quái thường
+            let target = (mapSequence.length === 1 && activeMapCode === "starter_01")
+                ? bicanh.findNewTarget(snapshot, charId)
+                : bicanh.findOnlyBossElite(snapshot, charId);
 
             if (target) {
                 currentMobId = target.id;
