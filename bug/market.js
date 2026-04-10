@@ -61,7 +61,12 @@ export async function autoBuyMarketItems(token, charId, config, targetItemCodes 
         for (let floor = 1; floor <= 2; floor++) {
             const list = await getMarketList(token, charId, config, floor, cat);
 
-            if (!list || !Array.isArray(list) || list.length === 0) continue;
+            if (!list || !Array.isArray(list)) {
+                // console.log(`[CHỢ ĐEN] KQ không phải array: ${JSON.stringify(list)}`);
+                continue;
+            }
+
+            if (list.length === 0) continue;
 
             let buyableItems = list.filter(item => {
                 if (item.is_mine) return false;
@@ -71,7 +76,7 @@ export async function autoBuyMarketItems(token, charId, config, targetItemCodes 
             });
 
             if (buyableItems.length > 0) {
-                console.log(`[CHỢ ĐEN] Tìm thấy ${buyableItems.length} vật phẩm giá hời!`);
+                console.log(`[CHỢ ĐEN] Loại: ${cat || 'TẤT CẢ'} | Floor: ${floor} | Tổng: ${list.length} | Hợp lệ: ${buyableItems.length}`);
                 for (const item of buyableItems) {
                     process.stdout.write(`Đang mua [${item.item_name}] giá ${item.price_spirit_stones}... `);
                     const buyRes = await buyListing(token, charId, config, item.id);
@@ -127,7 +132,7 @@ export async function run(email, password, maxPrice = 1, itemCode = null) {
         return;
     }
 
-    const targetItemCodes = itemCode ? [itemCode] : [];
+    const targetItemCodes = Array.isArray(itemCode) ? itemCode : (itemCode ? [itemCode] : []);
     const configPath = path.resolve(__dirname, '../data/config.json');
 
     let config;
@@ -176,5 +181,5 @@ export async function run(email, password, maxPrice = 1, itemCode = null) {
 const EMAIL = "vosongkiemton38@gmail.com";
 const PASSWORD = "Vosongkiemton822.";
 const MAX_PRICE = 10;
-const ITEM_CODE = ["pill_lk_hp", "pill_lk_mp"];
+const ITEM_CODE =[]
 run(EMAIL, PASSWORD, MAX_PRICE, ITEM_CODE);

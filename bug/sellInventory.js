@@ -84,8 +84,10 @@ async function sellItems(token, charId) {
         const items = await invRes.json();
         if (!Array.isArray(items)) return;
 
-        // Bán HP/MP hoặc đồ Rare+ (theo nhu cầu)
-        const sellableItems = items.filter(i => i.qty > 0 && (i.code === 'pill_lk_hp' || i.code === 'pill_lk_mp' || i.rarity !== 'common'));
+        // Bán TẤT CẢ vật phẩm có số lượng > 0
+        const sellableItems = items.filter(i => i.qty > 0);
+
+        log(`Tìm thấy ${sellableItems.length} loại vật phẩm. Đang treo bán giá 1đ...`);
 
         for (const item of sellableItems) {
             const res = await fetch(`${BASE_URL}/rest/v1/rpc/rpc_nh_market_create_listing`, {
@@ -100,10 +102,14 @@ async function sellItems(token, charId) {
                 })
             });
             const data = await res.json();
-            if (data?.ok) log(`Treo bán: ${item.name} x${item.qty}`, 'success');
+            if (data?.ok) {
+                log(`Treo bán: ${item.name} x${item.qty}`, 'success');
+            } else {
+                log(`Lỗi treo bán ${item.name}: ${JSON.stringify(data)}`, 'warning');
+            }
             await sleep(800);
         }
-    } catch (e) { }
+    } catch (e) { log(`Lỗi sellItems: ${e.message}`, 'error'); }
 }
 
 async function main() {
