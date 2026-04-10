@@ -113,7 +113,8 @@ async function createCharacter(token, name) {
             body: JSON.stringify({ p_name: name, p_region_code: REGION_CODE })
         });
         const data = await res.json();
-        if (data?.ok) return data.id || true;
+        const charId = data?.character?.id || data?.id;
+        if (charId) return charId;
 
         log(`Tạo nhân vật thất bại: ${JSON.stringify(data)}`, 'error');
     } catch (e) {

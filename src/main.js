@@ -27,16 +27,16 @@ let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
+let isCrafting = true; // Bật luyện đan tự động
+let craftMsg = "Đang chuẩn bị...";
 
 const mapSequence = [
-    "sect_lk_c02",
     "sect_lk_c03",
     "sect_lk_c04",
     "sect_lk_c05",
     "sect_lk_c06",
     "sect_lk_c07",
     "sect_lk_c08",
-    "train_lk_02",
     "train_lk_03",
     "train_lk_04",
     "train_lk_05",
@@ -247,13 +247,14 @@ async function start() {
                     console.clear();
                     console.log(`===========================================================`);
                     console.log(` Đạo hữu:    ${data.home.character.name} (Tài khoản ${auth.accountIndex})`);
-                    console.log(` HP:         ${latestHP} | MP: ${latestMP}`);
-                    console.log(` Thể lực:    ${latestStamina} | Thân hồn: ${latestSpirit}`);
+                    console.log(` HP:         ${latestHP} | MP: ${latestMP} (Dược: HP:${inventoryCounts['pill_lk_hp'] || 0} - MP:${inventoryCounts['pill_lk_mp'] || 0})`);
+                    console.log(` Thể lực:    ${latestStamina} | Thân hồn: ${latestSpirit} (Dược: TL:${inventoryCounts['pill_lk_sta'] || 0} - TH:${inventoryCounts['pill_lk_spirit'] || 0})`);
                     console.log(` Linh thạch: ${spiritStones.toLocaleString()}`);
                     console.log(`-----------------------------------------------------------`);
                     console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${(((status.cultivation_exp_progress + status.claimable_exp) / status.exp_to_next) * 100).toFixed(2)}%)`);
                     console.log(`-----------------------------------------------------------`);
                     console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
+                    console.log(` [LUYỆN ĐAN]: ${craftMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
                     console.log(` [OFFLINE AFK]: ${afkMsg}`);
                     console.log(` [WORLD BOSS]: ${wbMsg}`);
@@ -302,13 +303,31 @@ async function start() {
 
         setInterval(() => manageChests(), 600000);
         manageChests();
-        
+
         // Farm automation - use auth object to keep token fresh
         setInterval(async () => {
             try {
                 await farm.harvestAndPlant(auth.token, auth.charId, auth.config);
             } catch (e) {}
         }, 120000);
+
+        setInterval(async () => {
+            if (!isCrafting) return;
+            try {
+                const res = await tracker.craftPill(auth.token, auth.charId, auth.config, "r_pill_lk_spirit");
+                if (res && res.ok) {
+                    craftMsg = `Thành công (${new Date().toLocaleTimeString()})`;
+                } else {
+                    const errorMsg = res?.message || res?.error_description || res?.error || "Hết nguyên liệu";
+                    craftMsg = `Dừng (${errorMsg})`;
+                    if (errorMsg.includes("không đủ") || errorMsg.includes("thiếu") || errorMsg.includes("insufficient")) {
+                        isCrafting = false;
+                    }
+                }
+            } catch (e) {
+                craftMsg = `Lỗi: ${e.message}`;
+            }
+        }, 3000);
 
         setInterval(async () => {
             try {
@@ -320,10 +339,10 @@ async function start() {
 
                 if (reasons.length === 0) {
                     await kyngo.triggerKiNgo(token, charId, config);
-                    setTimeout(async () => { 
+                    setTimeout(async () => {
                         try {
-                            latestMsg = await kyngo.getLatestLog(token, charId, config); 
-                        } catch (e) {}
+                            latestMsg = await kyngo.getLatestLog(token, charId, config);
+                        } catch (e) { }
                     }, 2000);
                 } else {
                     latestMsg = `[HỆ THỐNG] ${reasons.join("/")} thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;

@@ -95,7 +95,7 @@ async function sellItems(token, charId) {
                     p_character_id: charId,
                     p_item_code: item.code,
                     p_qty: item.qty,
-                    p_price_spirit_stones: 10,
+                    p_price_spirit_stones: 1,
                     p_instance_id: item.id || null
                 })
             });
@@ -118,7 +118,7 @@ async function main() {
     for (const line of lines) {
         const [email, pass] = line.split(':').map(s => s.trim());
         log(`Đang xử lý: ${email}`);
-        
+
         const token = await login(email, pass);
         if (!token) continue;
 
@@ -127,7 +127,7 @@ async function main() {
 
         await openAllContainers(token, charId);
         await sellItems(token, charId);
-        
+
         log(`Xong: ${email}`, 'success');
         await sleep(1000);
     }

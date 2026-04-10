@@ -240,3 +240,17 @@ export async function rpcCall(token, charId, config, rpcName, payload) {
     }
     return null;
 }
+
+export async function craftPill(token, charId, config, recipeCode = "r_pill_lk_spirit") {
+    try {
+        const res = await rpcCall(token, charId, config, 'rpc_craft_guarded', {
+            p_character_id: charId,
+            p_recipe_code: recipeCode,
+            p_times: 1
+        });
+        return res;
+    } catch (e) {
+        console.error('[CRAFT ERROR]', e.message);
+    }
+    return null;
+}
