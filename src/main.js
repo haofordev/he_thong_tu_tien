@@ -1,7 +1,16 @@
-import { loginAndGetInfo } from './login.js';
+import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
 import * as tracker from './track.js';
 import * as kyngo from './ky_ngo.js';
 import * as bicanh from './secret_realm.js';
+
+let auth = {
+    token: null,
+    charId: null,
+    config: null,
+    accountIndex: 0,
+    expiresAt: 0
+};
+
 
 let latestMsg = "Đang khởi tạo...";
 let bossMsg = "Đang tìm mục tiêu...";
@@ -25,7 +34,9 @@ let latestSpirit = 0;
 let spiritStones = 0;
 let inventoryCounts = {};
 
-async function startCombatLoop(token, charId, config) {
+async function startCombatLoop() {
+    const { token, charId, config } = auth;
+
     if (!currentMobId) {
         try {
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
@@ -56,10 +67,10 @@ async function startCombatLoop(token, charId, config) {
                 scanCount = 0;
             }
 
-            setTimeout(() => startCombatLoop(token, charId, config), currentMobId ? 0 : 3000);
+            setTimeout(() => startCombatLoop(), currentMobId ? 0 : 3000);
             return;
         } catch (e) {
-            setTimeout(() => startCombatLoop(token, charId, config), 5000);
+            setTimeout(() => startCombatLoop(), 5000);
             return;
         }
     }
@@ -103,21 +114,25 @@ async function startCombatLoop(token, charId, config) {
                 nextWait = 1000;
             }
         }
-        setTimeout(() => startCombatLoop(token, charId, config), nextWait);
+        setTimeout(() => startCombatLoop(), nextWait);
     } catch (e) {
         currentMobId = null;
-        setTimeout(() => startCombatLoop(token, charId, config), 5000);
+        setTimeout(() => startCombatLoop(), 5000);
     }
 }
 
-async function manageOfflineAFK(token, charId, config) {
+async function manageOfflineAFK() {
+    const { token, charId, config } = auth;
+
     try {
         const start = await tracker.startOfflineAFK(token, charId, config, activeMapCode);
         afkMsg = (start && start.ok) ? `Đang chạy (Hết hạn sau 4h)` : `Lỗi AFK`;
     } catch (e) { afkMsg = `Lỗi AFK`; }
 }
 
-async function manageChests(token, charId, config) {
+async function manageChests() {
+    const { token, charId, config } = auth;
+
     try {
         const inv = await tracker.listInventory(token, charId, config);
         const containers = inv.filter(item => item.item_type === 'container' && item.qty > 0);
@@ -134,13 +149,25 @@ async function manageChests(token, charId, config) {
 async function start() {
     try {
         const accountIndex = parseInt(process.argv[2] || "0");
-        const { token, charId, config, userData } = await loginAndGetInfo(accountIndex);
+        const loginData = await loginAndGetInfo(accountIndex);
+        Object.assign(auth, loginData, { accountIndex });
+
+        const { token, charId, config, userData } = auth;
+
         activeMapCode = userData.map_code || mapSequence[0];
         const charName = userData.char_name || "Đạo hữu";
 
         // 1. CHẠY DASHBOARD
         setInterval(async () => {
             try {
+                // Kiểm tra và refresh token nếu cần
+                const newAuth = await refreshTokenIfNeeded(auth.accountIndex, auth.expiresAt);
+                if (newAuth) {
+                    Object.assign(auth, newAuth);
+                    console.log(`\n[HỆ THỐNG] Đã làm mới token thành công.\n`);
+                }
+
+                const { token, charId, config } = auth;
                 const data = await tracker.getStatus(token, charId, config);
                 const inv = await tracker.listInventory(token, charId, config);
 
@@ -173,20 +200,20 @@ async function start() {
                     console.log(` [WORLD BOSS]: ${wbMsg}`);
                     console.log(`-----------------------------------------------------------`);
 
-                    if (latestHP < 1000 && inventoryCounts['pill_lk_hp'] > 0) await tracker.useItem(token, charId, config, 'pill_lk_hp');
+                    if (latestHP < 1000 && inventoryCounts['pill_lk_hp'] > 0) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_hp');
 
                     // Thể lực < 10 thì cắn thuốc thể lực
                     if (latestStamina < 10 && inventoryCounts['pill_lk_stamina'] > 0) {
-                        await tracker.useItem(token, charId, config, 'pill_lk_stamina');
+                        await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_stamina');
                     }
                     // Thần hồn < 10 thì cắn thuốc thần hồn (Check >= 5 bình)
                     if (latestSpirit < 10 && (inventoryCounts['pill_lk_spirit'] || 0) >= 5) {
-                        await tracker.useItem(token, charId, config, 'pill_lk_spirit');
+                        await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
                     }
 
                     if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next) {
-                        if (status.claimable_exp > 0) await tracker.claimExp(token, charId, config);
-                        else await tracker.doBreakthrough(token, charId, config);
+                        if (status.claimable_exp > 0) await tracker.claimExp(auth.token, auth.charId, auth.config);
+                        else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
                 }
                 console.log(` Cập nhật lúc: ${new Date().toLocaleTimeString()}`);
@@ -201,15 +228,16 @@ async function start() {
         await kyngo.enterKiNgo(token, charId, config);
         latestMsg = await kyngo.getLatestLog(token, charId, config);
 
-        startCombatLoop(token, charId, config);
+        startCombatLoop();
 
-        setInterval(() => manageOfflineAFK(token, charId, config), 600000);
-        manageOfflineAFK(token, charId, config);
+        setInterval(() => manageOfflineAFK(), 600000);
+        manageOfflineAFK();
 
-        setInterval(() => manageChests(token, charId, config), 60000);
-        manageChests(token, charId, config);
+        setInterval(() => manageChests(), 60000);
+        manageChests();
 
         setInterval(async () => {
+            const { token, charId, config } = auth;
             const reasons = [];
             if (latestHP < 30) reasons.push("Sinh lực");
             if (latestStamina < 30) reasons.push("Thể lực");

@@ -19,6 +19,8 @@ export async function loginAndGetInfo(accountIndex = 0) {
     const userData = dataArray[accountIndex];
     if (!userData) throw new Error(`Không tìm thấy tài khoản index ${accountIndex}`);
 
+    // console.log(`[AUTH] Đang đăng nhập: ${userData.email}...`);
+
     // 1. Đăng nhập
     const authRes = await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
         method: 'POST',
@@ -34,9 +36,11 @@ export async function loginAndGetInfo(accountIndex = 0) {
     });
 
     const authData = await authRes.json();
-    if (!authRes.ok) throw new Error(`Đăng nhập thất bại (${userData.email})`);
+    if (!authRes.ok) throw new Error(`Đăng nhập thất bại (${userData.email}): ${authData.error_description || authData.error}`);
 
     const token = authData.access_token;
+    // Lưu thời gian hết hạn (trừ đi 5 phút cho an toàn)
+    const expiresAt = Date.now() + (authData.expires_in * 1000) - (5 * 60 * 1000);
 
     // 2. Lấy Character ID
     const charRes = await fetch(`${config.SUPABASE_URL}/rest/v1/characters?select=id,name&limit=1`, {
@@ -47,14 +51,25 @@ export async function loginAndGetInfo(accountIndex = 0) {
     });
 
     const charData = await charRes.json();
+    if (!charRes.ok || !charData[0]) throw new Error(`Không lấy được thông tin nhân vật`);
     const charId = charData[0].id;
 
     // 3. Lưu dữ liệu
     userData.access_token = token;
     userData.char_id = charId;
+    userData.expires_at = expiresAt;
     fs.writeFileSync(dataPath, JSON.stringify(dataArray, null, 2));
 
     const map_code = userData.map_code || "starter_01";
 
-    return { token, charId, config, map_code, userData };
-}
+    return { token, charId, config, map_code, userData, expiresAt };
+}
+
+export async function refreshTokenIfNeeded(accountIndex, currentExpiresAt) {
+    if (Date.now() >= currentExpiresAt) {
+        // console.log(`[AUTH] Token hết hạn, đang đăng nhập lại...`);
+        return await loginAndGetInfo(accountIndex);
+    }
+    return null;
+}
+
