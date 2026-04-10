@@ -270,7 +270,7 @@ async function start() {
                     if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 1) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
                     }
-                    // MP < 50 thì cắn thuốc MP nếu có
+                    // MP < 150 thì cắn thuốc MP nếu có
                     if (latestMP < 50 && (inventoryCounts['pill_lk_mp'] || 0) >= 1) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_mp');
                     }
@@ -308,7 +308,7 @@ async function start() {
         setInterval(async () => {
             try {
                 await farm.harvestAndPlant(auth.token, auth.charId, auth.config);
-            } catch (e) {}
+            } catch (e) { }
         }, 120000);
 
         setInterval(async () => {
