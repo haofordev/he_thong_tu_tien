@@ -55,7 +55,7 @@ export async function buyListing(token, charId, config, listingId) {
 
 export async function autoBuyMarketItems(token, charId, config, targetItemCodes = [], maxPrice = 1) {
     const categories = [null, 'consumable', 'material', 'equipment', 'talisman', 'formation'];
-    
+
     for (const cat of categories) {
         console.log(`[CHỢ ĐEN] Quét loại: ${cat || 'TẤT CẢ'} (Max Price: ${maxPrice})...`);
         for (let floor = 1; floor <= 2; floor++) {
@@ -146,7 +146,7 @@ export async function run(email, password, maxPrice = 1, itemCode = null) {
     try {
         console.log(`[AUTH] Đang đăng nhập với email: ${email}`);
         const { token, charId } = await loginWithEmailPass(email, password, config);
-        
+
         // Lấy thông tin nhân vật để xem Region chính xác
         const charInfoRes = await fetch(`${config.SUPABASE_URL}/rest/v1/characters?select=name,region_code&id=eq.${charId}`, {
             headers: { 'apikey': config.API_KEY, 'Authorization': `Bearer ${token}` }
@@ -180,6 +180,6 @@ export async function run(email, password, maxPrice = 1, itemCode = null) {
 
 const EMAIL = "vosongkiemton38@gmail.com";
 const PASSWORD = "Vosongkiemton822.";
-const MAX_PRICE = 9999999;
+const MAX_PRICE = 20;
 const ITEM_CODE = null;
 run(EMAIL, PASSWORD, MAX_PRICE, ITEM_CODE);
