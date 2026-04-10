@@ -203,11 +203,11 @@ async function start() {
                     if (latestHP < 1000 && inventoryCounts['pill_lk_hp'] > 0) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_hp');
 
                     // Thể lực < 10 thì cắn thuốc thể lực
-                    if (latestStamina < 10 && inventoryCounts['pill_lk_stamina'] > 0) {
+                    if (latestStamina < 30 && inventoryCounts['pill_lk_stamina'] > 0) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_stamina');
                     }
                     // Thần hồn < 10 thì cắn thuốc thần hồn (Check >= 5 bình)
-                    if (latestSpirit < 10 && (inventoryCounts['pill_lk_spirit'] || 0) >= 5) {
+                    if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 5) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
                     }
 
