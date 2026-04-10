@@ -199,16 +199,22 @@ async function manageChests() {
     } catch (e) { }
 }
 
+process.on('unhandledRejection', (reason, promise) => {
+    // console.error('[Unhandled Rejection]', reason);
+});
+
+process.on('uncaughtException', (err) => {
+    // console.error('[Uncaught Exception]', err);
+});
+
 async function start() {
     try {
         const accountIndex = parseInt(process.argv[2] || "0");
         const loginData = await loginAndGetInfo(accountIndex);
         Object.assign(auth, loginData, { accountIndex });
 
-        const { token, charId, config, userData } = auth;
-
-        activeMapCode = userData.map_code || mapSequence[0];
-        const charName = userData.char_name || "Đạo hữu";
+        activeMapCode = auth.userData.map_code || mapSequence[0];
+        const charName = auth.userData.char_name || "Đạo hữu";
 
         // 1. CHẠY DASHBOARD
         setInterval(async () => {
@@ -240,7 +246,7 @@ async function start() {
 
                     console.clear();
                     console.log(`===========================================================`);
-                    console.log(` Đạo hữu:    ${data.home.character.name} (Tài khoản ${accountIndex})`);
+                    console.log(` Đạo hữu:    ${data.home.character.name} (Tài khoản ${auth.accountIndex})`);
                     console.log(` HP:         ${latestHP} | MP: ${latestMP}`);
                     console.log(` Thể lực:    ${latestStamina} | Thân hồn: ${latestSpirit}`);
                     console.log(` Linh thạch: ${spiritStones.toLocaleString()}`);
@@ -282,34 +288,48 @@ async function start() {
         }, 3000);
 
         // 2. VÀO BÍ CẢNH NGAY LẬP TỨC
-        const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
+        // Sử dụng auth thay vì token, charId, config cục bộ
+        const realmData = await bicanh.joinSecretRealm(auth.token, auth.charId, auth.config, activeMapCode);
         currentRealmId = realmData?.realm_id;
 
-        await kyngo.enterKiNgo(token, charId, config);
-        latestMsg = await kyngo.getLatestLog(token, charId, config);
+        await kyngo.enterKiNgo(auth.token, auth.charId, auth.config);
+        latestMsg = await kyngo.getLatestLog(auth.token, auth.charId, auth.config);
 
         startCombatLoop();
 
         setInterval(() => manageOfflineAFK(), 600000);
         manageOfflineAFK();
 
-        setInterval(() => manageChests(), 60000);
+        setInterval(() => manageChests(), 600000);
         manageChests();
-        // Run farm automation every 10 seconds
-        setInterval(() => farm.harvestAndPlant(token, charId, config), 10000);
+        
+        // Farm automation - use auth object to keep token fresh
+        setInterval(async () => {
+            try {
+                await farm.harvestAndPlant(auth.token, auth.charId, auth.config);
+            } catch (e) {}
+        }, 120000);
 
         setInterval(async () => {
-            const { token, charId, config } = auth;
-            const reasons = [];
-            if (latestHP < 30) reasons.push("Sinh lực");
-            if (latestStamina < 30) reasons.push("Thể lực");
-            if (latestSpirit < 30) reasons.push("Thân hồn");
+            try {
+                const { token, charId, config } = auth;
+                const reasons = [];
+                if (latestHP < 30) reasons.push("Sinh lực");
+                if (latestStamina < 30) reasons.push("Thể lực");
+                if (latestSpirit < 30) reasons.push("Thân hồn");
 
-            if (reasons.length === 0) {
-                await kyngo.triggerKiNgo(token, charId, config);
-                setTimeout(async () => { latestMsg = await kyngo.getLatestLog(token, charId, config); }, 2000);
-            } else {
-                latestMsg = `[HỆ THỐNG] ${reasons.join("/")} thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
+                if (reasons.length === 0) {
+                    await kyngo.triggerKiNgo(token, charId, config);
+                    setTimeout(async () => { 
+                        try {
+                            latestMsg = await kyngo.getLatestLog(token, charId, config); 
+                        } catch (e) {}
+                    }, 2000);
+                } else {
+                    latestMsg = `[HỆ THỐNG] ${reasons.join("/")} thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
+                }
+            } catch (e) {
+                // console.error('[ERROR Kỳ Ngộ]', e.message);
             }
         }, 31000);
 

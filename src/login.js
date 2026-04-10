@@ -21,26 +21,58 @@ export async function loginAndGetInfo(accountIndex = 0) {
 
     // console.log(`[AUTH] Đang đăng nhập: ${userData.email}...`);
 
-    // 1. Đăng nhập
-    const authRes = await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: {
-            'apikey': config.API_KEY,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            email: userData.email,
-            password: userData.password,
-            gotrue_meta_security: { captcha_token: null },
-        }),
-    });
+    let authData;
+    let token;
+    let refreshToken;
+    let expiresAt;
 
-    const authData = await authRes.json();
-    if (!authRes.ok) throw new Error(`Đăng nhập thất bại (${userData.email}): ${authData.error_description || authData.error}`);
+    // Ưu tiên refresh token nếu có
+    if (userData.refresh_token) {
+        try {
+            const refreshRes = await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+                method: 'POST',
+                headers: {
+                    'apikey': config.API_KEY,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    refresh_token: userData.refresh_token,
+                }),
+            });
 
-    const token = authData.access_token;
-    // Lưu thời gian hết hạn (trừ đi 5 phút cho an toàn)
-    const expiresAt = Date.now() + (authData.expires_in * 1000) - (5 * 60 * 1000);
+            authData = await refreshRes.json();
+            if (refreshRes.ok) {
+                token = authData.access_token;
+                refreshToken = authData.refresh_token;
+                expiresAt = Date.now() + (authData.expires_in * 1000) - (5 * 60 * 1000);
+            }
+        } catch (e) {
+            // Refresh thất bại, sẽ thử login bằng password bên dưới
+        }
+    }
+
+    if (!token) {
+        // Đăng nhập bằng password
+        const authRes = await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: userData.email,
+                password: userData.password,
+                gotrue_meta_security: { captcha_token: null },
+            }),
+        });
+
+        authData = await authRes.json();
+        if (!authRes.ok) throw new Error(`Đăng nhập thất bại (${userData.email}): ${authData.error_description || authData.error}`);
+
+        token = authData.access_token;
+        refreshToken = authData.refresh_token;
+        expiresAt = Date.now() + (authData.expires_in * 1000) - (5 * 60 * 1000);
+    }
 
     // 2. Lấy Character ID
     const charRes = await fetch(`${config.SUPABASE_URL}/rest/v1/characters?select=id,name&limit=1`, {
@@ -56,6 +88,7 @@ export async function loginAndGetInfo(accountIndex = 0) {
 
     // 3. Lưu dữ liệu
     userData.access_token = token;
+    userData.refresh_token = refreshToken;
     userData.char_id = charId;
     userData.expires_at = expiresAt;
     fs.writeFileSync(dataPath, JSON.stringify(dataArray, null, 2));
