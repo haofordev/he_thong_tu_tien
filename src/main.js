@@ -24,7 +24,7 @@ let currentMobId = null;
 let currentMobKind = null;
 let scanCount = 0;
 
-const mapSequence = ["sect_lk_c02", "sect_lk_c03", "train_lk_02", "train_lk_03"];
+const mapSequence = ["sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
 let mapIndex = 0;
 activeMapCode = mapSequence[0];
 let latestHP = 0;
