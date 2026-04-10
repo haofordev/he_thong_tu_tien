@@ -180,6 +180,6 @@ export async function run(email, password, maxPrice = 1, itemCode = null) {
 
 const EMAIL = "vosongkiemton38@gmail.com";
 const PASSWORD = "Vosongkiemton822.";
-const MAX_PRICE = 10;
-const ITEM_CODE =[]
+const MAX_PRICE = 9999999;
+const ITEM_CODE = null;
 run(EMAIL, PASSWORD, MAX_PRICE, ITEM_CODE);
