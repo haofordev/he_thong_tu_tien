@@ -68,6 +68,7 @@ async function startCombatLoop() {
                 mapIndex = (mapIndex + 1) % mapSequence.length;
                 activeMapCode = mapSequence[mapIndex];
                 bossMsg = `Chuyển map -> ${activeMapCode}`;
+                blockedMobId = null;
                 process.stdout.write(`\r[HỆ THỐNG] Đang chuyển sang ${activeMapCode}...                      `);
                 const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
                 currentRealmId = realmData?.realm_id || currentRealmId;
