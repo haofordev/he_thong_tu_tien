@@ -24,6 +24,7 @@ let activeMapCode = "starter_01";
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobInRange = true; // Lưu trạng thái target
+let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let scanCount = 0;
 
 const mapSequence = ["starter_01", "sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
@@ -51,6 +52,7 @@ async function startCombatLoop() {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobInRange = target.inRange; // Lưu status
+                currentMobRetryCount = 0;
                 scanCount = 0;
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
@@ -105,26 +107,38 @@ async function startCombatLoop() {
                 currentMobId = null;
                 currentMobKind = null;
                 currentMobInRange = true;
+                currentMobRetryCount = 0;
                 nextWait = 1000;
             }
         } else {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'target_out_of_range') {
-                // Target quá xa - chuyển map
-                currentMobId = null;
-                currentMobInRange = true;
-                nextWait = 1000;
-                scanCount++;
+                // Target quá xa: giữ target và thử lại vài lần để game di chuyển
+                currentMobInRange = false;
+                currentMobRetryCount++;
+                nextWait = 3000;
+                bossMsg = `Target quá xa, đang điều chỉnh vị trí... (Lần ${currentMobRetryCount})`;
+                if (currentMobRetryCount >= 3) {
+                    currentMobId = null;
+                    currentMobKind = null;
+                    currentMobInRange = true;
+                    currentMobRetryCount = 0;
+                    scanCount++;
+                }
             } else if (res?.reason === 'not_joined' || res?.reason === 'not_found') {
                 currentMobId = null;
+                currentMobKind = null;
                 currentMobInRange = true;
+                currentMobRetryCount = 0;
                 nextWait = 1000;
                 scanCount++;
             } else {
                 // Lỗi khác
                 currentMobId = null;
+                currentMobKind = null;
                 currentMobInRange = true;
+                currentMobRetryCount = 0;
                 nextWait = 1000;
                 scanCount++;
             }
