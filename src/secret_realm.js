@@ -8,7 +8,8 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
     }
 
     const me = snapshot.participants?.find(p => p.character_id === charId)
-        || snapshot.top_players?.find(p => p.character_id === charId);
+        || snapshot.top_players?.find(p => p.character_id === charId)
+        || snapshot.top_damage?.find(p => p.character_id === charId);
 
     const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
     const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);

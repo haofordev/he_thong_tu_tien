@@ -28,7 +28,17 @@ let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
 
-const mapSequence = ["starter_01", "sect_lk_c01", "sect_lk_c02", "sect_lk_c03", "sect_lk_c04"];
+const mapSequence = [
+    "sect_lk_c02",
+    "sect_lk_c03",
+    "sect_lk_c04",
+    "sect_lk_c05",
+    "train_lk_02",
+    "train_lk_03",
+    "train_lk_04",
+    "train_lk_05"
+];
+
 //const mapSequence = ["starter_01"];
 
 let mapIndex = 0;
@@ -55,9 +65,9 @@ async function startCombatLoop() {
                 currentMobKind = target.mobKind;
                 currentMobInRange = target.inRange; // Lưu status
                 currentMobRetryCount = 0;
-                
+
                 // Nếu thấy quái trong tầm thì reset, ngoài tầm thì giữ nguyên để đếm dồn
-                if (target.inRange) scanCount = 0; 
+                if (target.inRange) scanCount = 0;
 
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
@@ -244,8 +254,12 @@ async function start() {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_sta');
                     }
                     // Thần hồn < 30 thì cắn thuốc thần hồn (Check >= 1 bình)
-                    if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 3) {
+                    if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 1) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
+                    }
+                    // MP < 50 thì cắn thuốc MP nếu có
+                    if (latestMP < 50 && (inventoryCounts['pill_lk_mp'] || 0) >= 1) {
+                        await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_mp');
                     }
 
                     if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next) {
