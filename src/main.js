@@ -31,10 +31,16 @@ let scanCount = 0;
 
 
 const mapSequence = [
-    "train_lk_06", // Map cao nhất Luyện Khí
-    "sect_lk_c06",  // Map Tông môn cấp cao
     "train_lk_05",
-    "sect_lk_c05"
+    "sect_lk_c05",
+    "train_lk_04",
+    "sect_lk_c04",
+    "train_lk_03",
+    "sect_lk_c03",
+    "train_lk_02",
+    "sect_lk_c02",
+    "train_lk_01",
+    "sect_lk_c01"
 ];
 
 //const mapSequence = ["starter_01"];
