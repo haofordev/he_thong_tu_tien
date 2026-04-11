@@ -432,3 +432,37 @@ export async function buyArenaItem(token, charId, config, itemKey) {
     }
     return null;
 }
+
+export async function listFarmPlots(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_list_farm_plots', { p_character_id: charId });
+    } catch (e) {
+        console.error('[LIST FARM ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function plantCrop(token, charId, config, slot, seedCode) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_plant_crop_guarded', {
+            p_character_id: charId,
+            p_slot: slot,
+            p_seed_code: seedCode
+        });
+    } catch (e) {
+        console.error('[PLANT CROP ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function harvestCrop(token, charId, config, slot) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_harvest_crop_guarded', {
+            p_character_id: charId,
+            p_slot: slot
+        });
+    } catch (e) {
+        console.error('[HARVEST CROP ERROR]', e.message);
+    }
+    return null;
+}

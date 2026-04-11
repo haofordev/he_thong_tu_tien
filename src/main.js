@@ -21,6 +21,7 @@ let wbDmg = 0;
 let isHuntingWB = false;
 let currentRealmId = null;
 let activeMapCode = "starter_01";
+let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobInRange = true; // Lưu trạng thái target
@@ -180,6 +181,42 @@ async function manageOfflineAFK() {
     } catch (e) { afkMsg = `Lỗi AFK`; }
 }
 
+async function manageGarden() {
+    const { token, charId, config } = auth;
+    try {
+        const res = await tracker.listFarmPlots(token, charId, config);
+        if (!res || !res.plots) return;
+
+        const now = new Date();
+        for (const plot of res.plots) {
+            // 1. Thu hoạch nếu chín
+            if (plot.seed_code && plot.ready_at) {
+                const ready = new Date(plot.ready_at);
+                if (now >= ready) {
+                    const harvest = await tracker.harvestCrop(token, charId, config, plot.slot);
+                    if (harvest && harvest.ok) {
+                        latestMsg = `[HỆ THỐNG] Đã thu hoạch ${plot.seed_name} tại ô ${plot.slot}`;
+                    }
+                }
+            }
+
+            // 2. Gieo hạt nếu trống
+            if (!plot.seed_code) {
+                // Lấy hạt giống trong kho
+                const inv = Object.keys(inventoryCounts).filter(code => code.startsWith('seed_') && inventoryCounts[code] > 0);
+                if (inv.length > 0) {
+                    const seed = inv[0]; // Lấy hạt đầu tiên tìm thấy
+                    const plant = await tracker.plantCrop(token, charId, config, plot.slot, seed);
+                    if (plant && plant.ok) {
+                        inventoryCounts[seed]--;
+                        latestMsg = `[HỆ THỐNG] Đã gieo ${seed} vào ô ${plot.slot}`;
+                    }
+                }
+            }
+        }
+    } catch (e) { }
+}
+
 async function manageBodyCult() {
     const { token, charId, config } = auth;
     try {
@@ -201,20 +238,27 @@ async function manageBodyCult() {
         // 2. Nếu không có phiên nào đang chạy, bắt đầu phiên mới
         const elements = ['fire', 'wood', 'water', 'earth', 'metal'];
         if (!body.training_session || (body.training_session.status !== 'active')) {
-            // Tìm hệ có cấp thấp nhất để ưu tiên luyện
-            let lowestEl = 'fire';
-            let lowestLv = 999;
-            for (const el of elements) {
-                const lv = body[`${el}_level`] || 0;
-                if (lv < lowestLv) {
-                    lowestLv = lv;
-                    lowestEl = el;
+            let targetEl = 'fire';
+            
+            if (bodyPriority === 'power') {
+                targetEl = 'fire';
+            } else if (bodyPriority === 'survival') {
+                targetEl = 'wood';
+            } else {
+                // Balanced: Tìm hệ có cấp thấp nhất
+                let lowestLv = 999;
+                for (const el of elements) {
+                    const lv = body[`${el}_level`] || 0;
+                    if (lv < lowestLv) {
+                        lowestLv = lv;
+                        targetEl = el;
+                    }
                 }
             }
             
-            const startRes = await tracker.startBodyTraining(token, charId, config, lowestEl, "long");
+            const startRes = await tracker.startBodyTraining(token, charId, config, targetEl, "long");
             if (startRes && startRes.ok) {
-                latestMsg = `[HỆ THỐNG] Bắt đầu Luyện Thể hệ ${lowestEl.toUpperCase()} (8 giờ)`;
+                latestMsg = `[HỆ THỐNG] Bắt đầu Luyện Thể hệ ${targetEl.toUpperCase()} (8 giờ) - Chế độ: ${bodyPriority}`;
             }
         }
 
@@ -381,6 +425,9 @@ async function start() {
 
         setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
         manageBodyCult();
+
+        setInterval(() => manageGarden(), 300000); // 5 phút check Linh Điền một lần
+        manageGarden();
 
         setInterval(() => manageChests(), 600000);
         manageChests();
