@@ -272,6 +272,14 @@ async function start() {
                         else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
 
+                    // Tự động nâng cấp Linh Mạch nếu còn ở cấp 0 và đủ linh thạch (>500)
+                    if (data.home.linh_mach && data.home.linh_mach.level === 0 && spiritStones > 500) {
+                        const upRes = await tracker.upgradeLinhMach(auth.token, auth.charId, auth.config);
+                        if (upRes && upRes.ok) {
+                            latestMsg = `[HỆ THỐNG] Đã tự động nâng cấp Linh Mạch (Lvl 0 -> 1)`;
+                        }
+                    }
+
                     // Tự động chuyển chỗ tu luyện nếu có chỗ tốt hơn (Ancient Cave +50%)
                     const spots = data.cultivation_spots?.spots || [];
                     const bestAvailable = spots.find(s => s.code === 'ancient_cave' && s.occupants < (s.capacity || 10));
