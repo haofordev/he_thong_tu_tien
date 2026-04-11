@@ -235,7 +235,7 @@ async function manageBodyCult() {
         const elements = ['fire', 'wood', 'water', 'earth', 'metal'];
         if (!body.training_session || (body.training_session.status !== 'active')) {
             let targetEl = 'fire';
-            
+
             if (bodyPriority === 'power') {
                 targetEl = 'fire';
             } else if (bodyPriority === 'survival') {
@@ -251,7 +251,7 @@ async function manageBodyCult() {
                     }
                 }
             }
-            
+
             const startRes = await tracker.startBodyTraining(token, charId, config, targetEl, "long");
             if (startRes && startRes.ok) {
                 latestMsg = `[HỆ THỐNG] Bắt đầu Luyện Thể hệ ${targetEl.toUpperCase()} (8 giờ) - Chế độ: ${bodyPriority}`;
@@ -261,11 +261,11 @@ async function manageBodyCult() {
         // 3. Tự động nâng cấp nếu đủ nguyên liệu
         for (const el of elements) {
             const cost = body.next_upgrade_cost[el];
-            const stoneKey = el === 'fire' ? 'hoa_linh_thach' : 
-                             el === 'wood' ? 'moc_linh_thach' : 
-                             el === 'water' ? 'thuy_linh_thach' : 
-                             el === 'earth' ? 'tho_linh_thach' : 'kim_linh_thach';
-            
+            const stoneKey = el === 'fire' ? 'hoa_linh_thach' :
+                el === 'wood' ? 'moc_linh_thach' :
+                    el === 'water' ? 'thuy_linh_thach' :
+                        el === 'earth' ? 'tho_linh_thach' : 'kim_linh_thach';
+
             const hasStones = body.stones[stoneKey] || 0;
             const hasSS = body.spirit_stones || 0;
 
@@ -360,7 +360,7 @@ async function start() {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_sta');
                     }
                     // Thần hồn < 30 thì cắn thuốc thần hồn (Check >= 1 bình)
-                    if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 1) {
+                    if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 5) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
                     }
                     // MP < 150 thì cắn thuốc MP nếu có
@@ -385,7 +385,7 @@ async function start() {
                     const spots = data.cultivation_spots?.spots || [];
                     const bestAvailable = spots.find(s => s.code === 'ancient_cave' && s.occupants < (s.capacity || 10));
                     const currentSpotCode = data.cultivation_status?.spot_code || data.qi_breakdown?.environment?.spot?.code;
-                    
+
                     if (bestAvailable && currentSpotCode !== 'ancient_cave') {
                         const moveRes = await tracker.changeCultivationSpot(auth.token, auth.charId, auth.config, 'ancient_cave');
                         if (moveRes && moveRes.ok) {
