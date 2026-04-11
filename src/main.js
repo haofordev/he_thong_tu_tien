@@ -27,8 +27,7 @@ let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
-let isCrafting = true; // Bật luyện đan tự động
-let craftMsg = "Đang chuẩn bị...";
+
 
 const mapSequence = [
     "sect_lk_c04",
@@ -250,7 +249,6 @@ async function start() {
                     console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${(((status.cultivation_exp_progress + status.claimable_exp) / status.exp_to_next) * 100).toFixed(2)}%)`);
                     console.log(`-----------------------------------------------------------`);
                     console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
-                    console.log(` [LUYỆN ĐAN]: ${craftMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
                     console.log(` [OFFLINE AFK]: ${afkMsg}`);
                     console.log(` [WORLD BOSS]: ${wbMsg}`);
@@ -306,23 +304,6 @@ async function start() {
             } catch (e) { }
         }, 120000);
 
-        setInterval(async () => {
-            if (!isCrafting) return;
-            try {
-                const res = await tracker.craftPill(auth.token, auth.charId, auth.config, "r_pill_lk_spirit");
-                if (res && res.ok) {
-                    craftMsg = `Thành công (${new Date().toLocaleTimeString()})`;
-                } else {
-                    const errorMsg = res?.message || res?.error_description || res?.error || "Hết nguyên liệu";
-                    craftMsg = `Dừng (${errorMsg})`;
-                    if (errorMsg.includes("không đủ") || errorMsg.includes("thiếu") || errorMsg.includes("insufficient")) {
-                        isCrafting = false;
-                    }
-                }
-            } catch (e) {
-                craftMsg = `Lỗi: ${e.message}`;
-            }
-        }, 3000);
 
         setInterval(async () => {
             try {
