@@ -180,6 +180,67 @@ async function manageOfflineAFK() {
     } catch (e) { afkMsg = `Lỗi AFK`; }
 }
 
+async function manageBodyCult() {
+    const { token, charId, config } = auth;
+    try {
+        const body = await tracker.getBodyCultivation(token, charId, config);
+        if (!body) return;
+
+        // 1. Kiểm tra xem có phiên nào xong chưa để nhận
+        if (body.training_session && body.training_session.status === 'active') {
+            const now = new Date();
+            const end = new Date(body.training_session.end_at);
+            if (now >= end) {
+                const claimRes = await tracker.claimBodyTraining(token, charId, config);
+                if (claimRes && claimRes.ok) {
+                    latestMsg = `[HỆ THỐNG] Đã nhận phần thưởng Luyện Thể hệ ${body.training_session.element.toUpperCase()}`;
+                }
+            }
+        }
+
+        // 2. Nếu không có phiên nào đang chạy, bắt đầu phiên mới
+        const elements = ['fire', 'wood', 'water', 'earth', 'metal'];
+        if (!body.training_session || (body.training_session.status !== 'active')) {
+            // Tìm hệ có cấp thấp nhất để ưu tiên luyện
+            let lowestEl = 'fire';
+            let lowestLv = 999;
+            for (const el of elements) {
+                const lv = body[`${el}_level`] || 0;
+                if (lv < lowestLv) {
+                    lowestLv = lv;
+                    lowestEl = el;
+                }
+            }
+            
+            const startRes = await tracker.startBodyTraining(token, charId, config, lowestEl, "long");
+            if (startRes && startRes.ok) {
+                latestMsg = `[HỆ THỐNG] Bắt đầu Luyện Thể hệ ${lowestEl.toUpperCase()} (8 giờ)`;
+            }
+        }
+
+        // 3. Tự động nâng cấp nếu đủ nguyên liệu
+        for (const el of elements) {
+            const cost = body.next_upgrade_cost[el];
+            const stoneKey = el === 'fire' ? 'hoa_linh_thach' : 
+                             el === 'wood' ? 'moc_linh_thach' : 
+                             el === 'water' ? 'thuy_linh_thach' : 
+                             el === 'earth' ? 'tho_linh_thach' : 'kim_linh_thach';
+            
+            const hasStones = body.stones[stoneKey] || 0;
+            const hasSS = body.spirit_stones || 0;
+
+            if (hasStones >= cost.stone_cost && hasSS >= cost.ss_cost) {
+                const upRes = await tracker.upgradeBodyElement(token, charId, config, el);
+                if (upRes && upRes.ok) {
+                    latestMsg = `[HỆ THỐNG] Nâng cấp Thể Tu hệ ${el.toUpperCase()} thành công!`;
+                    break; // Mỗi lần chỉ nâng 1 phát để tránh lỗi race condition
+                }
+            }
+        }
+
+    } catch (e) { }
+}
+
 async function manageChests() {
     const { token, charId, config } = auth;
 
@@ -317,6 +378,9 @@ async function start() {
 
         setInterval(() => manageOfflineAFK(), 600000);
         manageOfflineAFK();
+
+        setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
+        manageBodyCult();
 
         setInterval(() => manageChests(), 600000);
         manageChests();

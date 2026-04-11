@@ -368,7 +368,67 @@ export async function upgradeBodyElement(token, charId, config, element) {
             p_element: element
         });
     } catch (e) {
-        console.error('[UPGRADE BODY ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function getArenaStatus(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_arena_get_status', { p_character_id: charId });
+    } catch (e) {
+        console.error('[GET ARENA ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function collectArenaTribute(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_arena_collect_tribute', { p_character_id: charId });
+    } catch (e) {
+        console.error('[COLLECT ARENA ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function findArenaOpponent(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_arena_find_opponent', { p_character_id: charId });
+    } catch (e) {
+        console.error('[FIND ARENA ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function attackArenaOpponent(token, charId, config, defenderId, isNPC = false) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_arena_attack', {
+            p_character_id: charId,
+            p_defender_id: defenderId,
+            p_is_npc: isNPC
+        });
+    } catch (e) {
+        console.error('[ATTACK ARENA ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function getArenaShop(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_arena_shop_list', { p_character_id: charId });
+    } catch (e) {
+        console.error('[GET ARENA SHOP ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function buyArenaItem(token, charId, config, itemKey) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_arena_shop_buy', {
+            p_character_id: charId,
+            p_item_key: itemKey
+        });
+    } catch (e) {
+        console.error('[BUY ARENA ITEM ERROR]', e.message);
     }
     return null;
 }
