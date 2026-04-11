@@ -329,3 +329,46 @@ export async function getCharacterResourcesV2(token, charId, config) {
     }
     return null;
 }
+
+export async function getBodyCultivation(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_get_body_cultivation', { p_character_id: charId });
+    } catch (e) {
+        console.error('[GET BODY CULT ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function claimBodyTraining(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_body_cult_claim_training', { p_character_id: charId });
+    } catch (e) {
+        console.error('[CLAIM BODY ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function startBodyTraining(token, charId, config, element, sessionType = "long") {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_body_cult_start_training', {
+            p_character_id: charId,
+            p_element: element,
+            p_session_type: sessionType
+        });
+    } catch (e) {
+        console.error('[START BODY ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function upgradeBodyElement(token, charId, config, element) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_upgrade_body_element', {
+            p_character_id: charId,
+            p_element: element
+        });
+    } catch (e) {
+        console.error('[UPGRADE BODY ERROR]', e.message);
+    }
+    return null;
+}
