@@ -272,6 +272,24 @@ async function start() {
                         else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
 
+                    // Tự động chuyển chỗ tu luyện nếu có chỗ tốt hơn (Ancient Cave +50%)
+                    const spots = data.cultivation_spots?.spots || [];
+                    const bestAvailable = spots.find(s => s.code === 'ancient_cave' && s.occupants < (s.capacity || 10));
+                    const currentSpotCode = data.cultivation_status?.spot_code || data.qi_breakdown?.environment?.spot?.code;
+                    
+                    if (bestAvailable && currentSpotCode !== 'ancient_cave') {
+                        const moveRes = await tracker.changeCultivationSpot(auth.token, auth.charId, auth.config, 'ancient_cave');
+                        if (moveRes && moveRes.ok) {
+                            latestMsg = `[HỆ THỐNG] Đã tự động chuyển sang Ancient Cave (+50% EXP)`;
+                        }
+                    } else if (!bestAvailable && currentSpotCode === 'quiet_courtyard') {
+                        // Nếu cave full, thử spirit vein (+20%)
+                        const vein = spots.find(s => s.code === 'spirit_vein' && s.occupants < (s.capacity || 50));
+                        if (vein) {
+                            await tracker.changeCultivationSpot(auth.token, auth.charId, auth.config, 'spirit_vein');
+                        }
+                    }
+
                     // Farming moved to dedicated interval below
                 }
                 console.log(` Cập nhật lúc: ${new Date().toLocaleTimeString()}`);

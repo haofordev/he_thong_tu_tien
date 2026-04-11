@@ -276,3 +276,45 @@ export async function craftPill(token, charId, config, recipeCode = "r_pill_lk_s
     }
     return null;
 }
+
+export async function changeCultivationSpot(token, charId, config, spotCode) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_start_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_realm_code: spotCode
+            })
+        });
+        const data = await res.json();
+        return { ...data, ok: res.ok };
+    } catch (e) {
+        console.error('[MOVE SPOT ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function getCharacterResourcesV2(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_get_character_resources_v2`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+            },
+            body: JSON.stringify({ p_character_id: charId })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[GET RESOURCES V2 ERROR]', e.message);
+    }
+    return null;
+}
