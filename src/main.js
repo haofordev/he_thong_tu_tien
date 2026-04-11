@@ -30,16 +30,14 @@ let scanCount = 0;
 
 
 const mapSequence = [
+    "sect_lk_c03",
     "sect_lk_c04",
     "sect_lk_c05",
     "sect_lk_c06",
-    "sect_lk_c07",
-    "sect_lk_c08",
+    "train_lk_03",
     "train_lk_04",
     "train_lk_05",
     "train_lk_06",
-    "train_lk_07",
-    "train_lk_08",
 ];
 
 //const mapSequence = ["starter_01"];
