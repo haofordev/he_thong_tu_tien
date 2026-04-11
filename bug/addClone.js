@@ -94,10 +94,13 @@ async function registerAccount(email, password) {
         const data = await res.json();
         if (res.ok && data.access_token) return data.access_token;
         
-        log(`Đăng ký thất bại: ${data.msg || data.error_description || JSON.stringify(data)}`, 'error');
-        if (JSON.stringify(data).includes("rate limit")) {
-            log("Bị chặn IP temporarily. Nghỉ 60s...", "warning");
-            await sleep(60000);
+        const errorDetail = data.msg || data.error_description || JSON.stringify(data);
+        log(`Đăng ký thất bại: ${errorDetail}`, 'error');
+
+        const errorMsg = errorDetail.toLowerCase();
+        if (errorMsg.includes("rate limit") || errorMsg.includes("too many requests") || res.status === 429) {
+            log("🚫 PHÁT HIỆN CHẶN IP. Nghỉ 30 phút để reset...", "warning");
+            await sleep(30 * 60 * 1000); 
         }
     } catch (e) {
         log(`Lỗi kết nối đăng ký: ${e.message}`, 'error');
@@ -214,11 +217,11 @@ async function sellAllItems(token, charId) {
         const items = await invRes.json();
         if (!Array.isArray(items)) return;
 
-        // Chỉ bán bình HP và MP (Gửi p_instance_id là null vì đồ stackable không có ID)
-        const sellableItems = items.filter(i => i.qty > 0 && (i.code === 'pill_lk_hp' || i.code === 'pill_lk_mp'));
+        // Bán tất cả vật phẩm có trong rương
+        const sellableItems = items.filter(i => i.qty > 0);
 
         if (sellableItems.length === 0) {
-            log('Không tìm thấy vật phẩm giá trị (Rare+) để bán.', 'warning');
+            log('Rương trống, không có gì để bán.', 'warning');
             return;
         }
 
@@ -232,7 +235,7 @@ async function sellAllItems(token, charId) {
                         p_character_id: charId,
                         p_item_code: item.code,
                         p_qty: item.qty,
-                        p_price_spirit_stones: 10,
+                        p_price_spirit_stones: 1,
                         p_instance_id: item.id || null
                     })
                 });

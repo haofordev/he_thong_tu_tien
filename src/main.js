@@ -92,7 +92,7 @@ async function startCombatLoop() {
                 scanCount = 0;
             }
 
-            setTimeout(() => startCombatLoop(), currentMobId ? 0 : 3000);
+            setTimeout(() => startCombatLoop(), currentMobId ? 0 : 1500);
             return;
         } catch (e) {
             setTimeout(() => startCombatLoop(), 5000);
@@ -106,8 +106,8 @@ async function startCombatLoop() {
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        // Nếu target ngoài tầm, chờ lâu hơn để game di chuyển tự động
-        let nextWait = !currentMobInRange ? 3000 : (isBoss ? 5000 : 3200);
+        // Nếu target ngoài tầm, chờ ít hơn để nhân vật kịp di chuyển và thử lại
+        let nextWait = !currentMobInRange ? 1500 : (isBoss ? 3500 : 2200);
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             scanCount = 0;
@@ -115,13 +115,15 @@ async function startCombatLoop() {
             if (res.hp_after !== undefined) latestHP = res.hp_after;
 
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
+            const speedInfo = res.atk_speed_sec ? ` | Spd: ${res.atk_speed_sec}s` : "";
             const mode = useNormalAttack ? "[THƯỜNG] " : "[CHIÊU] ";
             const kind = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
-            bossMsg = `${kind}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
+            bossMsg = `${kind}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}${speedInfo}`;
 
             process.stdout.write(`\r[TRẬN ĐÁNH] ${kind}Gây -${res.damage ?? 0} HP ${hpLeft}                `);
 
-            if (!isBoss && res.atk_speed_sec) nextWait = (res.atk_speed_sec * 1000) + 200;
+            if (res.atk_speed_sec) nextWait = (res.atk_speed_sec * 1000) + 200;
+            else if (!isBoss) nextWait = 2200;
 
             if (res.mob_hp_after <= 0) {
                 currentMobId = null;
@@ -138,7 +140,7 @@ async function startCombatLoop() {
                 currentMobInRange = false;
                 currentMobRetryCount++;
                 scanCount++; // Đếm cả lần thử lại này vào tổng số lần ngoài tầm liên tiếp
-                nextWait = 3000;
+                nextWait = 1500;
                 bossMsg = `Quái ngoài tầm... (Lần ${currentMobRetryCount}, Tổng: ${scanCount}/5)`;
                 if (currentMobRetryCount >= 3 || scanCount >= 5) {
                     blockedMobId = currentMobId;
@@ -185,14 +187,10 @@ async function manageChests() {
     const { token, charId, config } = auth;
 
     try {
-        const inv = await tracker.listInventory(token, charId, config);
-        const containers = inv.filter(item => item.item_type === 'container' && item.qty > 0);
-        if (containers.length > 0) {
-            latestMsg = `[HỆ THỐNG] Đang mở ${containers.length} loại rương...`;
-            for (const item of containers) {
-                await tracker.openContainer(token, charId, config, item.code, item.qty);
-            }
-            latestMsg = `[HỆ THỐNG] Đã mở rương xong.`;
+        const res = await tracker.openAllContainers(token, charId, config);
+        if (res && (res.ok || res.message)) {
+            const msg = res.message || "Thành công";
+            latestMsg = `[HỆ THỐNG] Mở rương: ${msg}`;
         }
     } catch (e) { }
 }
@@ -278,8 +276,7 @@ async function start() {
                         else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
 
-                    // Farming: thu hoạch và trồng cây
-                    await farm.harvestAndPlant(auth.token, auth.charId, auth.config);
+                    // Farming moved to dedicated interval below
                 }
                 console.log(` Cập nhật lúc: ${new Date().toLocaleTimeString()}`);
                 console.log(`===========================================================`);

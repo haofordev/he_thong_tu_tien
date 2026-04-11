@@ -220,6 +220,28 @@ export async function openContainer(token, charId, config, itemCode, qty = 1) {
     return null;
 }
 
+export async function openAllContainers(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_open_all_containers`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId
+            })
+        });
+        return await res.json();
+    } catch (e) {
+        console.error('[OPEN ALL CHESTS ERROR]', e.message);
+    }
+    return null;
+}
+
 export async function rpcCall(token, charId, config, rpcName, payload) {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/${rpcName}`, {
