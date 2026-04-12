@@ -139,7 +139,7 @@ export async function getRealmSnapshot(token, charId, config, realmId) {
  */
 export async function attackMob(token, charId, config, realmId, mobId, useV1 = false) {
     try {
-        const rpcName = useV1 ? 'rpc_attack_realm_mob' : 'rpc_attack_realm_mob_v2';
+        const rpcName = 'rpc_attack_realm_mob_v3';
         const payload = {
             p_character_id: charId,
             p_realm_id: realmId,
