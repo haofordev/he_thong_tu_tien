@@ -1,0 +1,30 @@
+===========================================================
+        HUONG DAN SU DUNG TATUTIEN LITE v1.0
+===========================================================
+
+1. GIOI THIEU:
+   Day la ban rut gon cua bot Tu Tien, tap trung vao:
+   - Tu dong san Boss/Elite trong Bi Canh.
+   - Tu dong nhan EXP va Dot pha canh gioi.
+   - Tu dong thu hoach va gieo hat Linh Dien.
+   - Tu dong hoi phuc HP/MP/TL/Spirit bang thuoc.
+   - Tu dong di Ky Ngo (mo moi 31 giay).
+
+2. CACH CHAY:
+   - Cach 1: Click dup vao file `run.bat`.
+   - Cach 2: Mo Terminal tai thu muc nay va go: node main.js 0
+
+3. CAU HINH (File data/data.json):
+   - map_sequence: Mang danh sach cac map bot se xoay vong (Vi du: ["map1", "map2"]).
+   - auto_pill: Cau hinh tu dong dung thuoc:
+     + hp, mp, sta, spirit: Nguong thap duoi muc nay se dung thuoc.
+     + _min (Vi du hp_min): So luong thuoc toi thieu phai co trong tui moi duoc dung (De du phong).
+
+4. LUU Y:
+   - Bot se tu dong lam moi token neu het han.
+   - Neu muon chay tai khoan khac, hay thay doi index trong run.bat hoac go node main.js <index>.
+   - Folder nay doc lap hoan toan voi ban goc.
+
+===========================================================
+            CHUC DAO HUU SOM NGAY THANH TIEN!
+===========================================================

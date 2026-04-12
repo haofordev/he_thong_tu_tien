@@ -30,23 +30,9 @@ let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
 
 
-const mapSequence = [
-    "train_lk_05",
-    "sect_lk_c05",
-    "train_lk_04",
-    "sect_lk_c04",
-    "train_lk_03",
-    "sect_lk_c03",
-    "train_lk_02",
-    "sect_lk_c02",
-    "train_lk_01",
-    "sect_lk_c01"
-];
-
-//const mapSequence = ["starter_01"];
+let mapSequence = [];
 
 let mapIndex = 0;
-activeMapCode = mapSequence[0];
 let latestHP = 0;
 let latestMP = 0;
 let latestStamina = 0;
@@ -313,7 +299,19 @@ async function start() {
         const loginData = await loginAndGetInfo(accountIndex);
         Object.assign(auth, loginData, { accountIndex });
 
+        if (Array.isArray(auth.userData.map_sequence)) {
+            mapSequence = auth.userData.map_sequence;
+        } else if (typeof auth.userData.map_sequence === 'string') {
+            mapSequence = auth.userData.map_sequence.split(',').map(m => m.trim()).filter(m => m !== "");
+        } else {
+            // Fallback nếu không có trong data.json
+            mapSequence = ["train_lk_01", "sect_lk_c01"];
+        }
+
         activeMapCode = auth.userData.map_code || mapSequence[0];
+        mapIndex = mapSequence.indexOf(activeMapCode);
+        if (mapIndex === -1) mapIndex = 0;
+
         const charName = auth.userData.char_name || "Đạo hữu";
 
         // 1. CHẠY DASHBOARD

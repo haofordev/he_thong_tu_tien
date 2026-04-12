@@ -3,12 +3,23 @@
     "email": "vosongkiemton38@gmail.com",
     "password": "Vosongkiemton822.",
     "user_id": "273071e7-2d40-44a7-b0e6-6164e3ea9082",
-    "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU0MjZlNDI2LWMzNTEtNDE0MC04OGIwLWU2NTc4NTczMmQ1YyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2plYXNzZWZtbHByZm5sc3pndmJzLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIyNzMwNzFlNy0yZDQwLTQ0YTctYjBlNi02MTY0ZTNlYTkwODIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc1OTIyMTg0LCJpYXQiOjE3NzU5MTg1ODQsImVtYWlsIjoidm9zb25na2llbXRvbjM4QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJ2b3NvbmdraWVtdG9uMzhAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiMjczMDcxZTctMmQ0MC00NGE3LWIwZTYtNjE2NGUzZWE5MDgyIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NzU5MTY5MTJ9XSwic2Vzc2lvbl9pZCI6IjlhZDA1MjZkLTFjMWQtNDJiMS1iNTEyLTUwYTc4MTc0ZjIzYyIsImlzX2Fub255bW91cyI6ZmFsc2V9.X40CowlcYK2kinIXgYKH-xpJ2_QUeuP32oGRoCtJeA4GvIgE9AIi-3qxdW4SlaXJki-cI94mGuEI1HupBN3JeA",
-    "refresh_token": "vpyf75jnlo3l",
+    "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU0MjZlNDI2LWMzNTEtNDE0MC04OGIwLWU2NTc4NTczMmQ1YyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2plYXNzZWZtbHByZm5sc3pndmJzLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIyNzMwNzFlNy0yNzMwNzFlNy0yNzMwNzFlNyIsImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJleHAiOjE3NzU5MjI0NzgsImlhdCI6MTc3NTkxODg3OCwiZW1haWwiOiJ2b3NvbmdraWVtdG9uMzhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InZvc29uZ2tpZW10b24zOEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiIyNzMwNzFlNy0yNzMwNzFlNy0yNzMwNzFlNyJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzc1OTE4NjU4fV0sInNlc3Npb25faWQiOiJhMTBCQkVDOC02RDRFLTQwNjEtOTRGQS03NzA5Q0E1MTcwMkMiLCJpc19hbm9ueW1vdXMiOmZhbHNlfS5JQml4blAtUFd3aGhvOHI3WlZfR1A1bC1zcEwzcDFJSHNTcFJlNGNBcGxMYjMxUVNkQUs4ekJnRnN1Nkx0dGtRaXRhLWE3VU1FdlNhY082V29DWjFmdw",
+    "refresh_token": "i56c4he62qqo",
     "char_id": "7ff9603b-d4dd-4ad4-a294-a504f622377c",
     "char_name": "Vô Song Kiếm Tôn",
-    "map_code": "",
-    "expires_at": 1775921897688
+    "map_sequence": [
+      "train_lk_05",
+      "sect_lk_c05",
+      "train_lk_04",
+      "sect_lk_c04",
+      "train_lk_03",
+      "sect_lk_c03",
+      "train_lk_02",
+      "sect_lk_c02",
+      "train_lk_01",
+      "sect_lk_c01"
+    ],
+    "expires_at": 1775922191793
   },
   {
     "email": "hacbangkiemton73026@gmail.com",
@@ -18,7 +29,18 @@
     "refresh_token": "uag3wtzvq5ga",
     "char_id": "0c4d2613-b97b-4ab9-a4a4-a1a83673dc9c",
     "char_name": "Hắc Bảng Kiếm Tôn",
-    "map_code": "",
+    "map_sequence": [
+      "train_lk_05",
+      "sect_lk_c05",
+      "train_lk_04",
+      "sect_lk_c04",
+      "train_lk_03",
+      "sect_lk_c03",
+      "train_lk_02",
+      "sect_lk_c02",
+      "train_lk_01",
+      "sect_lk_c01"
+    ],
     "expires_at": 1775900170544
   }
 ]
