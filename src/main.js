@@ -15,7 +15,6 @@ let auth = {
 
 let latestMsg = "Đang khởi tạo...";
 let bossMsg = "Đang tìm mục tiêu...";
-let afkMsg = "Chưa kiểm tra AFK";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let wbDmg = 0;
 let isHuntingWB = false;
@@ -160,14 +159,7 @@ async function startCombatLoop() {
     }
 }
 
-async function manageOfflineAFK() {
-    const { token, charId, config } = auth;
 
-    try {
-        const start = await tracker.startOfflineAFK(token, charId, config, activeMapCode);
-        afkMsg = (start && start.ok) ? `Đang chạy (Hết hạn sau 4h)` : `Lỗi AFK`;
-    } catch (e) { afkMsg = `Lỗi AFK`; }
-}
 
 async function manageGarden() {
     const { token, charId, config } = auth;
@@ -353,7 +345,7 @@ async function start() {
                     console.log(`-----------------------------------------------------------`);
                     console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
-                    console.log(` [OFFLINE AFK]: ${afkMsg}`);
+
                     console.log(` [WORLD BOSS]: ${wbMsg}`);
                     console.log(`-----------------------------------------------------------`);
 
@@ -420,8 +412,7 @@ async function start() {
 
         startCombatLoop();
 
-        setInterval(() => manageOfflineAFK(), 600000);
-        manageOfflineAFK();
+
 
         setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
         manageBodyCult();
