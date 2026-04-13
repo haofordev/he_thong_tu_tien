@@ -8,7 +8,6 @@
     "char_id": "fafc025b-b622-4b59-b41c-10083481975e",
     "char_name": "Vô Song Kiếm Tôn",
     "map_sequence": [
-      "sect_lk_c02",
       "sect_lk_c01",
       "starter_01"
     ],
@@ -23,12 +22,8 @@
     "char_id": "0c4d2613-b97b-4ab9-a4a4-a1a83673dc9c",
     "char_name": "Hắc Bảng Kiếm Tôn",
     "map_sequence": [
-      "train_lk_09",
-      "sect_lk_c09",
-      "train_lk_08",
-      "sect_lk_c08",
-      "sect_lk_c07",
-      "train_lk_07"
+      "sect_lk_c01",
+      "starter_01"
     ],
     "expires_at": 1775900170544
   }
