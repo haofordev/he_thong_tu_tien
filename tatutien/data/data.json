@@ -3,18 +3,11 @@
     "email": "0@gmail.com",
     "password": "123456",
     "user_id": "",
-    "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU0MjZlNDI2LWMzNTEtNDE0MC04OGIwLWU2NTc4NTczMmQ1YyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2plYXNzZWZtbHByZm5sc3pndmJzLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJhZjJjNGM4OC0yZmE4LTQwNjYtOWQwNS1kOWQ5M2NmODAwNzgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc2MDYxMjAyLCJpYXQiOjE3NzYwNTc2MDIsImVtYWlsIjoiMEBnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiMEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJhZjJjNGM4OC0yZmE4LTQwNjYtOWQwNS1kOWQ5M2NmODAwNzgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3NjA1NzQwNn1dLCJzZXNzaW9uX2lkIjoiZDE5ZDgwMTAtYzYwMC00Y2Q2LWFlZTktOTQ0ZTQxYjM4MjA0IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.iHzBWu7DJaGVyUhjCxQ3guJCiKPPrkEsxxzh0fQCzpaHHZzu9n6q_de943a4CJMLLv3goFA_OJnmqAM1paAkcQ",
-    "refresh_token": "zu2jpbdu4gy7",
+    "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU0MjZlNDI2LWMzNTEtNDE0MC04OGIwLWU2NTc4NTczMmQ1YyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2plYXNzZWZtbHByZm5sc3pndmJzLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJhZjJjNGM4OC0yZmE4LTQwNjYtOWQwNS1kOWQ5M2NmODAwNzgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc2MDYzNjE0LCJpYXQiOjE3NzYwNjAwMTQsImVtYWlsIjoiMEBnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiMEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJhZjJjNGM4OC0yZmE4LTQwNjYtOWQwNS1kOWQ5M2NmODAwNzgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3NjA1OTQ0MX1dLCJzZXNzaW9uX2lkIjoiZGQ0MWRjZDAtYjQ2NS00ZTdhLTgyMDUtMTg4ODdhOWZjMDE4IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.rZ7pwesBlPx_uKlCDxlqlJozfSiNQ0SqRBQ3ufoP1M0vpJAeCz0b2eZvWHerF2vcZ1zL6vI-eUxPOwHWYQAFyQ",
+    "refresh_token": "jjj3kso2t4nm",
     "char_id": "b48fe230-7824-4b07-a361-c415daab0396",
     "char_name": "",
     "map_sequence": [
-      "train_lk_04",
-      "sect_lk_c04",
-      "train_lk_03",
-      "sect_lk_c03",
-      "train_lk_02",
-      "sect_lk_c02",
-      "train_lk_01",
       "sect_lk_c01"
     ],
     "auto_pill": {
@@ -27,6 +20,6 @@
       "spirit": 20,
       "spirit_min": 5
     },
-    "expires_at": 1776060901663
+    "expires_at": 1776063313755
   }
 ]

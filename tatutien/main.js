@@ -56,7 +56,10 @@ async function startCombatLoop() {
 
     if (!currentMobId) {
         try {
+            // [DEBUG] Xem Realm ID và Snapshot
+            console.log(`[DEBUG] Realm ID hiện tại: ${currentRealmId}`);
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
+            if (!currentMobId) console.log(`[DEBUG] Raw Snapshot:`, JSON.stringify(snapshot).substring(0, 200));
 
             let target = bicanh.findNewTarget(snapshot, charId, auth.charId)
 
@@ -99,14 +102,9 @@ async function startCombatLoop() {
             latestMP += 100; // Ước tính hồi 100 MP
         }
 
-        // CHIẾN THUẬT LAI: 
-        // - Nếu quái > 10,000 HP và đủ Mana: Dùng Kỹ năng (v3) để lấy điểm.
-        // - Nếu quái <= 10,000 HP hoặc hết Mana: Dùng Đánh tay (v1) để tiết kiệm.
-        let useNormalAttack = true;
-        if (latestMP >= 50 && (currentMobHP > 10000 || currentMobKind === 'boss')) {
-            useNormalAttack = false;
-        }
-
+        // [CHẾ ĐỘ THỬ NGHIỆM]: Ép buộc dùng Đánh Tay (v1) để kiểm tra tính điểm BXH
+        let useNormalAttack = true; 
+        
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
@@ -118,7 +116,7 @@ async function startCombatLoop() {
             if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
 
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            const mode = useNormalAttack ? "[TAY] " : "[CHIÊU] ";
+            const mode = "[TAY-TEST] ";
             const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
             bossMsg = `${kindLabel}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
@@ -437,6 +435,7 @@ async function start() {
         // 3. VÀO BÍ CẢNH NGAY LẬP TỨC
         // Sử dụng auth thay vì token, charId, config cục bộ
         const realmData = await bicanh.joinSecretRealm(auth.token, auth.charId, auth.config, activeMapCode);
+        console.log(`[DEBUG] Kết quả Join Realm (${activeMapCode}):`, JSON.stringify(realmData));
         currentRealmId = realmData?.realm_id;
 
         await kyngo.enterKiNgo(auth.token, auth.charId, auth.config);
