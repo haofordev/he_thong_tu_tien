@@ -466,9 +466,30 @@ async function start() {
         setInterval(async () => {
             try {
                 const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
-                if (res && res.ok) {
-                    const top1 = res.top && res.top[0] ? `${res.top[0].character_name} (${res.top[0].score})` : "Chưa có";
-                    killMsg = `Hạng của tôi: ${res.my_rank || 'N/A'} - Điểm: ${res.my_score} | Top 1: ${top1}`;
+                if (res) {
+                    const topArray = res.top || res.top_players || [];
+                    const top1 = topArray[0] ? `${topArray[0].character_name || topArray[0].character_id} (${topArray[0].score ?? topArray[0].my_score ?? 0})` : "Chưa có";
+
+                    const myRank = Number(res.my_rank || 0);
+                    const myScore = Number(res.my_score ?? res.score ?? 0);
+
+                    let gap10Msg = "";
+                    let gap1Msg = "";
+
+                    // Khoảng cách tới Top 10 (hoặc người cuối danh sách nếu server trả về < 10)
+                    const idxThreshold = Math.min(topArray.length - 1, 9);
+                    if (idxThreshold >= 0 && myRank > (idxThreshold + 1) && topArray[idxThreshold]) {
+                        const scoreThreshold = Number(topArray[idxThreshold].score ?? topArray[idxThreshold].my_score ?? 0);
+                        gap10Msg = ` | Thua Top ${idxThreshold + 1}: ${scoreThreshold - myScore} pts`;
+                    }
+
+                    // Khoảng cách tới Top 1 (Hạng 1)
+                    if (myRank > 1 && topArray[0]) {
+                        const score1 = Number(topArray[0].score ?? topArray[0].my_score ?? 0);
+                        gap1Msg = ` | Thua Top 1: ${score1 - myScore} pts`;
+                    }
+
+                    killMsg = `Hạng: ${myRank || 'N/A'} - Điểm: ${myScore}${gap10Msg}${gap1Msg} | Top 1: ${top1}`;
                 }
             } catch (e) { }
         }, 5000);
