@@ -3,6 +3,7 @@ import * as tracker from './track.js';
 import * as kyngo from './ky_ngo.js';
 import * as bicanh from './secret_realm.js';
 import * as farm from './farm.js';
+import WebSocket from 'ws';
 
 let auth = {
     token: null,
@@ -27,6 +28,10 @@ let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
+
+let lastMPCheck = 0;
+let mpRecoveredLastMinute = 0;
+let mpCheckTime = Date.now();
 
 
 let mapSequence = [];
@@ -62,8 +67,8 @@ async function startCombatLoop() {
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
                 process.stdout.write(`\r[SĂN BOSS] ${activeMapCode} -> ${kindLabel}${currentMobId.substring(0, 8)}...${rangeLabel}          `);
             } else {
-                scanCount++;
-                bossMsg = `Map [${activeMapCode}] kô thấy boss... (Lần ${scanCount})`;
+                scanCount = 5; // Đổi map NGAY LẬP TỨC nếu không có quái trong tầm
+                bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu gần. Đang đổi map...`;
             }
 
             if (scanCount >= 5) { // Chuyển map sau 5 lần không tìm thấy target
@@ -86,13 +91,14 @@ async function startCombatLoop() {
     }
 
     try {
-        // Chiến thuật MP: > 50 dùng chiêu, <= 50 đánh thường
-        const useNormalAttack = (latestMP <= 50);
+        // CHIẾN THUẬT MỚI: Chỉ đánh thường và đánh 4s/lần
+        const useNormalAttack = true; 
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
         // Nếu target ngoài tầm, chờ ít hơn để nhân vật kịp di chuyển và thử lại
-        let nextWait = !currentMobInRange ? 1500 : (isBoss ? 3500 : 2200);
+        // Mặc định đánh 4s một lần theo yêu cầu
+        let nextWait = !currentMobInRange ? 1500 : 4000;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             scanCount = 0;
@@ -100,55 +106,39 @@ async function startCombatLoop() {
             if (res.hp_after !== undefined) latestHP = res.hp_after;
 
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            const speedInfo = res.atk_speed_sec ? ` | Spd: ${res.atk_speed_sec}s` : "";
             const mode = useNormalAttack ? "[THƯỜNG] " : "[CHIÊU] ";
             const kind = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
-            bossMsg = `${kind}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}${speedInfo}`;
+            bossMsg = `${kind}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
             process.stdout.write(`\r[TRẬN ĐÁNH] ${kind}Gây -${res.damage ?? 0} HP ${hpLeft}                `);
 
-            if (res.atk_speed_sec) nextWait = (res.atk_speed_sec * 1000) + 200;
-            else if (!isBoss) nextWait = 2200;
+            // Đảm bảo nhịp độ tối thiểu 4s theo yêu cầu
+            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
+            nextWait = Math.max(4000, serverWait);
 
-            if (res.mob_hp_after <= 0) {
+            if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
                 currentMobKind = null;
-                currentMobInRange = true;
-                currentMobRetryCount = 0;
-                nextWait = 1000;
+                nextWait = 500;
             }
         } else {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
+            } else if (res?.reason === 'no_mana') {
+                process.stdout.write(`\n[CẢNH BÁO] Hết MP! Đang nghỉ ngơi 9s để tích lũy Mana...           \n`);
+                nextWait = 5000; // Nghỉ 9 giây theo yêu cầu
             } else if (res?.reason === 'target_out_of_range' || res?.message === 'target_out_of_range') {
-                // Target quá xa: giữ target và thử lại vài lần để game di chuyển
-                currentMobInRange = false;
-                currentMobRetryCount++;
-                scanCount++; // Đếm cả lần thử lại này vào tổng số lần ngoài tầm liên tiếp
-                nextWait = 1500;
-                bossMsg = `Quái ngoài tầm... (Lần ${currentMobRetryCount}, Tổng: ${scanCount}/5)`;
-                if (currentMobRetryCount >= 3 || scanCount >= 5) {
-                    blockedMobId = currentMobId;
-                    currentMobId = null;
-                    currentMobKind = null;
-                    currentMobInRange = true;
-                    currentMobRetryCount = 0;
-                }
-            } else if (res?.reason === 'not_joined' || res?.reason === 'not_found') {
+                process.stdout.write(`\n[HỆ THỐNG] Boss ngoài tầm hoặc đã di chuyển! Đổi map...          \n`);
+                currentMobId = null;
+                scanCount = 5;
+                nextWait = 500;
+            } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
                 currentMobId = null;
                 currentMobKind = null;
-                currentMobInRange = true;
-                currentMobRetryCount = 0;
-                nextWait = 1000;
-                scanCount++;
+                nextWait = 200;
             } else {
-                // Lỗi khác
-                currentMobId = null;
-                currentMobKind = null;
-                currentMobInRange = true;
-                currentMobRetryCount = 0;
-                nextWait = 1000;
-                scanCount++;
+                // Tạm giữ ID để đánh tiếp, tránh scan lại
+                nextWait = 1500;
             }
         }
         setTimeout(() => startCombatLoop(), nextWait);
@@ -334,6 +324,19 @@ async function start() {
                     inventoryCounts = {};
                     if (Array.isArray(inv)) inv.forEach(item => inventoryCounts[item.code] = item.qty);
 
+                    const now = Date.now();
+                    // Tính toán mana hồi phục
+                    if (lastMPCheck > 0 && latestMP > lastMPCheck) {
+                        mpRecoveredLastMinute += (latestMP - lastMPCheck);
+                    }
+                    // Mỗi 60s in log và reset
+                    if (now - mpCheckTime >= 60000) {
+                        process.stdout.write(`\n[THỐNG KÊ] Tốc độ hồi Mana: +${mpRecoveredLastMinute} MP/phút.           \n`);
+                        mpRecoveredLastMinute = 0;
+                        mpCheckTime = now;
+                    }
+                    lastMPCheck = latestMP;
+
                     console.clear();
                     console.log(`===========================================================`);
                     console.log(` Đạo hữu:    ${data.home.character.name} (Tài khoản ${auth.accountIndex})`);
@@ -402,6 +405,9 @@ async function start() {
             } catch (e) { }
         }, 3000);
 
+        // Khởi động Realtime Socket duy trì Online
+        connectRealtime(auth.config);
+
         // 2. VÀO BÍ CẢNH NGAY LẬP TỨC
         // Sử dụng auth thay vì token, charId, config cục bộ
         const realmData = await bicanh.joinSecretRealm(auth.token, auth.charId, auth.config, activeMapCode);
@@ -455,6 +461,46 @@ async function start() {
         }, 31000);
 
     } catch (err) { console.error('[CRITICAL ERROR]', err.message); }
+}
+
+function connectRealtime(config) {
+    const wsUrl = `wss://${config.SUPABASE_URL.split('//')[1]}/realtime/v1/websocket?apikey=${config.API_KEY}&vsn=1.0.0`;
+    let ws = new WebSocket(wsUrl);
+    let heartbeatInterval;
+    let ref = 0;
+
+    ws.on('open', () => {
+        console.log('\n[REALTIME] Kết nối thành công! Đã bật trạng thái Online.');
+        // Gửi Join vào kênh phoenix
+        ws.send(JSON.stringify({
+            topic: "phoenix",
+            event: "phx_join",
+            payload: {},
+            ref: String(++ref)
+        }));
+
+        // Gửi Heartbeat mỗi 30s
+        heartbeatInterval = setInterval(() => {
+            ws.send(JSON.stringify({
+                topic: "phoenix",
+                event: "heartbeat",
+                payload: {},
+                ref: String(++ref)
+            }));
+        }, 30000);
+    });
+
+    ws.on('error', (err) => {
+        // console.error('[REALTIME ERROR]', err.message);
+    });
+
+    ws.on('close', () => {
+        console.log('[REALTIME] Mất kết nối. Đang thử lại sau 5s...');
+        clearInterval(heartbeatInterval);
+        setTimeout(() => connectRealtime(config), 5000);
+    });
+
+    return ws;
 }
 
 start();

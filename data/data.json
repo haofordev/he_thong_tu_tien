@@ -3,16 +3,16 @@
     "email": "huyenthienkiemton9687@gmail.com",
     "password": "Huyenthienkiemton5789.",
     "user_id": "273071e7-2d40-44a7-b0e6-6164e3ea9082",
-    "access_token": ".",
-    "refresh_token": "",
-    "char_id": "7ff9603b-d4dd-4ad4-a294-a504f622377c",
+    "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU0MjZlNDI2LWMzNTEtNDE0MC04OGIwLWU2NTc4NTczMmQ1YyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2plYXNzZWZtbHByZm5sc3pndmJzLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIyYzZiZWZkMC1mOGRjLTRhNzQtOWFiMy0zY2ExMTEwMmYwZWYiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc2MDQ5ODIwLCJpYXQiOjE3NzYwNDYyMjAsImVtYWlsIjoiaHV5ZW50aGllbmtpZW10b245Njg3QGdtYWlsLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJodXllbnRoaWVua2llbXRvbjk2ODdAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiMmM2YmVmZDAtZjhkYy00YTc0LTlhYjMtM2NhMTExMDJmMGVmIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NzYwNDM0NTR9XSwic2Vzc2lvbl9pZCI6IjY5ZGUwNGJmLTE1YzYtNDM3Zi1iMjY4LTUwNzVlNzIwYmVlNiIsImlzX2Fub255bW91cyI6ZmFsc2V9.LhTFun-dNQ_Oz8k1KGLa-IwYoxm8_t7xqL8xwW62xjuXVBzMzTTWzURkJRWPQ4m_AOdK7HmJjfeNCX_8-LRc9Q",
+    "refresh_token": "4ede3hycljry",
+    "char_id": "fafc025b-b622-4b59-b41c-10083481975e",
     "char_name": "Vô Song Kiếm Tôn",
     "map_sequence": [
       "sect_lk_c02",
       "sect_lk_c01",
       "starter_01"
     ],
-    "expires_at": 1775922191793
+    "expires_at": 1776049519960
   },
   {
     "email": "hacbangkiemton73026@gmail.com",
