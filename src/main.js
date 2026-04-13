@@ -15,6 +15,7 @@ let auth = {
 
 
 let latestMsg = "Đang khởi tạo...";
+let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let wbDmg = 0;
@@ -347,6 +348,7 @@ async function start() {
                     console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${(((status.cultivation_exp_progress + status.claimable_exp) / status.exp_to_next) * 100).toFixed(2)}%)`);
                     console.log(`-----------------------------------------------------------`);
                     console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
+                    console.log(` [TOP DIỆT QUÁI]: ${killMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
 
                     console.log(` [WORLD BOSS]: ${wbMsg}`);
@@ -436,6 +438,24 @@ async function start() {
             } catch (e) { }
         }, 120000);
 
+        // 5. Cập nhật BXH Diệt quái (Mỗi 5 phút)
+        setInterval(async () => {
+            try {
+                const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
+                if (res && res.ok) {
+                    const top1 = res.top && res.top[0] ? `${res.top[0].character_name} (${res.top[0].score})` : "Chưa có";
+                    killMsg = `Hạng của tôi: ${res.my_rank || 'N/A'} - Điểm: ${res.my_score} | Top 1: ${top1}`;
+                }
+            } catch (e) { }
+        }, 300000);
+        // Chạy lần đầu ngay khi start
+        setTimeout(async () => {
+            const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
+            if (res && res.ok) {
+                const top1 = res.top && res.top[0] ? `${res.top[0].character_name} (${res.top[0].score})` : "Chưa có";
+                killMsg = `Hạng của tôi: ${res.my_rank || 'N/A'} - Điểm: ${res.my_score} | Top 1: ${top1}`;
+            }
+        }, 5000);
 
         setInterval(async () => {
             try {
