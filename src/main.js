@@ -18,8 +18,6 @@ let latestMsg = "Đang khởi tạo...";
 let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
-let wbDmg = 0;
-let isHuntingWB = false;
 let currentRealmId = null;
 let activeMapCode = "starter_01";
 let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
@@ -93,7 +91,7 @@ async function startCombatLoop() {
 
     try {
         // CHIẾN THUẬT MỚI: Chỉ đánh thường và đánh 4s/lần
-        const useNormalAttack = true; 
+        const useNormalAttack = true;
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
@@ -447,14 +445,6 @@ async function start() {
                     killMsg = `Hạng của tôi: ${res.my_rank || 'N/A'} - Điểm: ${res.my_score} | Top 1: ${top1}`;
                 }
             } catch (e) { }
-        }, 300000);
-        // Chạy lần đầu ngay khi start
-        setTimeout(async () => {
-            const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
-            if (res && res.ok) {
-                const top1 = res.top && res.top[0] ? `${res.top[0].character_name} (${res.top[0].score})` : "Chưa có";
-                killMsg = `Hạng của tôi: ${res.my_rank || 'N/A'} - Điểm: ${res.my_score} | Top 1: ${top1}`;
-            }
         }, 5000);
 
         setInterval(async () => {
