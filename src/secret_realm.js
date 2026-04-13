@@ -14,43 +14,34 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
     const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
     const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);
     const range = snapshot.realm?.skill_range_px || 300;
-    const maxAttackDistance = range * 2.5; // Tối đa có thể di chuyển trong lúc attack (~750px nếu range=300px)
-
     const aliveMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0 && m.id !== blockedMobId);
     if (aliveMobs.length === 0) return null;
 
     aliveMobs.forEach(m => {
         m.distance = Math.sqrt(Math.pow(myX - m.x, 2) + Math.pow(myY - m.y, 2));
-        m.inRange = m.distance <= range;
+        m.inRange = true; // Bỏ qua check phạm vi theo yêu cầu
     });
 
-    // CHIẾN THUẬT MỚI: Ưu tiên Boss > Elite > Normal
- 
-    // 1. Ưu tiên hàng đầu: BOSS
-    const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss');
+    // Ưu tiên Boss > Elite
+    const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss').sort((a, b) => a.distance - b.distance);
     if (bossMobs.length > 0) {
-        bossMobs.sort((a, b) => a.distance - b.distance);
         const target = bossMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'boss', x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'boss', x: target.x, y: target.y, myX, myY };
     }
- 
-    // 2. Ưu tiên thứ hai: ELITE (Tinh anh)
-    const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite');
+
+    const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
     if (eliteMobs.length > 0) {
-        eliteMobs.sort((a, b) => a.distance - b.distance);
         const target = eliteMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'elite', x: target.x, y: target.y, myX, myY };
     }
- 
-    // 3. Cuối cùng mới là quái thường
-    const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal');
+
+    const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal').sort((a, b) => a.distance - b.distance);
     if (normalMobs.length > 0) {
-        normalMobs.sort((a, b) => a.distance - b.distance);
         const target = normalMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY };
     }
- 
-    return null; // Map sạch quái -> Đổi map
+
+    return null; // Thực sự hết quái mới chuyển map
 }
 
 /**
@@ -189,6 +180,30 @@ export async function leaveSecretRealm(token, charId, config, realmId) {
         return data;
     } catch (e) {
         console.error('[LEAVE REALM ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function claimSecretRealmOfflineAFK(token, charId, config, realmCode = "starter_01") {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_start_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_realm_code: realmCode
+            })
+        });
+        const data = await res.json();
+        return data;
+    } catch (e) {
+        console.error('[CLAIM REALM AFK ERROR]', e.message);
     }
     return null;
 }

@@ -27,6 +27,13 @@ let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
+let combatLogs = [];
+
+function logCombat(msg) {
+    const time = new Date().toLocaleTimeString();
+    combatLogs.unshift(`[${time}] ${msg}`);
+    if (combatLogs.length > 5) combatLogs.pop();
+}
 
 let lastMPCheck = 0;
 let mpRecoveredLastMinute = 0;
@@ -64,7 +71,7 @@ async function startCombatLoop() {
 
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
-                process.stdout.write(`\r[SĂN BOSS] ${activeMapCode} -> ${kindLabel}${currentMobId.substring(0, 8)}...${rangeLabel}          `);
+                logCombat(`Target: ${kindLabel}${currentMobId.substring(0, 8)}...${rangeLabel}`);
             } else {
                 scanCount = 5; // Đổi map NGAY LẬP TỨC nếu không có quái trong tầm
                 bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu gần. Đang đổi map...`;
@@ -90,14 +97,19 @@ async function startCombatLoop() {
     }
 
     try {
-        // CHIẾN THUẬT MỚI: Chỉ đánh thường và đánh 4s/lần
-        const useNormalAttack = true;
+        // TỰ ĐỘNG CẮN THUỐC TRONG CHIẾN ĐẤU (MP)
+        if (latestMP < 60 && inventoryCounts['pill_lk_mp'] > 0) {
+            await tracker.useItem(token, charId, config, 'pill_lk_mp');
+            latestMP += 100; // Ước tính hồi 100 MP
+        }
+
+        // CHIẾN THUẬT TỐI ƯU: Dùng chiêu nếu MP > 60, nếu không thì đánh thường
+        const useNormalAttack = latestMP < 60;
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        // Nếu target ngoài tầm, chờ ít hơn để nhân vật kịp di chuyển và thử lại
-        // Mặc định đánh 4s một lần theo yêu cầu
-        let nextWait = !currentMobInRange ? 1500 : 4000;
+        // Tối ưu nhịp độ: di chuyển nhanh hơn (1s), tấn công nhanh hơn (2.8s)
+        let nextWait = !currentMobInRange ? 1000 : 2800;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             scanCount = 0;
@@ -109,11 +121,11 @@ async function startCombatLoop() {
             const kind = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
             bossMsg = `${kind}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
-            process.stdout.write(`\r[TRẬN ĐÁNH] ${kind}Gây -${res.damage ?? 0} HP ${hpLeft}                `);
+            logCombat(bossMsg);
 
-            // Đảm bảo nhịp độ tối thiểu 4s theo yêu cầu
+            // Đảm bảo nhịp độ tối thiểu 2.8s hoặc theo server
             const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
-            nextWait = Math.max(4000, serverWait);
+            nextWait = Math.max(2800, serverWait);
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
@@ -124,20 +136,17 @@ async function startCombatLoop() {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
-                process.stdout.write(`\n[CẢNH BÁO] Hết MP! Đang nghỉ ngơi 4s để tích lũy Mana...           \n`);
-                nextWait = 4000; // Nghỉ 4 giây theo yêu cầu
-            } else if (res?.reason === 'target_out_of_range' || res?.message === 'target_out_of_range') {
-                process.stdout.write(`\n[HỆ THỐNG] Boss ngoài tầm hoặc đã di chuyển! Đổi map...          \n`);
-                currentMobId = null;
-                scanCount = 5;
-                nextWait = 500;
+                const msg = `Hết MP! Đang nghỉ ngơi 4s để hồi phục...`;
+                bossMsg = msg;
+                logCombat(msg);
+                nextWait = 4000;
             } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
                 currentMobId = null;
                 currentMobKind = null;
                 nextWait = 200;
             } else {
-                // Tạm giữ ID để đánh tiếp, tránh scan lại
-                nextWait = 1500;
+                // Tạm giữ ID để đánh tiếp, chờ 1s rồi thử lại nếu gặp lỗi khác (bao gồm out_of_range từ server)
+                nextWait = 1000;
             }
         }
         setTimeout(() => startCombatLoop(), nextWait);
@@ -346,6 +355,7 @@ async function start() {
                     console.log(` EXP: ${status.cultivation_exp_progress} / ${status.exp_to_next} (${(((status.cultivation_exp_progress + status.claimable_exp) / status.exp_to_next) * 100).toFixed(2)}%)`);
                     console.log(`-----------------------------------------------------------`);
                     console.log(` [CHIẾN ĐẤU BÍ CẢNH]: ${bossMsg}`);
+                    combatLogs.slice(0, 5).forEach(log => console.log(`    > ${log}`));
                     console.log(` [TOP DIỆT QUÁI]: ${killMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
 
@@ -409,9 +419,15 @@ async function start() {
 
         // 1. NHẬN THƯỞNG OFFLINE (Nếu có)
         try {
+            console.log(`[HỆ THỐNG] Đang kiểm tra quà Offline...`);
             const afkRes = await tracker.claimOfflineAFK(auth.token, auth.charId, auth.config);
             if (afkRes && afkRes.reward) {
-                console.log(`\n[OFFLINE] Đã nhận thưởng Treo máy: ${JSON.stringify(afkRes.reward)}`);
+                console.log(`    > [CƠ BẢN] Nhận : ${JSON.stringify(afkRes.reward)}`);
+            }
+
+            const realmAfkRes = await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config, activeMapCode);
+            if (realmAfkRes && (realmAfkRes.reward || realmAfkRes.message)) {
+                console.log(`    > [BÍ CẢNH] Nhận : ${realmAfkRes.message || JSON.stringify(realmAfkRes.reward)}`);
             }
         } catch (e) { }
 
