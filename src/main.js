@@ -73,7 +73,7 @@ async function startCombatLoop() {
             } else {
                 const mobCount = target?.totalMobs || 0;
                 bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu... (Nhìn thấy ${mobCount} thực thể)`;
-                
+
                 // Nếu Map trống thực sự (>15 lần quét ~30s), thử join lại chính nó để refresh realm
                 scanCount++;
                 if (scanCount >= 15) {
@@ -103,7 +103,7 @@ async function startCombatLoop() {
         // - Nếu quái > 10,000 HP và đủ Mana: Dùng Kỹ năng (v3) để lấy điểm.
         // - Nếu quái <= 10,000 HP hoặc hết Mana: Dùng Đánh tay (v1) để tiết kiệm.
         let useNormalAttack = true;
-        if (latestMP >= 50 && (currentMobHP > 10000 || currentMobKind === 'boss')) {
+        if (currentMobHP < 8000) {
             useNormalAttack = false;
         }
 
@@ -472,14 +472,14 @@ async function start() {
                 const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
                 if (res) {
                     const topArray = res.top || res.top_players || [];
-                    
+
                     // 1. Tìm thông tin của mình trong danh sách Top
                     const myId = String(auth.charId).toLowerCase();
                     const myIndex = topArray.findIndex(p => String(p.character_id).toLowerCase() === myId);
-                    
+
                     let myRank = Number(res.my_rank || 0);
                     let myScore = Number(res.my_score ?? res.score ?? 0);
-                    
+
                     if (myIndex !== -1) {
                         myRank = Number(topArray[myIndex].rank || myIndex + 1);
                         myScore = Number(topArray[myIndex].score || topArray[myIndex].my_score || 0);
@@ -488,7 +488,7 @@ async function start() {
                     const top1Name = topArray[0] ? (topArray[0].character_name || "Top 1") : "Chưa có";
                     const top1Score = topArray[0] ? Number(topArray[0].score || topArray[0].my_score || 0) : 0;
                     const top1 = topArray[0] ? `${top1Name} (${top1Score})` : "Chưa có";
-                    
+
                     let gapNextMsg = "";
                     let gap1Msg = "";
 
