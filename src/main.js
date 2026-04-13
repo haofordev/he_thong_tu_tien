@@ -110,7 +110,7 @@ async function startCombatLoop() {
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        let nextWait = 2800;
+        let nextWait = 2100; // Giảm xuống 2.1 giây để tăng tốc
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             if (res.mp_after !== undefined) latestMP = res.mp_after;
@@ -124,8 +124,12 @@ async function startCombatLoop() {
 
             logCombat(bossMsg);
 
-            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
-            nextWait = Math.max(2800, serverWait);
+            // Cập nhật tốc độ từ Server
+            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 100 : 0;
+            if (res.atk_speed_sec) {
+                process.stdout.write(`\r[TỐC ĐỘ] Server yêu cầu hồi chiêu: ${res.atk_speed_sec}s                    `);
+            }
+            nextWait = Math.max(2100, serverWait);
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
