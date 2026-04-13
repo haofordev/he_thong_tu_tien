@@ -24,17 +24,25 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
         m.inRange = m.distance <= range;
     });
 
-    // CHIẾN THUẬT MỚI: Ưu tiên Boss/Elite trước, quái thường sau
+    // CHIẾN THUẬT MỚI: Ưu tiên Boss > Elite > Normal
  
-    // 1. Tìm Boss/Elite bất kể khoảng cách
-    const eliteMobs = aliveMobs.filter(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite'));
+    // 1. Ưu tiên hàng đầu: BOSS
+    const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss');
+    if (bossMobs.length > 0) {
+        bossMobs.sort((a, b) => a.distance - b.distance);
+        const target = bossMobs[0];
+        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'boss', x: target.x, y: target.y, myX, myY };
+    }
+ 
+    // 2. Ưu tiên thứ hai: ELITE (Tinh anh)
+    const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite');
     if (eliteMobs.length > 0) {
         eliteMobs.sort((a, b) => a.distance - b.distance);
         const target = eliteMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: target.mob_kind, x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', x: target.x, y: target.y, myX, myY };
     }
  
-    // 2. Nếu sạch Boss/Elite, mới đánh quái thường
+    // 3. Cuối cùng mới là quái thường
     const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal');
     if (normalMobs.length > 0) {
         normalMobs.sort((a, b) => a.distance - b.distance);
