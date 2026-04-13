@@ -405,10 +405,18 @@ async function start() {
             } catch (e) { }
         }, 3000);
 
-        // Khởi động Realtime Socket duy trì Online
+        // 1. NHẬN THƯỞNG OFFLINE (Nếu có)
+        try {
+            const afkRes = await tracker.claimOfflineAFK(auth.token, auth.charId, auth.config);
+            if (afkRes && afkRes.reward) {
+                console.log(`\n[OFFLINE] Đã nhận thưởng Treo máy: ${JSON.stringify(afkRes.reward)}`);
+            }
+        } catch (e) { }
+
+        // 2. KHỞI ĐỘNG REALTIME SOCKET
         connectRealtime(auth.config);
 
-        // 2. VÀO BÍ CẢNH NGAY LẬP TỨC
+        // 3. VÀO BÍ CẢNH NGAY LẬP TỨC
         // Sử dụng auth thay vì token, charId, config cục bộ
         const realmData = await bicanh.joinSecretRealm(auth.token, auth.charId, auth.config, activeMapCode);
         currentRealmId = realmData?.realm_id;
