@@ -380,7 +380,8 @@ async function start() {
                         }
                     }
 
-                    // Tự động chuyển chỗ tu luyện nếu có chỗ tốt hơn (Ancient Cave +50%)
+                    // Tự động chuyển chỗ tu luyện bị vô hiệu hóa theo yêu cầu (Bỏ qua Ancient Cave)
+                    /*
                     const spots = data.cultivation_spots?.spots || [];
                     const bestAvailable = spots.find(s => s.code === 'ancient_cave' && s.occupants < (s.capacity || 10));
                     const currentSpotCode = data.cultivation_status?.spot_code || data.qi_breakdown?.environment?.spot?.code;
@@ -397,6 +398,7 @@ async function start() {
                             await tracker.changeCultivationSpot(auth.token, auth.charId, auth.config, 'spirit_vein');
                         }
                     }
+                    */
 
                     // Farming moved to dedicated interval below
                 }
