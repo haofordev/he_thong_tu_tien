@@ -65,30 +65,27 @@ async function startCombatLoop() {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobHP = target.hp || 0;
-                currentMobInRange = target.inRange; // Lưu status
+                currentMobInRange = target.inRange;
                 currentMobRetryCount = 0;
 
-                // Nếu thấy quái trong tầm thì reset, ngoài tầm thì giữ nguyên để đếm dồn
                 if (target.inRange) scanCount = 0;
 
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
                 const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
                 logCombat(`Target: ${kindLabel}${currentMobId.substring(0, 8)}...${rangeLabel}`);
             } else {
-                scanCount = 5; // Đổi map NGAY LẬP TỨC nếu không có quái trong tầm
-                bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu gần. Đang đổi map...`;
+                scanCount++;
+                bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu... (Đã tắt tự đổi map)`;
             }
 
-            if (scanCount >= 5) { // Chuyển map sau 5 lần không tìm thấy target
+            // Đã vô hiệu hóa cơ chế tự đổi map theo yêu cầu
+            /*
+            if (scanCount >= 5) { 
                 mapIndex = (mapIndex + 1) % mapSequence.length;
                 activeMapCode = mapSequence[mapIndex];
-                bossMsg = `Chuyển map -> ${activeMapCode}`;
-                blockedMobId = null;
-                process.stdout.write(`\r[HỆ THỐNG] Đang chuyển sang ${activeMapCode}...                      `);
-                const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
-                currentRealmId = realmData?.realm_id || currentRealmId;
-                scanCount = 0;
+                ...
             }
+            */
 
             setTimeout(() => startCombatLoop(), currentMobId ? 0 : 1500);
             return;
