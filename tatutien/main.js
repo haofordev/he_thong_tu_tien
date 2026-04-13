@@ -13,7 +13,6 @@ let auth = {
     expiresAt: 0
 };
 
-
 let latestMsg = "Đang khởi tạo...";
 let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
@@ -24,9 +23,7 @@ let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobHP = 0;
-let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
-let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
 let combatLogs = [];
 
@@ -56,10 +53,7 @@ async function startCombatLoop() {
 
     if (!currentMobId) {
         try {
-            // [DEBUG] Xem Realm ID và Snapshot
-            console.log(`[DEBUG] Realm ID hiện tại: ${currentRealmId}`);
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
-            if (!currentMobId) console.log(`[DEBUG] Raw Snapshot:`, JSON.stringify(snapshot).substring(0, 200));
 
             let target = bicanh.findNewTarget(snapshot, charId, auth.charId)
 
@@ -67,7 +61,6 @@ async function startCombatLoop() {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobHP = target.hp || 0;
-                currentMobInRange = true;
                 currentMobRetryCount = 0;
                 scanCount = 0;
 
@@ -76,7 +69,7 @@ async function startCombatLoop() {
             } else {
                 const mobCount = target?.totalMobs || 0;
                 bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu... (Nhìn thấy ${mobCount} thực thể)`;
-                
+
                 // Nếu Map trống thực sự (>15 lần quét ~30s), thử join lại chính nó để refresh realm
                 scanCount++;
                 if (scanCount >= 15) {
@@ -99,16 +92,21 @@ async function startCombatLoop() {
         // TỰ ĐỘNG CẮN THUỐC TRONG CHIẾN ĐẤU (MP)
         if (latestMP < 60 && inventoryCounts['pill_lk_mp'] > 0) {
             await tracker.useItem(token, charId, config, 'pill_lk_mp');
-            latestMP += 100; // Ước tính hồi 100 MP
+            latestMP += 50; // Hồi 50 MP theo cập nhật mới
         }
 
-        // [CHẾ ĐỘ THỬ NGHIỆM]: Ép buộc dùng Đánh Tay (v1) để kiểm tra tính điểm BXH
-        let useNormalAttack = true; 
-        
+        // CHIẾN THUẬT CỦA ĐẠO HỮU: 
+        // - Nếu quái < 5000 HP và đủ Mana (>20): Dùng Kỹ năng (v3) để hạ gục nhanh.
+        // - Ngược lại: Dùng Đánh tay (v1) để tiết kiệm.
+        let useNormalAttack = true;
+        if (currentMobHP < 5000 && latestMP > 20) {
+            useNormalAttack = false;
+        }
+
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        let nextWait = 2800;
+        let nextWait = 2100; // Tốc độ cao theo cập nhật mới
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             if (res.mp_after !== undefined) latestMP = res.mp_after;
@@ -116,14 +114,18 @@ async function startCombatLoop() {
             if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
 
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            const mode = "[TAY-TEST] ";
+            const mode = useNormalAttack ? "[TAY] " : "[CHIÊU] ";
             const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
             bossMsg = `${kindLabel}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
             logCombat(bossMsg);
 
-            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
-            nextWait = Math.max(2800, serverWait);
+            // Cập nhật tốc độ từ Server
+            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 100 : 0;
+            if (res.atk_speed_sec) {
+                process.stdout.write(`\r[TỐC ĐỘ] Server yêu cầu hồi chiêu: ${res.atk_speed_sec}s                    `);
+            }
+            nextWait = Math.max(2100, serverWait);
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
@@ -370,7 +372,7 @@ async function start() {
                     if (latestSpirit < 30 && (inventoryCounts['pill_lk_spirit'] || 0) >= 5) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
                     }
-                    // MP < 150 thì cắn thuốc MP nếu có
+                    // MP < 50 thì cắn thuốc MP nếu có
                     if (latestMP < 50 && (inventoryCounts['pill_lk_mp'] || 0) >= 1) {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_mp');
                     }
@@ -387,28 +389,6 @@ async function start() {
                             latestMsg = `[HỆ THỐNG] Đã tự động nâng cấp Linh Mạch (Lvl 0 -> 1)`;
                         }
                     }
-
-                    // Tự động chuyển chỗ tu luyện bị vô hiệu hóa theo yêu cầu (Bỏ qua Ancient Cave)
-                    /*
-                    const spots = data.cultivation_spots?.spots || [];
-                    const bestAvailable = spots.find(s => s.code === 'ancient_cave' && s.occupants < (s.capacity || 10));
-                    const currentSpotCode = data.cultivation_status?.spot_code || data.qi_breakdown?.environment?.spot?.code;
-
-                    if (bestAvailable && currentSpotCode !== 'ancient_cave') {
-                        const moveRes = await tracker.changeCultivationSpot(auth.token, auth.charId, auth.config, 'ancient_cave');
-                        if (moveRes && moveRes.ok) {
-                            latestMsg = `[HỆ THỐNG] Đã tự động chuyển sang Ancient Cave (+50% EXP)`;
-                        }
-                    } else if (!bestAvailable && currentSpotCode === 'quiet_courtyard') {
-                        // Nếu cave full, thử spirit vein (+20%)
-                        const vein = spots.find(s => s.code === 'spirit_vein' && s.occupants < (s.capacity || 50));
-                        if (vein) {
-                            await tracker.changeCultivationSpot(auth.token, auth.charId, auth.config, 'spirit_vein');
-                        }
-                    }
-                    */
-
-                    // Farming moved to dedicated interval below
                 }
                 console.log(` Cập nhật lúc: ${new Date().toLocaleTimeString()}`);
                 console.log(`===========================================================`);
@@ -435,15 +415,12 @@ async function start() {
         // 3. VÀO BÍ CẢNH NGAY LẬP TỨC
         // Sử dụng auth thay vì token, charId, config cục bộ
         const realmData = await bicanh.joinSecretRealm(auth.token, auth.charId, auth.config, activeMapCode);
-        console.log(`[DEBUG] Kết quả Join Realm (${activeMapCode}):`, JSON.stringify(realmData));
         currentRealmId = realmData?.realm_id;
 
         await kyngo.enterKiNgo(auth.token, auth.charId, auth.config);
         latestMsg = await kyngo.getLatestLog(auth.token, auth.charId, auth.config);
 
         startCombatLoop();
-
-
 
         setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
         manageBodyCult();
@@ -467,14 +444,14 @@ async function start() {
                 const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
                 if (res) {
                     const topArray = res.top || res.top_players || [];
-                    
+
                     // 1. Tìm thông tin của mình trong danh sách Top
                     const myId = String(auth.charId).toLowerCase();
                     const myIndex = topArray.findIndex(p => String(p.character_id).toLowerCase() === myId);
-                    
+
                     let myRank = Number(res.my_rank || 0);
                     let myScore = Number(res.my_score ?? res.score ?? 0);
-                    
+
                     if (myIndex !== -1) {
                         myRank = Number(topArray[myIndex].rank || myIndex + 1);
                         myScore = Number(topArray[myIndex].score || topArray[myIndex].my_score || 0);
@@ -483,7 +460,7 @@ async function start() {
                     const top1Name = topArray[0] ? (topArray[0].character_name || "Top 1") : "Chưa có";
                     const top1Score = topArray[0] ? Number(topArray[0].score || topArray[0].my_score || 0) : 0;
                     const top1 = topArray[0] ? `${top1Name} (${top1Score})` : "Chưa có";
-                    
+
                     let gapNextMsg = "";
                     let gap1Msg = "";
 

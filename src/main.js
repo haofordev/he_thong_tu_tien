@@ -13,7 +13,6 @@ let auth = {
     expiresAt: 0
 };
 
-
 let latestMsg = "Đang khởi tạo...";
 let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
@@ -24,9 +23,7 @@ let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobHP = 0;
-let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
-let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
 let combatLogs = [];
 
