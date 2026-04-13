@@ -96,14 +96,14 @@ async function startCombatLoop() {
         // TỰ ĐỘNG CẮN THUỐC TRONG CHIẾN ĐẤU (MP)
         if (latestMP < 60 && inventoryCounts['pill_lk_mp'] > 0) {
             await tracker.useItem(token, charId, config, 'pill_lk_mp');
-            latestMP += 100; // Ước tính hồi 100 MP
+            latestMP += 50; // Ước tính hồi 100 MP
         }
 
         // CHIẾN THUẬT LAI: 
         // - Nếu quái > 10,000 HP và đủ Mana: Dùng Kỹ năng (v3) để lấy điểm.
         // - Nếu quái <= 10,000 HP hoặc hết Mana: Dùng Đánh tay (v1) để tiết kiệm.
         let useNormalAttack = true;
-        if (currentMobHP < 8000) {
+        if (currentMobHP < 5000 && latestMP > 20) {
             useNormalAttack = false;
         }
 
