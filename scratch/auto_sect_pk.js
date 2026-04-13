@@ -12,7 +12,7 @@ async function autoSectPK() {
         console.log('Mã bảng chuẩn (Cấp 11-20): tc');
 
         // Thử khiêu chiến các hạng từ 10 xuống 1
-        const targetSlots = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+        const targetSlots = [9, 10, 9, 10, 9, 10, 9, 10, 9, 10];
 
         for (const slot of targetSlots) {
             console.log(`\n[HẠNG ${slot}] Đang gửi lệnh khiêu chiến...`);
