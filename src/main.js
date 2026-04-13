@@ -471,7 +471,7 @@ async function start() {
         setInterval(() => manageGarden(), 300000); // 5 phút check Linh Điền một lần
         manageGarden();
 
-        setInterval(() => manageChests(), 600000);
+        setInterval(() => manageChests(), 60000); // 1 phút check rương một lần
         manageChests();
 
         // Farm automation - use auth object to keep token fresh

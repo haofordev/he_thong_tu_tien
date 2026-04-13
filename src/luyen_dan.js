@@ -7,8 +7,8 @@ async function luyenDanLoop() {
 
     console.log(`[HỆ THỐNG] Bắt đầu luyện đan cho: ${auth.userData.email}`);
 
-    //const recipeCode = "r_pill_lk_spirit";
-    const recipeCode = "r_pill_lk_hp"; 
+    const recipeCode = "r_pill_lk_spirit";
+    //const recipeCode = "r_pill_lk_mp";
 
     while (true) {
         try {
