@@ -125,8 +125,8 @@ async function startCombatLoop() {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
-                process.stdout.write(`\n[CẢNH BÁO] Hết MP! Đang nghỉ ngơi 9s để tích lũy Mana...           \n`);
-                nextWait = 5000; // Nghỉ 9 giây theo yêu cầu
+                process.stdout.write(`\n[CẢNH BÁO] Hết MP! Đang nghỉ ngơi 4s để tích lũy Mana...           \n`);
+                nextWait = 4000; // Nghỉ 4 giây theo yêu cầu
             } else if (res?.reason === 'target_out_of_range' || res?.message === 'target_out_of_range') {
                 process.stdout.write(`\n[HỆ THỐNG] Boss ngoài tầm hoặc đã di chuyển! Đổi map...          \n`);
                 currentMobId = null;
