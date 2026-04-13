@@ -6,9 +6,10 @@ async function luyenDanLoop() {
     let auth = await loginAndGetInfo(accountIndex);
 
     console.log(`[HỆ THỐNG] Bắt đầu luyện đan cho: ${auth.userData.email}`);
-    
+
     const recipeCode = "r_pill_lk_spirit";
-    
+    //const recipeCode = "r_pill_lk_hp"; 
+
     while (true) {
         try {
             // Check and refresh token
@@ -29,9 +30,9 @@ async function luyenDanLoop() {
             } else {
                 const errorMsg = res?.message || res?.error_description || res?.error || "Lỗi không xác định";
                 console.error(`[LUYỆN ĐAN] Thất bại: ${errorMsg}`);
-                
+
                 // Kiểm tra nếu thiếu nguyên liệu
-                if (errorMsg.toLowerCase().includes("không đủ") || 
+                if (errorMsg.toLowerCase().includes("không đủ") ||
                     errorMsg.toLowerCase().includes("insufficient") ||
                     errorMsg.toLowerCase().includes("thiếu")) {
                     console.log(`[HỆ THỐNG] Dừng luyện đan do thiếu nguyên liệu.`);

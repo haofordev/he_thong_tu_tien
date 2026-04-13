@@ -19,7 +19,7 @@ let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let currentRealmId = null;
 let activeMapCode = "starter_01";
-let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
+let bodyPriority = "top_cp"; // Ưu tiên leo Top Tăng Lực Chiến
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobHP = 0;
@@ -222,6 +222,27 @@ async function manageBodyCult() {
                 targetEl = 'fire';
             } else if (bodyPriority === 'survival') {
                 targetEl = 'wood';
+            } else if (bodyPriority === 'top_cp') {
+                // Ưu tiên Hỏa (Công) hoặc Kim (Xuyên) - hoặc cái nào rẻ nhất để lấy điểm tăng trưởng
+                const offensive = ['fire', 'metal'];
+                let bestOffensive = offensive.find(el => {
+                    const cost = body.next_upgrade_cost[el];
+                    const stoneKey = el === 'fire' ? 'hoa' : 'kim';
+                    return (body.stones[`${stoneKey}_linh_thach`] || 0) >= cost.stone_cost;
+                });
+                
+                if (bestOffensive) targetEl = bestOffensive;
+                else {
+                    // Nếu không đủ đá hệ Công, tìm hệ Rẻ nhất để nâng lấy điểm
+                    let cheapestCost = 999999;
+                    for (const el of elements) {
+                        const cost = body.next_upgrade_cost[el].ss_cost;
+                        if (cost < cheapestCost) {
+                            cheapestCost = cost;
+                            targetEl = el;
+                        }
+                    }
+                }
             } else {
                 // Balanced: Tìm hệ có cấp thấp nhất
                 let lowestLv = 999;
@@ -257,10 +278,15 @@ async function manageBodyCult() {
                     latestMsg = `[HỆ THỐNG] Nâng cấp Thể Tu hệ ${el.toUpperCase()} thành công!`;
                     break; // Mỗi lần chỉ nâng 1 phát để tránh lỗi race condition
                 }
+                } else if (hasStones >= cost.stone_cost && hasSS < cost.ss_cost) {
+                    process.stdout.write(`\r[CẢNH BÁO] Thiếu Linh thạch để nâng Thể Tu hệ ${el.toUpperCase()} (Cần: ${cost.ss_cost}, Có: ${hasSS})          `);
+                }
             }
         }
 
-    } catch (e) { }
+    } catch (e) {
+        console.error('[LUYỆN THỂ] Lỗi:', e.message);
+    }
 }
 
 async function manageChests() {
@@ -422,7 +448,7 @@ async function start() {
 
         startCombatLoop();
 
-        setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
+        setInterval(() => manageBodyCult(), 30000); // 30 giây check Thể Tu một lần
         manageBodyCult();
 
         setInterval(() => manageGarden(), 300000); // 5 phút check Linh Điền một lần

@@ -19,7 +19,7 @@ let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let currentRealmId = null;
 let activeMapCode = "starter_01";
-let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
+let bodyPriority = "top_cp"; // Ưu tiên leo Top Tăng Lực Chiến
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobHP = 0;
@@ -223,8 +223,26 @@ async function manageBodyCult() {
                 targetEl = 'fire';
             } else if (bodyPriority === 'survival') {
                 targetEl = 'wood';
+            } else if (bodyPriority === 'top_cp') {
+                const offensive = ['fire', 'metal'];
+                let bestOffensive = offensive.find(el => {
+                    const cost = body.next_upgrade_cost[el];
+                    const stoneKey = el === 'fire' ? 'hoa' : 'kim';
+                    return (body.stones[`${stoneKey}_linh_thach`] || 0) >= cost.stone_cost;
+                });
+
+                if (bestOffensive) targetEl = bestOffensive;
+                else {
+                    let cheapestCost = 999999;
+                    for (const el of elements) {
+                        const cost = body.next_upgrade_cost[el].ss_cost;
+                        if (cost < cheapestCost) {
+                            cheapestCost = cost;
+                            targetEl = el;
+                        }
+                    }
+                }
             } else {
-                // Balanced: Tìm hệ có cấp thấp nhất
                 let lowestLv = 999;
                 for (const el of elements) {
                     const lv = body[`${el}_level`] || 0;
@@ -447,7 +465,7 @@ async function start() {
 
 
 
-        setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
+        setInterval(() => manageBodyCult(), 30000); // 30 giây check Thể Tu một lần
         manageBodyCult();
 
         setInterval(() => manageGarden(), 300000); // 5 phút check Linh Điền một lần
