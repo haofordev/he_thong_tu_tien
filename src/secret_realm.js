@@ -24,22 +24,22 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
         m.inRange = m.distance <= range;
     });
 
-    // CHIẾN THUẬT MỚI: Ưu tiên quái thường trước, Boss sau
+    // CHIẾN THUẬT MỚI: Ưu tiên Boss/Elite trước, quái thường sau
  
-    // 1. Tìm quái thường (Normal) bất kể khoảng cách
-    const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal');
-    if (normalMobs.length > 0) {
-        normalMobs.sort((a, b) => a.distance - b.distance);
-        const target = normalMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY };
-    }
- 
-    // 2. Nếu sạch quái thường, mới đánh Boss/Elite
+    // 1. Tìm Boss/Elite bất kể khoảng cách
     const eliteMobs = aliveMobs.filter(m => (m.mob_kind === 'boss' || m.mob_kind === 'elite'));
     if (eliteMobs.length > 0) {
         eliteMobs.sort((a, b) => a.distance - b.distance);
         const target = eliteMobs[0];
         return { id: target.id, inRange: true, distance: target.distance, mobKind: target.mob_kind, x: target.x, y: target.y, myX, myY };
+    }
+ 
+    // 2. Nếu sạch Boss/Elite, mới đánh quái thường
+    const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal');
+    if (normalMobs.length > 0) {
+        normalMobs.sort((a, b) => a.distance - b.distance);
+        const target = normalMobs[0];
+        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY };
     }
  
     return null; // Map sạch quái -> Đổi map
