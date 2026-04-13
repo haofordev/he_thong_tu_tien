@@ -58,34 +58,31 @@ async function startCombatLoop() {
         try {
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
 
-            let target = bicanh.findNewTarget(snapshot, charId, blockedMobId)
+            let target = bicanh.findNewTarget(snapshot, charId, auth.charId)
 
-            if (target) {
-                blockedMobId = null;
+            if (target && target.id) {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobHP = target.hp || 0;
-                currentMobInRange = target.inRange;
+                currentMobInRange = true;
                 currentMobRetryCount = 0;
-
-                if (target.inRange) scanCount = 0;
+                scanCount = 0;
 
                 const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? "[BOSS] " : "";
-                const rangeLabel = target.inRange ? "" : ` [NGOÀI TẦM: ${Math.round(target.distance)}px]`;
-                logCombat(`Target: ${kindLabel}${currentMobId.substring(0, 8)}...${rangeLabel}`);
+                logCombat(`Target: ${kindLabel}${currentMobId.substring(0, 8)}... (Nhìn thấy ${target.totalMobs} quái)`);
             } else {
+                const mobCount = target?.totalMobs || 0;
+                bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu... (Nhìn thấy ${mobCount} thực thể)`;
+                
+                // Nếu Map trống thực sự (>15 lần quét ~30s), thử join lại chính nó để refresh realm
                 scanCount++;
-                bossMsg = `Map [${activeMapCode}] kô thấy mục tiêu... (Đã tắt tự đổi map)`;
+                if (scanCount >= 15) {
+                    process.stdout.write(`\r[HỆ THỐNG] Đang làm mới kết nối Bí Cảnh...                      `);
+                    const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
+                    currentRealmId = realmData?.realm_id || currentRealmId;
+                    scanCount = 0;
+                }
             }
-
-            // Đã vô hiệu hóa cơ chế tự đổi map theo yêu cầu
-            /*
-            if (scanCount >= 5) { 
-                mapIndex = (mapIndex + 1) % mapSequence.length;
-                activeMapCode = mapSequence[mapIndex];
-                ...
-            }
-            */
 
             setTimeout(() => startCombatLoop(), currentMobId ? 0 : 2000);
             return;
@@ -139,12 +136,11 @@ async function startCombatLoop() {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
-                // Ép buộc đánh thường lượt tới
                 latestMP = 0;
-                logCombat(`[HỆ THỐNG] Hết MP! Đang đánh bằng Tay...`);
+                logCombat(`[HỆ THỐNG] Hết MP, chuyển sang Đánh TAY...`);
                 nextWait = 500;
             } else if (res?.reason === 'target_out_of_range') {
-                bossMsg = `[CẢNH BÁO] Mục tiêu ngoài tầm đánh! Đang đợi quái...`;
+                bossMsg = `[CẢNH BÁO] Mục tiêu ngoài tầm đánh! Đang đợi quái di chuyển...`;
                 nextWait = 2000;
             } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
                 currentMobId = null;
@@ -153,26 +149,10 @@ async function startCombatLoop() {
             } else {
                 nextWait = 1500;
             }
-        }            if (res?.reason === 'attack_cooldown') {
-                nextWait = (res.remain_sec * 1000) + 200;
-            } else if (res?.reason === 'no_mana') {
-                // Ép buộc đánh thường lượt tới
-                latestMP = 0;
-                logCombat(`[HỆ THỐNG] Hết MP! Đang đánh bằng Tay...`);
-                nextWait = 500;
-            } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
-                currentMobId = null;
-                currentMobKind = null;
-                nextWait = 200;
-            } else {
-                // Tạm giữ ID để đánh tiếp, chờ 1s rồi thử lại nếu gặp lỗi khác (bao gồm out_of_range từ server)
-                nextWait = 1000;
-            }
         }
         setTimeout(() => startCombatLoop(), nextWait);
     } catch (e) {
         currentMobId = null;
-        currentMobInRange = true;
         setTimeout(() => startCombatLoop(), 5000);
     }
 }
