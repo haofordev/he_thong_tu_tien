@@ -18,7 +18,7 @@ let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let currentRealmId = null;
-let activeMapCode = "starter_01";
+let activeMapCode = "sect_lk_c01";
 let bodyPriority = "top_cp"; // Ưu tiên leo Top Tăng Lực Chiến
 let currentMobId = null;
 let currentMobKind = null;
@@ -26,6 +26,7 @@ let currentMobHP = 0;
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let scanCount = 0;
 let combatLogs = [];
+let attackFailureCount = 0;
 
 function logCombat(msg) {
     const time = new Date().toLocaleTimeString();
@@ -110,6 +111,7 @@ async function startCombatLoop() {
         let nextWait = 2100; // Giảm xuống 2.1 giây để tăng tốc
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
+            attackFailureCount = 0; // Reset bộ đếm khi có phản hồi thành công
             if (res.mp_after !== undefined) latestMP = res.mp_after;
             if (res.hp_after !== undefined) latestHP = res.hp_after;
             if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
@@ -134,21 +136,37 @@ async function startCombatLoop() {
                 nextWait = 500;
             }
         } else {
-            if (res?.reason === 'attack_cooldown') {
+            attackFailureCount++;
+            if (attackFailureCount >= 5) {
+                logCombat(`[CẢNH BÁO] 5 lần đánh không phản hồi, đang Re-join Bí cảnh...`);
+                const realmData = await bicanh.joinSecretRealm(token, charId, config, activeMapCode);
+                if (realmData && realmData.realm_id) {
+                    currentRealmId = realmData.realm_id;
+                    attackFailureCount = 0;
+                    currentMobId = null;
+                    logCombat(`✅ Đã Re-join thành công! Instance mới: ${currentRealmId}`);
+                }
+                nextWait = 3000;
+            } else if (res?.reason === 'attack_cooldown') {
+                attackFailureCount = 0; // Reset vì vẫn có phản hồi từ server
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
+                attackFailureCount = 0;
                 latestMP = 0;
                 logCombat(`[HỆ THỐNG] Hết MP, chuyển sang Đánh TAY...`);
                 nextWait = 500;
             } else if (res?.reason === 'target_out_of_range') {
+                attackFailureCount = 0;
                 bossMsg = `[CẢNH BÁO] Mục tiêu ngoài tầm đánh! Đang đợi quái di chuyển...`;
                 nextWait = 2000;
             } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
+                attackFailureCount = 0;
                 currentMobId = null;
                 currentMobKind = null;
                 nextWait = 200;
             } else {
-                nextWait = 1500;
+                bossMsg = `[HỆ THỐNG] Lỗi đánh quái: ${res?.message || 'Không có phản hồi'}`;
+                nextWait = 2000;
             }
         }
         setTimeout(() => startCombatLoop(), nextWait);
