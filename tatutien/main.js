@@ -87,7 +87,7 @@ async function startCombatLoop() {
             }
             */
 
-            setTimeout(() => startCombatLoop(), currentMobId ? 0 : 1500);
+            setTimeout(() => startCombatLoop(), currentMobId ? 0 : 2000);
             return;
         } catch (e) {
             setTimeout(() => startCombatLoop(), 5000);
@@ -113,11 +113,9 @@ async function startCombatLoop() {
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        // Tối ưu nhịp độ: di chuyển (1s), tấn công (2.8s)
-        let nextWait = !currentMobInRange ? 1000 : 2800;
+        let nextWait = 2800;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
-            scanCount = 0;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
             if (res.hp_after !== undefined) latestHP = res.hp_after;
             if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
@@ -129,7 +127,6 @@ async function startCombatLoop() {
 
             logCombat(bossMsg);
 
-            // Đảm bảo nhịp độ tối thiểu 2.8s hoặc theo server
             const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
             nextWait = Math.max(2800, serverWait);
 
@@ -140,6 +137,23 @@ async function startCombatLoop() {
             }
         } else {
             if (res?.reason === 'attack_cooldown') {
+                nextWait = (res.remain_sec * 1000) + 200;
+            } else if (res?.reason === 'no_mana') {
+                // Ép buộc đánh thường lượt tới
+                latestMP = 0;
+                logCombat(`[HỆ THỐNG] Hết MP! Đang đánh bằng Tay...`);
+                nextWait = 500;
+            } else if (res?.reason === 'target_out_of_range') {
+                bossMsg = `[CẢNH BÁO] Mục tiêu ngoài tầm đánh! Đang đợi quái...`;
+                nextWait = 2000;
+            } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
+                currentMobId = null;
+                currentMobKind = null;
+                nextWait = 200;
+            } else {
+                nextWait = 1500;
+            }
+        }            if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
                 // Ép buộc đánh thường lượt tới

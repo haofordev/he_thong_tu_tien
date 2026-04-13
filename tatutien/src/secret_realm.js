@@ -4,7 +4,7 @@
  */
 export function findNewTarget(snapshot, charId, blockedMobId = null) {
     if (!snapshot || !snapshot.mobs || snapshot.mobs.length === 0) {
-        return null;
+        return { id: null, totalMobs: 0 };
     }
 
     const me = snapshot.participants?.find(p => p.character_id === charId)
@@ -13,35 +13,33 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
 
     const myX = me ? me.x : (snapshot.realm?.spawn_x_px || 1000);
     const myY = me ? me.y : (snapshot.realm?.spawn_y_px || 1000);
-    const range = snapshot.realm?.skill_range_px || 300;
-    const aliveMobs = snapshot.mobs.filter(m => m && m.status === 'alive' && m.hp > 0 && m.id !== blockedMobId);
-    if (aliveMobs.length === 0) return null;
+    
+    // Lọc rộng hơn: chỉ cần có máu > 0
+    const aliveMobs = snapshot.mobs.filter(m => m && (m.hp > 0 || m.status === 'alive'));
+    const totalCount = aliveMobs.length;
+    
+    if (totalCount === 0) return { id: null, totalMobs: 0 };
 
     aliveMobs.forEach(m => {
         m.distance = Math.sqrt(Math.pow(myX - m.x, 2) + Math.pow(myY - m.y, 2));
-        m.inRange = true; // Bỏ qua check phạm vi theo yêu cầu
+        m.inRange = true;
     });
 
-    // Ưu tiên Boss > Elite
+    // Ưu tiên Boss > Elite > Normal
     const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss').sort((a, b) => a.distance - b.distance);
     if (bossMobs.length > 0) {
         const target = bossMobs[0];
-        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'boss', x: target.x, y: target.y, myX, myY, hp: target.hp };
+        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'boss', hp: target.hp, totalMobs: totalCount };
     }
 
     const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
     if (eliteMobs.length > 0) {
         const target = eliteMobs[0];
-        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'elite', x: target.x, y: target.y, myX, myY, hp: target.hp };
+        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', hp: target.hp, totalMobs: totalCount };
     }
 
-    const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal').sort((a, b) => a.distance - b.distance);
-    if (normalMobs.length > 0) {
-        const target = normalMobs[0];
-        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY, hp: target.hp };
-    }
-
-    return null; // Thực sự hết quái mới chuyển map
+    const target = aliveMobs.sort((a, b) => a.distance - b.distance)[0];
+    return { id: target.id, inRange: true, distance: target.distance, mobKind: target.mobKind || 'normal', hp: target.hp, totalMobs: totalCount };
 }
 
 /**
