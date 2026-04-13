@@ -23,6 +23,7 @@ let activeMapCode = "starter_01";
 let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
 let currentMobId = null;
 let currentMobKind = null;
+let currentMobHP = 0;
 let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
@@ -63,6 +64,7 @@ async function startCombatLoop() {
                 blockedMobId = null;
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
+                currentMobHP = target.hp || 0;
                 currentMobInRange = target.inRange; // Lưu status
                 currentMobRetryCount = 0;
 
@@ -103,27 +105,34 @@ async function startCombatLoop() {
             latestMP += 100; // Ước tính hồi 100 MP
         }
 
-        // CHIẾN THUẬT TỐI ƯU: Dùng chiêu nếu MP > 60, nếu không thì đánh thường
-        const useNormalAttack = latestMP < 60;
+        // CHIẾN THUẬT LAI: 
+        // - Nếu quái > 10,000 HP và đủ Mana: Dùng Kỹ năng (v3) để lấy điểm.
+        // - Nếu quái <= 10,000 HP hoặc hết Mana: Dùng Đánh tay (v1) để tiết kiệm.
+        let useNormalAttack = true;
+        if (latestMP >= 50 && (currentMobHP > 10000 || currentMobKind === 'boss')) {
+            useNormalAttack = false;
+        }
+
         const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
 
         let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        // Tối ưu nhịp độ: di chuyển nhanh hơn (1s), tấn công nhanh hơn (2.8s)
+        // Tối ưu nhịp độ: di chuyển (1s), tấn công (2.8s)
         let nextWait = !currentMobInRange ? 1000 : 2800;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
             scanCount = 0;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
             if (res.hp_after !== undefined) latestHP = res.hp_after;
+            if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
 
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            const mode = useNormalAttack ? "[THƯỜNG] " : "[CHIÊU] ";
-            const kind = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
-            bossMsg = `${kind}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
+            const mode = useNormalAttack ? "[TAY] " : "[CHIÊU] ";
+            const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
+            bossMsg = `${kindLabel}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
             logCombat(bossMsg);
 
-            // Đảm bảo nhịp độ tối thiểu 2.8s hoặc theo server
+            // Đảm bảo nhịp độ tối thiểu theo server hoặc 2.8s
             const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
             nextWait = Math.max(2800, serverWait);
 
@@ -136,16 +145,15 @@ async function startCombatLoop() {
             if (res?.reason === 'attack_cooldown') {
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
-                const msg = `Hết MP! Đang nghỉ ngơi 4s để hồi phục...`;
-                bossMsg = msg;
-                logCombat(msg);
-                nextWait = 4000;
+                // Nếu server báo hết mana, ép buộc đánh thường ngay lượt tới
+                latestMP = 0;
+                logCombat(`[HỆ THỐNG] Hết MP, chuyển sang Đánh Thường...`);
+                nextWait = 500;
             } else if (res?.reason === 'not_found' || res?.reason === 'target_is_dead') {
                 currentMobId = null;
                 currentMobKind = null;
                 nextWait = 200;
             } else {
-                // Tạm giữ ID để đánh tiếp, chờ 1s rồi thử lại nếu gặp lỗi khác (bao gồm out_of_range từ server)
                 nextWait = 1000;
             }
         }
@@ -468,28 +476,45 @@ async function start() {
                 const res = await tracker.getWeeklyContestStatus(auth.token, auth.charId, auth.config);
                 if (res) {
                     const topArray = res.top || res.top_players || [];
-                    const top1 = topArray[0] ? `${topArray[0].character_name || topArray[0].character_id} (${topArray[0].score ?? topArray[0].my_score ?? 0})` : "Chưa có";
+                    
+                    // 1. Tìm thông tin của mình trong danh sách Top
+                    const myId = String(auth.charId).toLowerCase();
+                    const myIndex = topArray.findIndex(p => String(p.character_id).toLowerCase() === myId);
+                    
+                    let myRank = Number(res.my_rank || 0);
+                    let myScore = Number(res.my_score ?? res.score ?? 0);
+                    
+                    if (myIndex !== -1) {
+                        myRank = Number(topArray[myIndex].rank || myIndex + 1);
+                        myScore = Number(topArray[myIndex].score || topArray[myIndex].my_score || 0);
+                    }
 
-                    const myRank = Number(res.my_rank || 0);
-                    const myScore = Number(res.my_score ?? res.score ?? 0);
-
-                    let gap10Msg = "";
+                    const top1Name = topArray[0] ? (topArray[0].character_name || "Top 1") : "Chưa có";
+                    const top1Score = topArray[0] ? Number(topArray[0].score || topArray[0].my_score || 0) : 0;
+                    const top1 = topArray[0] ? `${top1Name} (${top1Score})` : "Chưa có";
+                    
+                    let gapNextMsg = "";
                     let gap1Msg = "";
 
-                    // Khoảng cách tới Top 10 (hoặc người cuối danh sách nếu server trả về < 10)
-                    const idxThreshold = Math.min(topArray.length - 1, 9);
-                    if (idxThreshold >= 0 && myRank > (idxThreshold + 1) && topArray[idxThreshold]) {
-                        const scoreThreshold = Number(topArray[idxThreshold].score ?? topArray[idxThreshold].my_score ?? 0);
-                        gap10Msg = ` | Thua Top ${idxThreshold + 1}: ${scoreThreshold - myScore} pts`;
+                    // Khoảng cách tới người xếp ngay trên
+                    if (myIndex > 0) {
+                        const nextPlayer = topArray[myIndex - 1];
+                        const nextScore = Number(nextPlayer.score || nextPlayer.my_score || 0);
+                        const nextRank = nextPlayer.rank || myIndex;
+                        gapNextMsg = ` | Thua Hạng ${nextRank}: ${nextScore - myScore} pts`;
+                    } else if (myIndex === -1 && topArray.length > 0) {
+                        const lastPlayer = topArray[topArray.length - 1];
+                        const lastScore = Number(lastPlayer.score || lastPlayer.my_score || 0);
+                        const lastRank = lastPlayer.rank || topArray.length;
+                        gapNextMsg = ` | Thua Top ${lastRank}: ${lastScore - myScore} pts`;
                     }
 
-                    // Khoảng cách tới Top 1 (Hạng 1)
-                    if (myRank > 1 && topArray[0]) {
-                        const score1 = Number(topArray[0].score ?? topArray[0].my_score ?? 0);
-                        gap1Msg = ` | Thua Top 1: ${score1 - myScore} pts`;
+                    // Khoảng cách tới Top 1
+                    if (myRank > 1 && top1Score > 0) {
+                        gap1Msg = ` | Thua Top 1: ${top1Score - myScore} pts`;
                     }
 
-                    killMsg = `Hạng: ${myRank || 'N/A'} - Điểm: ${myScore}${gap10Msg}${gap1Msg} | Top 1: ${top1}`;
+                    killMsg = `Hạng: ${myRank || 'N/A'} - Điểm: ${myScore}${gapNextMsg}${gap1Msg} | Top 1: ${top1}`;
                 }
             } catch (e) { }
         }, 5000);

@@ -26,19 +26,19 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
     const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss').sort((a, b) => a.distance - b.distance);
     if (bossMobs.length > 0) {
         const target = bossMobs[0];
-        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'boss', x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'boss', x: target.x, y: target.y, myX, myY, hp: target.hp };
     }
 
     const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
     if (eliteMobs.length > 0) {
         const target = eliteMobs[0];
-        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'elite', x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'elite', x: target.x, y: target.y, myX, myY, hp: target.hp };
     }
 
     const normalMobs = aliveMobs.filter(m => m.mob_kind === 'normal').sort((a, b) => a.distance - b.distance);
     if (normalMobs.length > 0) {
         const target = normalMobs[0];
-        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY };
+        return { id: target.id, inRange: target.inRange, distance: target.distance, mobKind: 'normal', x: target.x, y: target.y, myX, myY, hp: target.hp };
     }
 
     return null; // Thực sự hết quái mới chuyển map
@@ -130,13 +130,14 @@ export async function getRealmSnapshot(token, charId, config, realmId) {
  */
 export async function attackMob(token, charId, config, realmId, mobId, useV1 = false) {
     try {
-        const rpcName = 'rpc_attack_realm_mob_v3';
+        // Nếu dùng chiêu (useV1 = false) thì dùng v3, nếu đánh thường thì dùng bản gốc rpc_attack_realm_mob
+        const rpcName = useV1 ? 'rpc_attack_realm_mob' : 'rpc_attack_realm_mob_v3';
         const payload = {
             p_character_id: charId,
             p_realm_id: realmId,
             p_mob_id: mobId
         };
-        if (!useV1) payload.p_apply_counter = true;
+        if (!useV1) payload.p_apply_counter = true; // Chỉ v3 mới dùng apply_counter
 
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/${rpcName}`, {
             method: 'POST',

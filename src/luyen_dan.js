@@ -21,7 +21,7 @@ async function luyenDanLoop() {
             const res = await tracker.rpcCall(auth.token, auth.charId, auth.config, 'rpc_craft_guarded', {
                 p_character_id: auth.charId,
                 p_recipe_code: recipeCode,
-                p_times: 1
+                p_times: 10
             });
 
             if (res && res.ok) {
