@@ -13,6 +13,13 @@ const TOKEN_FILE = './config/token.text';
 
 // --- Các hàm tiện ích ---
 
+function formatNum(num) {
+    if (typeof num !== 'number') num = Number(num || 0);
+    if (num >= 1000000) return (num / 1000000).toFixed(2) + " Triệu";
+    if (num >= 1000) return (num / 1000).toFixed(1) + " K";
+    return num.toString();
+}
+
 function hp(payload) {
     if (!payload || Object.keys(payload).length === 0) return "";
     return Object.keys(payload).sort().map(k => `${k}${payload[k]}`).join("");
@@ -95,10 +102,10 @@ async function runBot() {
             console.log(colors.cyan + "====================================================" + colors.reset);
             console.log(colors.cyan + "   " + colors.bright + "CHÂN GIỚI AUTO ULTIMATE" + colors.reset + ` - [${colors.yellow}${new Date().toLocaleTimeString()}${colors.cyan}]`);
             console.log(colors.cyan + "====================================================" + colors.reset);
-            console.log(` Đạo hữu:   ${colors.magenta}${playerName}${colors.reset} | LC: ${colors.red}${Number(player.combat_power || 0).toLocaleString()}${colors.reset}`);
+            console.log(` Đạo hữu:   ${colors.magenta}${playerName}${colors.reset} | LC: ${colors.red}${formatNum(player.combat_power)}${colors.reset}`);
             console.log(` Cảnh giới: ${colors.yellow}${currentRealm.name}${colors.reset}`);
-            console.log(` Linh khí:  [${bar}] ${colors.green}${Math.floor(player.qi)}${colors.reset}/${currentRealm.qiThreshold} (${percent}%)`);
-            console.log(` Thể lực:   ${colors.bright}${bodyPower}${colors.reset} | Linh thạch: ${colors.yellow}${stones.toLocaleString()}${colors.reset}`);
+            console.log(` Linh khí:  [${bar}] ${colors.green}${formatNum(player.qi)}${colors.reset} / ${formatNum(currentRealm.qiThreshold)} (${percent}%)`);
+            console.log(` Thể lực:   ${colors.bright}${bodyPower}${colors.reset} | Linh thạch: ${colors.yellow}${formatNum(stones)}${colors.reset}`);
             console.log(colors.cyan + "----------------------------------------------------" + colors.reset);
             
             // 1. AUTO PHÂN BỔ TIỀM NĂNG (Dồn 100% vào ATK)
@@ -116,7 +123,7 @@ async function runBot() {
                 if (cd <= 0 && bodyPower >= 10 && player.realmIndex >= zone.minRealm) {
                     console.log(` [HÀNH ĐỘNG] Đang càn quét: ${colors.bright}${zone.name}${colors.reset}...`);
                     await apiRequest("/api/challenge", "POST", { zoneId: zone.id }, token, playerName).catch(()=>{});
-                    break; // Ưu tiên đánh từng vùng một ở mỗi vòng lặp 5s
+                    break; 
                 } else if (cd > 0 && player.realmIndex >= zone.minRealm) {
                     nextTrialMsg = `Tiếp theo: ${zone.name} (${cd}s)`;
                 }
