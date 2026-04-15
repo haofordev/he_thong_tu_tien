@@ -73,16 +73,17 @@ async function apiRequest(endpoint, method = "GET", payload = null, token = null
 
 async function runBot() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    let token = null, playerName = "", lastGuessTime = 0, lastMineCheck = 0, lastHarvestTime = 0, mineStatus = "Đang kiểm tra...";
-    const C = { 
-        res: "\x1b[0m", 
-        cyan: "\x1b[36m", 
-        gre: "\x1b[32m", 
-        yel: "\x1b[33m", 
-        mag: "\x1b[35m", 
-        red: "\x1b[31m", 
-        blu: "\x1b[34m", 
-        bri: "\x1b[1m", 
+    let token = null, playerName = "", lastGuessTime = 0, lastMineCheck = 0, lastHarvestTime = 0, lastSyncTime = 0, mineStatus = "Đang kiểm tra...";
+    let guessLow = 1, guessHigh = 10000, currentGuess = 5000, lastSyncedWinner = "", playerCount = 0;
+    const C = {
+        res: "\x1b[0m",
+        cyan: "\x1b[36m",
+        gre: "\x1b[32m",
+        yel: "\x1b[33m",
+        mag: "\x1b[35m",
+        red: "\x1b[31m",
+        blu: "\x1b[34m",
+        bri: "\x1b[1m",
         dim: "\x1b[2m",
         bg_blu: "\x1b[44m"
     };
@@ -91,7 +92,7 @@ async function runBot() {
     if (token) {
         try { playerName = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString()).name; } catch (e) { token = null; }
     }
-    
+
     if (!token) {
         addLog("Đang tiến hành đăng nhập...", 'info');
         try {
@@ -153,25 +154,25 @@ async function runBot() {
             console.clear();
             const timeStr = new Date().toLocaleTimeString();
             const line = C.cyan + "━".repeat(60) + C.res;
-            
+
             console.log(C.cyan + "┏" + "━".repeat(58) + "┓" + C.res);
             console.log(C.cyan + "┃" + C.res + C.bri + "            CHÂN GIỚI AUTO ULTIMATE - BETA V2           " + C.res + C.cyan + "┃" + C.res);
             console.log(C.cyan + "┗" + "━".repeat(58) + "┛" + C.res);
 
             // Row 1: Player Info
             console.log(` Đạo hữu: ${C.mag}${playerName}${C.res} | ${C.yel}${currentRealm.name}${C.res} | LC: ${C.red}${formatNum(player.combat_power)}${C.res}`);
-            
+
             // Qi Progress Bar
             const percent = Math.min(100, Math.floor((player.qi / currentRealm.qiThreshold) * 100));
             const barWidth = 30;
             const filledWidth = Math.floor(percent / (100 / barWidth));
             const bar = C.gre + "█".repeat(filledWidth) + C.res + C.dim + "░".repeat(barWidth - filledWidth) + C.res;
             console.log(` Linh khí: [${bar}] ${C.gre}${percent}%${C.res} (${formatNum(player.qi)} / ${formatNum(currentRealm.qiThreshold)})`);
-            
+
             // Stats Row
             console.log(` Tốc độ: ${C.gre}${formatNum(totalQiSpeed)}/s${C.res} | Thể lực: ${C.bri}${bodyPower}${C.res} | Linh thạch: ${C.yel}${formatNum(stones)}${C.res}`);
             console.log(` Công đức: ${C.mag}${formatNum(player.merit)}${C.res} | Tỷ lệ Đột phá: ${totalChance > 0 ? C.gre : C.red}${totalChance.toFixed(1)}%${C.res}`);
-            
+
             console.log(line);
 
             // Row: Trials
@@ -183,7 +184,7 @@ async function runBot() {
                 const lastTime = lastChallenges[zone.id] || 0;
                 const cooldownMs = (zone.cooldownSeconds || 300) * 1000 + 5000;
                 const cd = Math.max(0, Math.floor((lastTime + cooldownMs - Date.now()) / 1000));
-                
+
                 if (cd <= 0) {
                     trialOutputs.push(`${C.blu}✔ ${zone.name.padEnd(16)}${C.res}`);
                     // Automation
@@ -206,6 +207,30 @@ async function runBot() {
 
             console.log(line);
 
+            // Row: Guess Number (Optimized)
+            console.log(C.bri + " [ ĐOÁN MỆNH SỐ ]" + C.res);
+            const guessCd = Math.max(0, Math.floor((lastGuessTime + 301000 - Date.now()) / 1000));
+            const rangeWidth = guessHigh - guessLow;
+            if (stones > 500) {
+                if (lastSyncedWinner) {
+                    console.log(`   Trạng thái: ${C.yel}Đã kết thúc (Thắng: ${lastSyncedWinner})${C.res}`);
+                    console.log(`   ${C.dim}Đang chờ ván mới...${C.res}`);
+                } else {
+                    console.log(`   Phạm vi: ${C.yel}[${guessLow} - ${guessHigh}]${C.res} | Tiếp theo: ${C.bri}${currentGuess}${C.res}`);
+                    if (rangeWidth < 100 && rangeWidth > 2 && playerCount > 1) {
+                        console.log(`   Trạng thái: ${C.mag}Chờ đồng đội thu hẹp phạm vi...${C.res}`);
+                    } else if (guessCd <= 0) {
+                        console.log(`   Trạng thái: ${C.gre}Sẵn sàng${C.res}`);
+                    } else {
+                        console.log(`   Trạng thái: ${C.dim}Chờ ${guessCd}s${C.res}`);
+                    }
+                }
+            } else {
+                console.log(`   Trạng thái: ${C.red}Cần > 500 Linh Thạch${C.res}`);
+            }
+
+            console.log(line);
+
             // Row: Action Logs
             console.log(C.bri + " [ NHẬT KÝ HÀNH ĐỘNG ]" + C.res);
             actionLogs.slice(0, 5).forEach(log => {
@@ -224,7 +249,7 @@ async function runBot() {
             if (player.potential_points > 0) {
                 await apiRequest("/potential/distribute", "POST", { distribution: { hp: 0, atk: player.potential_points, def: 0 } }, token, playerName)
                     .then(() => addLog(`Đã phân bổ ${player.potential_points} tiềm năng vào ATK`, 'success'))
-                    .catch(() => {});
+                    .catch(() => { });
             }
 
             // 3. Đột phá
@@ -237,39 +262,101 @@ async function runBot() {
                     .catch(e => addLog(`Lỗi đột phá: ${e.message}`, 'error'));
             }
 
-            // 4. Khai mỏ
-            if (Date.now() - lastMineCheck > 60000) {
-                try {
-                    const mines = await apiRequest("/api/mine/list", "GET", null, token);
-                    const myMine = mines.find(m => m.isOwned === true || m.occupierName === playerName);
-                    if (myMine) {
-                        const timeLeft = myMine.occupationTimeLeft || 0;
-                        mineStatus = `${myMine.name} (${Math.floor(timeLeft / 60000)}p)`;
-                        if (bodyPower >= 2 && (myMine.canHarvest || (Date.now() - lastHarvestTime > 300000))) {
-                            await apiRequest("/api/mine/harvest", "POST", { mineId: myMine.id }, token, playerName);
-                            await apiRequest("/api/mine/collect", "POST", { mineId: myMine.id }, token, playerName);
-                            addLog(`Đã thu hoạch mỏ: ${myMine.name}`, 'success');
-                            lastHarvestTime = Date.now();
-                        }
-                    } else if (bodyPower > 20) {
-                        await apiRequest("/api/mine/occupy", "POST", { mineId: TARGET_MINE_ID }, token, playerName);
-                        addLog(`Đã chiếm mỏ ID: ${TARGET_MINE_ID}`, 'success');
-                    }
-                    lastMineCheck = Date.now();
-                } catch (e) { mineStatus = "Lỗi mỏ: " + e.message; }
-            }
+            // 4. Khai mỏ (Logic đã tắt theo yêu cầu)
+            mineStatus = "Đã tắt";
+
 
             // 5. Rèn thể
-            if (player.exp >= 10) { // Giả sử cần ít nhất 10 exp
+            if (player.exp >= 10 && totalChance <= 0) {
                 await apiRequest("/api/temper-body", "POST", null, token, playerName)
-                    .then(() => addLog(`Đã thực hiện rèn thể`, 'info'))
-                    .catch(() => {});
+                    .then(() => addLog(`Đã thực hiện rèn thể (Tỷ lệ ĐP <= 0)`, 'info'))
+                    .catch(() => { });
             }
 
-        } catch (err) { 
+            // 6. Đoán số (Binary Search with Smart Catch-up)
+            // Tách biệt việc đồng bộ trạng thái (mỗi 30s) và việc gửi lệnh đoán (mỗi 5p)
+            if (stones > 500) {
+                // 6a. Đồng bộ trạng thái game
+                const syncInterval = lastSyncedWinner ? 120000 : 30000; // Nếu game kết thúc thì sync chậm lại (2p), đang chơi thì 30s
+                if (Date.now() - lastSyncTime > syncInterval) {
+                    try {
+                        const gameState = await apiRequest("/api/doanso/game-state", "GET", null, token);
+                        if (gameState.winner) {
+                            lastSyncedWinner = gameState.winner;
+                        } else if (gameState.isActive === false) {
+                            lastSyncedWinner = "Hệ thống (Đang chờ)";
+                        } else {
+                            if (lastSyncedWinner) {
+                                addLog(`Khởi động ván mới!`, 'info');
+                                lastSyncedWinner = "";
+                            }
+                            let tempLow = 1, tempHigh = 10000;
+                            (gameState.guesses || []).forEach(g => {
+                                const num = g.guessNumber;
+                                const hint = g.hintMessage || "";
+                                if (hint.includes("lớn hơn")) { if (num <= tempHigh) tempHigh = num - 1; }
+                                else if (hint.includes("nhỏ hơn")) { if (num >= tempLow) tempLow = num + 1; }
+                            });
+                            if (tempLow !== guessLow || tempHigh !== guessHigh) {
+                                guessLow = tempLow;
+                                guessHigh = tempHigh;
+                                currentGuess = Math.floor((guessLow + guessHigh) / 2);
+                            }
+
+                            // Cập nhật số người chơi duy nhất tham gia
+                            playerCount = new Set((gameState.guesses || []).map(g => g.playerName)).size;
+
+                            // SYNC COOLDOWN: Tìm lượt đoán cuối của chính mình để đồng bộ thời gian chờ
+                            const myLastGuess = [...(gameState.guesses || [])].reverse().find(g => g.playerName === playerName);
+                            if (myLastGuess && myLastGuess.time) {
+                                const remoteLastTime = new Date(myLastGuess.time).getTime();
+                                if (remoteLastTime > lastGuessTime) {
+                                    lastGuessTime = remoteLastTime;
+                                }
+                            }
+                        }
+                        lastSyncTime = Date.now();
+                    } catch (e) { }
+                }
+
+                // 6b. Gửi lệnh đoán (Mỗi 5 phút + 5 giây bù trừ)
+                const rangeWidth = guessHigh - guessLow;
+                const isStrategicWait = rangeWidth < 10 && rangeWidth > 2 && playerCount > 1;
+
+                if (!lastSyncedWinner && !isStrategicWait && (Date.now() - lastGuessTime > 305000)) {
+                    await apiRequest("/api/doanso/guess", "POST", { guessNumber: currentGuess }, token, playerName)
+                        .then(res => {
+                            const hint = res.hintMessage || "";
+                            addLog(`Đoán ${currentGuess}: ${hint}`, 'info');
+                            if (hint.includes("lớn hơn")) { guessLow = currentGuess + 1; }
+                            else if (hint.includes("nhỏ hơn")) { guessHigh = currentGuess - 1; }
+                            else if (res.success || res.winner || hint.includes("CHÚC MỪNG")) {
+                                addLog(`🎉 Trúng số: ${currentGuess}!`, 'success');
+                                lastSyncedWinner = playerName;
+                                guessLow = 1; guessHigh = 10000;
+                            }
+                            currentGuess = Math.floor((guessLow + guessHigh) / 2);
+                            lastGuessTime = Date.now();
+                        })
+                        .catch(e => {
+                            const err = e.message.toLowerCase();
+                            if (err.includes("kết thúc") || err.includes("isactive")) {
+                                lastGuessTime = Date.now() - 240000; // Thử lại sau 1 phút
+                            } else if (err.includes("đợi") || err.includes("phút") || err.includes("chưa tới giờ") || err.includes("wait")) {
+                                addLog(`Server báo chờ: Đã cập nhật lại thời gian hồi.`, 'warn');
+                                lastGuessTime = Date.now(); // Đồng bộ lại thời gian chờ của server
+                            } else {
+                                addLog(`Lỗi đoán số: ${e.message}`, 'error');
+                                lastGuessTime = Date.now(); // Tạm dừng để tránh spam khi lỗi lạ
+                            }
+                        });
+                }
+            }
+
+        } catch (err) {
             if (err.message.includes("401")) {
                 addLog("Token hết hạn, đang đăng nhập lại...", 'warn');
-                token = null; 
+                token = null;
             } else {
                 addLog(`Lỗi hệ thống: ${err.message}`, 'error');
             }
