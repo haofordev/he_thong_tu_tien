@@ -211,22 +211,20 @@ async function runBot() {
             console.log(C.bri + " [ ĐOÁN MỆNH SỐ ]" + C.res);
             const guessCd = Math.max(0, Math.floor((lastGuessTime + 301000 - Date.now()) / 1000));
             const rangeWidth = guessHigh - guessLow;
-            if (stones > 500) {
-                if (lastSyncedWinner) {
-                    console.log(`   Trạng thái: ${C.yel}Đã kết thúc (Thắng: ${lastSyncedWinner})${C.res}`);
-                    console.log(`   ${C.dim}Đang chờ ván mới...${C.res}`);
-                } else {
-                    console.log(`   Phạm vi: ${C.yel}[${guessLow} - ${guessHigh}]${C.res} | Tiếp theo: ${C.bri}${currentGuess}${C.res}`);
-                    if (rangeWidth < 100 && rangeWidth > 2 && playerCount > 1) {
-                        console.log(`   Trạng thái: ${C.mag}Chờ đồng đội thu hẹp phạm vi...${C.res}`);
-                    } else if (guessCd <= 0) {
-                        console.log(`   Trạng thái: ${C.gre}Sẵn sàng${C.res}`);
-                    } else {
-                        console.log(`   Trạng thái: ${C.dim}Chờ ${guessCd}s${C.res}`);
-                    }
-                }
+            if (lastSyncedWinner) {
+                console.log(`   Trạng thái: ${C.yel}Đã kết thúc (Thắng: ${lastSyncedWinner})${C.res}`);
+                console.log(`   ${C.dim}Đang chờ ván mới...${C.res}`);
             } else {
-                console.log(`   Trạng thái: ${C.red}Cần > 500 Linh Thạch${C.res}`);
+                console.log(`   Phạm vi: ${C.yel}[${guessLow} - ${guessHigh}]${C.res} | Tiếp theo: ${C.bri}${currentGuess}${C.res}`);
+                if (stones <= 500) {
+                    console.log(`   Trạng thái: ${C.red}Cần > 500 Linh Thạch để cược${C.res}`);
+                } else if (rangeWidth < 100 && rangeWidth > 2 && playerCount > 1) {
+                    console.log(`   Trạng thái: ${C.mag}Chờ đồng đội thu hẹp phạm vi...${C.res}`);
+                } else if (guessCd <= 0) {
+                    console.log(`   Trạng thái: ${C.gre}Sẵn sàng${C.res}`);
+                } else {
+                    console.log(`   Trạng thái: ${C.dim}Chờ ${guessCd}s${C.res}`);
+                }
             }
 
             console.log(line);
@@ -241,7 +239,7 @@ async function runBot() {
             });
 
             console.log(C.dim + " " + "━".repeat(60) + C.res);
-            console.log(` Hệ thống: ${C.gre}ONLINE${C.res} | ${timeStr} | Chờ 5s...`);
+            console.log(` Hệ thống: ${C.gre}ONLINE${C.res} | ${timeStr} | Chờ 3s...`);
 
             // --- AUTOMATION LOGIC ---
 
@@ -274,52 +272,45 @@ async function runBot() {
             }
 
             // 6. Đoán số (Binary Search with Smart Catch-up)
-            // Tách biệt việc đồng bộ trạng thái (mỗi 30s) và việc gửi lệnh đoán (mỗi 5p)
-            if (stones > 500) {
-                // 6a. Đồng bộ trạng thái game
-                const syncInterval = lastSyncedWinner ? 120000 : 30000; // Nếu game kết thúc thì sync chậm lại (2p), đang chơi thì 30s
-                if (Date.now() - lastSyncTime > syncInterval) {
-                    try {
-                        const gameState = await apiRequest("/api/doanso/game-state", "GET", null, token);
-                        if (gameState.winner) {
-                            lastSyncedWinner = gameState.winner;
-                        } else if (gameState.isActive === false) {
-                            lastSyncedWinner = "Hệ thống (Đang chờ)";
-                        } else {
-                            if (lastSyncedWinner) {
-                                addLog(`Khởi động ván mới!`, 'info');
-                                lastSyncedWinner = "";
-                            }
-                            let tempLow = 1, tempHigh = 10000;
-                            (gameState.guesses || []).forEach(g => {
-                                const num = g.guessNumber;
-                                const hint = g.hintMessage || "";
-                                if (hint.includes("lớn hơn")) { if (num <= tempHigh) tempHigh = num - 1; }
-                                else if (hint.includes("nhỏ hơn")) { if (num >= tempLow) tempLow = num + 1; }
-                            });
-                            if (tempLow !== guessLow || tempHigh !== guessHigh) {
-                                guessLow = tempLow;
-                                guessHigh = tempHigh;
-                                currentGuess = Math.floor((guessLow + guessHigh) / 2);
-                            }
-
-                            // Cập nhật số người chơi duy nhất tham gia
-                            playerCount = new Set((gameState.guesses || []).map(g => g.playerName)).size;
-
-                            // SYNC COOLDOWN: Tìm lượt đoán cuối của chính mình để đồng bộ thời gian chờ
-                            const myLastGuess = [...(gameState.guesses || [])].reverse().find(g => g.playerName === playerName);
-                            if (myLastGuess && myLastGuess.time) {
-                                const remoteLastTime = new Date(myLastGuess.time).getTime();
-                                if (remoteLastTime > lastGuessTime) {
-                                    lastGuessTime = remoteLastTime;
-                                }
-                            }
+            // 6a. Đồng bộ trạng thái game (Luôn chạy để lấy dự đoán)
+            const syncInterval = lastSyncedWinner ? 120000 : 30000;
+            if (Date.now() - lastSyncTime > syncInterval) {
+                try {
+                    const gameState = await apiRequest("/api/doanso/game-state", "GET", null, token);
+                    if (gameState.winner) {
+                        lastSyncedWinner = gameState.winner;
+                    } else if (gameState.isActive === false) {
+                        lastSyncedWinner = "Hệ thống (Đang chờ)";
+                    } else {
+                        if (lastSyncedWinner) {
+                            addLog(`Khởi động ván mới!`, 'info');
+                            lastSyncedWinner = "";
                         }
-                        lastSyncTime = Date.now();
-                    } catch (e) { }
-                }
+                        let tempLow = 1, tempHigh = 10000;
+                        (gameState.guesses || []).forEach(g => {
+                            const num = g.guessNumber;
+                            const hint = g.hintMessage || "";
+                            if (hint.includes("lớn hơn")) { if (num <= tempHigh) tempHigh = num - 1; }
+                            else if (hint.includes("nhỏ hơn")) { if (num >= tempLow) tempLow = num + 1; }
+                        });
+                        if (tempLow !== guessLow || tempHigh !== guessHigh) {
+                            guessLow = tempLow;
+                            guessHigh = tempHigh;
+                            currentGuess = Math.floor((guessLow + guessHigh) / 2);
+                        }
+                        playerCount = new Set((gameState.guesses || []).map(g => g.playerName)).size;
+                        const myLastGuess = [...(gameState.guesses || [])].reverse().find(g => g.playerName === playerName);
+                        if (myLastGuess && myLastGuess.time) {
+                            const remoteLastTime = new Date(myLastGuess.time).getTime();
+                            if (remoteLastTime > lastGuessTime) lastGuessTime = remoteLastTime;
+                        }
+                    }
+                    lastSyncTime = Date.now();
+                } catch (e) { }
+            }
 
-                // 6b. Gửi lệnh đoán (Mỗi 5 phút + 5 giây bù trừ)
+            // 6b. Gửi lệnh đoán (Chỉ khi đủ Linh Thạch)
+            if (stones > 500) {
                 const rangeWidth = guessHigh - guessLow;
                 const isStrategicWait = rangeWidth < 10 && rangeWidth > 2 && playerCount > 1;
 
@@ -341,13 +332,13 @@ async function runBot() {
                         .catch(e => {
                             const err = e.message.toLowerCase();
                             if (err.includes("kết thúc") || err.includes("isactive")) {
-                                lastGuessTime = Date.now() - 240000; // Thử lại sau 1 phút
+                                lastGuessTime = Date.now() - 240000;
                             } else if (err.includes("đợi") || err.includes("phút") || err.includes("chưa tới giờ") || err.includes("wait")) {
                                 addLog(`Server báo chờ: Đã cập nhật lại thời gian hồi.`, 'warn');
-                                lastGuessTime = Date.now(); // Đồng bộ lại thời gian chờ của server
+                                lastGuessTime = Date.now();
                             } else {
                                 addLog(`Lỗi đoán số: ${e.message}`, 'error');
-                                lastGuessTime = Date.now(); // Tạm dừng để tránh spam khi lỗi lạ
+                                lastGuessTime = Date.now();
                             }
                         });
                 }
@@ -361,11 +352,11 @@ async function runBot() {
                 addLog(`Lỗi hệ thống: ${err.message}`, 'error');
             }
         }
-        await new Promise(r => setTimeout(r, 5000));
+        await new Promise(r => setTimeout(r, 3000));
     }
 }
 
 runBot().catch(e => {
     console.error(e);
-    setTimeout(runBot, 5000);
+    setTimeout(runBot, 3000);
 });
