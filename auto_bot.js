@@ -25,8 +25,9 @@ function addLog(msg, type = 'info') {
 
 function formatNum(num) {
     if (typeof num !== 'number') num = Number(num || 0);
-    if (num >= 1000000) return (num / 1000000).toFixed(2) + "M";
-    if (num >= 1000) return (num / 1000).toFixed(1) + "K";
+    if (num >= 1000000000) return (num / 1000000000).toFixed(2) + " Tỷ";
+    if (num >= 1000000) return (num / 1000000).toFixed(2) + " Tr";
+    if (num >= 1000) return (num / 1000).toFixed(1) + " K";
     return num.toString();
 }
 
@@ -73,7 +74,7 @@ async function apiRequest(endpoint, method = "GET", payload = null, token = null
 
 async function runBot() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    let token = null, playerName = "", lastGuessTime = 0, lastMineCheck = 0, lastHarvestTime = 0, lastSyncTime = 0, mineStatus = "Đang kiểm tra...";
+    let token = null, playerName = "", lastGuessTime = 0, lastMineCheck = 0, lastHarvestTime = 0, lastSyncTime = 0, lastTowerTime = 0, mineStatus = "Đang kiểm tra...";
     let guessLow = 1, guessHigh = 10000, currentGuess = 5000, lastSyncedWinner = "", playerCount = 0;
     const C = {
         res: "\x1b[0m",
@@ -124,30 +125,50 @@ async function runBot() {
             // Tính toán tỷ lệ đột phá và tốc độ tu luyện thực tế
             let bonusChance = 0;
             let qiMultiplier = 1;
+            let detailBreakdown = [];
 
             const root = (gameData.SPIRITUAL_ROOTS || []).find(r => r.id === player.spiritualRoot);
             if (root && root.bonus) {
+                let rChance = 0;
                 root.bonus.forEach(b => {
-                    if (b.type === 'breakthrough_chance_add') bonusChance += b.value;
+                    if (b.type === 'breakthrough_chance_add') rChance += b.value;
                     if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1);
                 });
+                if (rChance > 0) detailBreakdown.push(`Linh căn: +${(rChance * 100).toFixed(1)}%`);
+                bonusChance += rChance;
             }
 
             const tech = (gameData.TECHNIQUES || []).find(t => t.id === player.activeTechniqueId);
             if (tech && tech.bonuses) {
+                let tChance = 0;
                 tech.bonuses.forEach(b => {
-                    if (b.type === 'breakthrough_chance_add') bonusChance += b.value;
+                    if (b.type === 'breakthrough_chance_add') tChance += b.value;
                     if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1);
                 });
+                if (tChance > 0) detailBreakdown.push(`Công pháp: +${(tChance * 100).toFixed(1)}%`);
+                bonusChance += tChance;
             }
 
-            (player.equipment || []).forEach(eq => {
+            (player.equipment || []).forEach((eq, idx) => {
+                const nameMatch = eq.name.match(/\+(\d+)$/);
+                const eqLevel = eq.upgrade_level ?? ((nameMatch ? parseInt(nameMatch[1]) : 0) || eq.refine || eq.level || eq.refine_level || eq.enhance || 0);
+                
+                const enhanceFactor = 1 + eqLevel * 0.1;
+                let eChance = 0;
                 (eq.bonuses || []).forEach(b => {
-                    if (b.type === 'breakthrough_chance_add') bonusChance += b.value;
+                    const effectiveValue = b.value * enhanceFactor;
+                    if (b.type === 'breakthrough_chance_add') eChance += effectiveValue;
+                    if (b.type === 'breakthrough_chance_multiplier') eChance += (currentRealm.breakthroughChance * (effectiveValue - 1));
+                    if (b.type === 'qi_per_second_multiplier') qiMultiplier += (effectiveValue - 1);
                 });
+                if (eChance > 0) detailBreakdown.push(`${eq.name.split(' ').pop().replace(/\+\d+$/, '')}(+${eqLevel}): +${(eChance * 100).toFixed(1)}%`);
+                bonusChance += eChance;
             });
 
-            const totalChance = (currentRealm.breakthroughChance + bonusChance) * 100;
+            const baseChancePercent = (currentRealm.breakthroughChance || 0) * 100;
+            const bonusChancePercent = bonusChance * 100;
+            const meritChancePercent = (player.merit || 0) * 0.01; // 0.01% mỗi điểm công đức
+            const totalChance = baseChancePercent + bonusChancePercent + meritChancePercent;
             const totalQiSpeed = currentRealm.baseQiPerSecond * qiMultiplier;
 
             // --- VẼ DASHBOARD ---
@@ -160,7 +181,7 @@ async function runBot() {
             console.log(C.cyan + "┗" + "━".repeat(58) + "┛" + C.res);
 
             // Row 1: Player Info
-            console.log(` Đạo hữu: ${C.mag}${playerName}${C.res} | ${C.yel}${currentRealm.name}${C.res} | LC: ${C.red}${formatNum(player.combat_power)}${C.res}`);
+            console.log(` Đạo hữu: ${C.mag}${playerName}${C.res} | ${C.yel}${currentRealm.name}${C.res} | Thân thể: ${C.blu}Cấp ${player.bodyStrength || 0}${C.res} | LC: ${C.red}${formatNum(player.combat_power)}${C.res}`);
 
             // Qi Progress Bar
             const percent = Math.min(100, Math.floor((player.qi / currentRealm.qiThreshold) * 100));
@@ -170,8 +191,9 @@ async function runBot() {
             console.log(` Linh khí: [${bar}] ${C.gre}${percent}%${C.res} (${formatNum(player.qi)} / ${formatNum(currentRealm.qiThreshold)})`);
 
             // Stats Row
-            console.log(` Tốc độ: ${C.gre}${formatNum(totalQiSpeed)}/s${C.res} | Thể lực: ${C.bri}${bodyPower}${C.res} | Linh thạch: ${C.yel}${formatNum(stones)}${C.res}`);
-            console.log(` Công đức: ${C.mag}${formatNum(player.merit)}${C.res} | Tỷ lệ Đột phá: ${totalChance > 0 ? C.gre : C.red}${totalChance.toFixed(1)}%${C.res}`);
+            const bonusQi = totalQiSpeed - currentRealm.baseQiPerSecond;
+            console.log(` Tốc độ: ${C.gre}${formatNum(totalQiSpeed)}/s${C.res} (${C.dim}+${formatNum(bonusQi)}${C.res}) | Thể lực: ${C.bri}${bodyPower}${C.res} | Linh thạch: ${C.yel}${formatNum(stones)}${C.res}`);
+            console.log(` Công đức: ${C.mag}${formatNum(player.merit)}${C.res} | Tỷ lệ Đột phá: ${totalChance > 0 ? C.gre : C.red}${totalChance.toFixed(1)}%${C.res} (${C.dim}${baseChancePercent.toFixed(1)}% + ${bonusChancePercent.toFixed(1)}% + ${meritChancePercent.toFixed(1)}%${C.res}) | Tháp: ${C.cyan}Tầng ${player.tower_floor || 0}${C.res}`);
 
             console.log(line);
 
@@ -201,9 +223,14 @@ async function runBot() {
 
             console.log(line);
 
-            // Row: Mining
-            console.log(C.bri + " [ KHAI MỎ ]" + C.res);
-            console.log(`   Vị trí: ${C.cyan}${mineStatus}${C.res}`);
+            // Row: Tower
+            console.log(C.bri + " [ THÔNG THIÊN THÁP ]" + C.res);
+            const towerCd = Math.max(0, Math.floor((lastTowerTime + 10000 - Date.now()) / 1000));
+            if (towerCd > 0) {
+                console.log(`   Tầng: ${C.cyan}${player.tower_floor || 0}${C.res} | Trạng thái: ${C.dim}Chờ hồi tháp (${towerCd}s)${C.res}`);
+            } else {
+                console.log(`   Tầng: ${C.cyan}${player.tower_floor || 0}${C.res} | Trạng thái: ${bodyPower >= 10 ? C.gre + "Sẵn sàng (Thể lực > 10)" : C.dim + "Chờ hồi thể lực (" + bodyPower + "/10)"}${C.res}`);
+            }
 
             console.log(line);
 
@@ -216,8 +243,9 @@ async function runBot() {
                 console.log(`   ${C.dim}Đang chờ ván mới...${C.res}`);
             } else {
                 console.log(`   Phạm vi: ${C.yel}[${guessLow} - ${guessHigh}]${C.res} | Tiếp theo: ${C.bri}${currentGuess}${C.res}`);
-                if (stones <= 500) {
-                    console.log(`   Trạng thái: ${C.red}Cần > 500 Linh Thạch để cược${C.res}`);
+                const isFinalStage = (guessHigh - guessLow) <= 1;
+                if (stones <= 500 && !isFinalStage) {
+                    console.log(`   Trạng thái: ${C.yel}Chờ 2 số cuối (Linh Thạch < 500)${C.res}`);
                 } else if (rangeWidth < 100 && rangeWidth > 2 && playerCount > 1) {
                     console.log(`   Trạng thái: ${C.mag}Chờ đồng đội thu hẹp phạm vi...${C.res}`);
                 } else if (guessCd <= 0) {
@@ -250,6 +278,28 @@ async function runBot() {
                     .catch(() => { });
             }
 
+            // 1b. Chuyển đổi công pháp chiến thuật (Ưu tiên hàng đầu khi > 90%)
+            const qiProgress = (player.qi / currentRealm.qiThreshold) * 100;
+            const targetTech = qiProgress < 90 ? "thanhtam" : "tinhthanha";
+            let techJustSwitched = false;
+
+            if (player.activeTechniqueId !== targetTech) {
+                const switchCooldown = (gameData.TECHNIQUE_SWITCH_COOLDOWN_SECONDS || { value: 60 }).value;
+                const lastSwitch = new Date(player.last_technique_switch_time || 0).getTime();
+                const canSwitch = (Date.now() - lastSwitch) / 1000 > switchCooldown;
+                
+                if (canSwitch) {
+                    try {
+                        await apiRequest("/api/activate-technique", "POST", { techniqueId: targetTech }, token, playerName);
+                        addLog(`Đã chuyển công pháp sang: ${targetTech === "thanhtam" ? "Thánh Tâm Quyết" : "Tinh Thần Quyết Hạ"}`, 'success');
+                        player.activeTechniqueId = targetTech; // Cập nhật tạm thời để các logic tính toán bên dưới nhận diện được
+                        techJustSwitched = true;
+                    } catch (e) {
+                        addLog(`Lỗi chuyển công pháp: ${e.message}`, 'error');
+                    }
+                }
+            }
+
             // 3. Đột phá
             if (player.qi >= currentRealm.qiThreshold && totalChance > 0) {
                 await apiRequest("/api/breakthrough", "POST", null, token, playerName)
@@ -264,11 +314,24 @@ async function runBot() {
             mineStatus = "Đã tắt";
 
 
-            // 5. Rèn thể
-            if (player.exp >= 10 && totalChance <= 0) {
+            // 5. Rèn thể (Chỉ rèn khi tỷ lệ chưa dương)
+            if (!techJustSwitched && player.activeTechniqueId === "tinhthanha" && player.exp >= 10 && qiProgress >= 90 && totalChance <= 0) {
                 await apiRequest("/api/temper-body", "POST", null, token, playerName)
-                    .then(() => addLog(`Đã thực hiện rèn thể (Tỷ lệ ĐP <= 0)`, 'info'))
+                    .then(() => addLog(`Đã thực hiện rèn thể (Tiến độ: ${qiProgress.toFixed(1)}% | Tỷ lệ: ${totalChance.toFixed(1)}%)`, 'info'))
                     .catch(() => { });
+            }
+
+            // 5b. Khiêu chiến Thông Thiên Tháp
+            if (bodyPower >= 10 && (Date.now() - lastTowerTime > 10000)) {
+                lastTowerTime = Date.now();
+                await apiRequest("/api/tower/challenge", "POST", null, token, playerName)
+                    .then(res => {
+                        if (res.success) addLog(`Khiêu chiến tháp thành công! (Tầng ${(player.tower_floor || 0) + 1})`, 'success');
+                        else addLog(`Khiêu chiến tháp: ${res.message || 'Thất bại'}`, 'warn');
+                    })
+                    .catch(e => {
+                        if (!e.message.includes("400")) addLog(`Lỗi khiêu chiến tháp: ${e.message}`, 'error');
+                    });
             }
 
             // 6. Đoán số (Binary Search with Smart Catch-up)
@@ -309,10 +372,12 @@ async function runBot() {
                 } catch (e) { }
             }
 
-            // 6b. Gửi lệnh đoán (Chỉ khi đủ Linh Thạch)
-            if (stones > 500) {
-                const rangeWidth = guessHigh - guessLow;
-                const isStrategicWait = rangeWidth < 10 && rangeWidth > 2 && playerCount > 1;
+            // 6b. Gửi lệnh đoán
+            const isFinalStage = rangeWidth <= 1;
+            const canGuess = stones > 500 || (isFinalStage && stones > 0);
+
+            if (canGuess) {
+                const isStrategicWait = rangeWidth < 100 && rangeWidth > 2 && playerCount > 1;
 
                 if (!lastSyncedWinner && !isStrategicWait && (Date.now() - lastGuessTime > 305000)) {
                     await apiRequest("/api/doanso/guess", "POST", { guessNumber: currentGuess }, token, playerName)
