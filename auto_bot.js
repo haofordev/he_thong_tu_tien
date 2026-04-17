@@ -54,7 +54,7 @@ async function apiRequest(endpoint, method = "GET", payload = null, token = null
     let body = null;
     if (method === "POST") {
         const timestamp = Date.now();
-        const action = endpoint.replace("/api", "");
+        const action = "-" + endpoint.split("/").pop();
         if (playerName && !endpoint.includes("/auth/login")) {
             body = JSON.stringify({
                 ...(payload || {}), action: action, timestamp: timestamp,
@@ -152,7 +152,7 @@ async function runBot() {
             (player.equipment || []).forEach((eq, idx) => {
                 const nameMatch = eq.name.match(/\+(\d+)$/);
                 const eqLevel = eq.upgrade_level ?? ((nameMatch ? parseInt(nameMatch[1]) : 0) || eq.refine || eq.level || eq.refine_level || eq.enhance || 0);
-                
+
                 const enhanceFactor = 1 + eqLevel * 0.1;
                 let eChance = 0;
                 (eq.bonuses || []).forEach(b => {
@@ -195,11 +195,20 @@ async function runBot() {
             console.log(` Tốc độ: ${C.gre}${formatNum(totalQiSpeed)}/s${C.res} (${C.dim}+${formatNum(bonusQi)}${C.res}) | Thể lực: ${C.bri}${bodyPower}${C.res} | Linh thạch: ${C.yel}${formatNum(stones)}${C.res}`);
             console.log(` Công đức: ${C.mag}${formatNum(player.merit)}${C.res} | Tỷ lệ Đột phá: ${totalChance > 0 ? C.gre : C.red}${totalChance.toFixed(1)}%${C.res} (${C.dim}${baseChancePercent.toFixed(1)}% + ${bonusChancePercent.toFixed(1)}% + ${meritChancePercent.toFixed(1)}%${C.res}) | Tháp: ${C.cyan}Tầng ${player.tower_floor || 0}${C.res}`);
 
+            // Tiến độ Rank tiếp theo
+            const nextRealm = gameData.REALMS[player.realmIndex + 1];
+            if (nextRealm) {
+                const qiPct = Math.min(100, (player.qi / currentRealm.qiThreshold) * 100).toFixed(1);
+                console.log(` Tiến độ Rank: ${C.bri}${currentRealm.name}${C.res} ➔ ${C.yel}${nextRealm.name}${C.res} (${qiPct}%)`);
+            }
+
             console.log(line);
 
             // Row: Trials
             console.log(C.bri + " [ THÍ LUYỆN ]" + C.res);
             const zones = (gameData.TRIAL_ZONES || []).sort((a, b) => b.requiredRealmIndex - a.requiredRealmIndex);
+            const highestZone = zones.find(z => player.realmIndex >= z.requiredRealmIndex);
+
             let trialOutputs = [];
             for (const zone of zones) {
                 if (player.realmIndex < zone.requiredRealmIndex) continue;
@@ -219,6 +228,33 @@ async function runBot() {
             }
             for (let i = 0; i < trialOutputs.length; i += 2) {
                 console.log(`   ${trialOutputs[i] || ""}${trialOutputs[i + 1] ? "  |  " + trialOutputs[i + 1] : ""}`);
+            }
+
+            console.log(line);
+
+            // Row: Exploration
+            console.log(C.bri + " [ THÁM HIỂM ]" + C.res);
+            const explorLocs = gameData.EXPLORATION_LOCATIONS || [];
+            const currentExplor = data.explorationStatus || {};
+
+            if (currentExplor && currentExplor.locationId) {
+                const loc = explorLocs.find(l => l.id === currentExplor.locationId);
+                const explorCd = Math.max(0, Math.floor((currentExplor.endTime - Date.now()) / 1000));
+                console.log(`   Địa điểm: ${C.yel}${loc ? loc.name : currentExplor.locationId}${C.res} | Kết thúc sau: ${C.gre}${explorCd}s${C.res}`);
+            } else {
+                const highestExplor = explorLocs
+                    .filter(l => player.realmIndex >= l.requiredRealmIndex && player.bodyStrength >= (l.requiredBodyStrength || 0))
+                    .sort((a, b) => b.requiredRealmIndex - a.requiredRealmIndex)[0];
+
+                console.log(`   Trạng thái: ${C.dim}Sẵn sàng${C.res} | Map đề xuất: ${C.yel}${highestExplor ? highestExplor.name : "N/A"}${C.res}`);
+
+                // Automation: Bắt đầu thám hiểm
+                if (highestExplor && !currentExplor?.locationId) {
+                    addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
+                    apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
+                        .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
+                        .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
+                }
             }
 
             console.log(line);
@@ -287,7 +323,7 @@ async function runBot() {
                 const switchCooldown = (gameData.TECHNIQUE_SWITCH_COOLDOWN_SECONDS || { value: 60 }).value;
                 const lastSwitch = new Date(player.last_technique_switch_time || 0).getTime();
                 const canSwitch = (Date.now() - lastSwitch) / 1000 > switchCooldown;
-                
+
                 if (canSwitch) {
                     try {
                         await apiRequest("/api/activate-technique", "POST", { techniqueId: targetTech }, token, playerName);
