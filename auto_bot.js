@@ -248,13 +248,15 @@ async function runBot() {
 
                 console.log(`   Trạng thái: ${C.dim}Sẵn sàng${C.res} | Map đề xuất: ${C.yel}${highestExplor ? highestExplor.name : "N/A"}${C.res}`);
 
-                // Automation: Bắt đầu thám hiểm
+                // Automation: Bắt đầu thám hiểm (Đã tắt theo yêu cầu)
+                /*
                 if (highestExplor && !currentExplor?.locationId) {
                     addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
                     apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
                         .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
                         .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
                 }
+                */
             }
 
             console.log(line);
@@ -358,7 +360,7 @@ async function runBot() {
             }
 
             // 5b. Khiêu chiến Thông Thiên Tháp
-            if (bodyPower >= 10 && (Date.now() - lastTowerTime > 10000)) {
+            if (bodyPower >= 50 && (Date.now() - lastTowerTime > 10000)) {
                 lastTowerTime = Date.now();
                 await apiRequest("/api/tower/challenge", "POST", null, token, playerName)
                     .then(res => {
