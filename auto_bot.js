@@ -10,7 +10,6 @@ const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 
 const CONFIG_PATH = './config/data.json';
 const TOKEN_FILE = './config/token.text';
-const TARGET_MINE_ID = 5;
 
 // --- Nhật ký hệ thống ---
 let actionLogs = [];
@@ -111,64 +110,151 @@ async function runBot() {
 
     while (true) {
         try {
-            const [data, gameData] = await Promise.all([
+            const [data, gameData, activeEventsData] = await Promise.all([
                 apiRequest("/api/load", "GET", null, token),
-                apiRequest("/api/game-data", "GET")
+                apiRequest("/api/game-data", "GET"),
+                apiRequest("/api/events/active", "GET", null, token)
             ]);
 
             const player = data.player;
+            const activeEvents = activeEventsData || [];
             const currentRealm = gameData.REALMS[player.realmIndex];
             const stones = Number(player.linh_thach || 0);
             const bodyPower = player.body_power || 0;
             const lastChallenges = data.lastChallengeTime || {};
 
             // Tính toán tỷ lệ đột phá và tốc độ tu luyện thực tế
-            let bonusChance = 0;
+            const calcBreakthroughBreakdown = (p, gd, activeEvts) => {
+                const breakdown = [];
+                const e = p;
+                const t = gd;
+                const a = activeEvts || [];
+
+                // 1. Công pháp
+                if (e.activeTechniqueId) {
+                    const tech = t.TECHNIQUES.find(y => y.id === e.activeTechniqueId);
+                    tech?.bonuses.forEach(y => {
+                        if (y.type === "breakthrough_chance_add" && y.value !== 0) {
+                            breakdown.push({ source: `Công pháp (${tech.name})`, value: y.value });
+                        }
+                    });
+                }
+
+                // 2. Trang bị
+                let equipBonus = 0;
+                e.equipment.forEach(p_eq => {
+                    const bonuses = Qc_local(p_eq, t);
+                    bonuses.forEach(m => {
+                        if (m.type === "breakthrough_chance_add") equipBonus += m.value;
+                    });
+                });
+                if (equipBonus !== 0) breakdown.push({ source: "Trang bị", value: equipBonus });
+
+                // 3. Linh căn
+                let rootBonus = 0;
+                if (e.spiritualRoot && t.SPIRITUAL_ROOTS) {
+                    const rootRecord = t.SPIRITUAL_ROOTS.find(y => y.id === e.spiritualRoot);
+                    if (rootRecord && rootRecord.bonus) {
+                        (Array.isArray(rootRecord.bonus) ? rootRecord.bonus : [rootRecord.bonus]).forEach(m => {
+                            if (m.type === "breakthrough_chance_add" && m.value !== 0) rootBonus += m.value;
+                        });
+                    }
+                }
+                if (rootBonus !== 0) breakdown.push({ source: "Linh căn", value: rootBonus });
+
+                // 4. Lĩnh ngộ
+                let insightBonus = 0;
+                if (e.unlockedInsights && t.INSIGHTS) {
+                    e.unlockedInsights.forEach(p_insId => {
+                        const insightRecord = t.INSIGHTS.find(m => m.id === p_insId);
+                        insightRecord?.bonus && (Array.isArray(insightRecord.bonus) ? insightRecord.bonus : [insightRecord.bonus]).forEach(h => {
+                            if (h.type === "breakthrough_chance_add" && h.value !== 0) insightBonus += h.value;
+                        });
+                    });
+                }
+                if (insightBonus !== 0) breakdown.push({ source: "Lĩnh ngộ", value: insightBonus });
+
+                // 5. Phúc lợi Tông Môn
+                const guildBonus = pf_local(e.guildLevel).breakthroughBonus;
+                if (guildBonus > 0) breakdown.push({ source: "Phúc lợi Tông Môn", value: guildBonus });
+
+                // 6. Phúc lợi thất bại
+                let failBonus = 0;
+                if (e.breakthrough_consecutive_failures > 0) {
+                    (t.BREAKTHROUGH_FAILURE_BONUSES || []).filter(y => y.failure_count <= e.breakthrough_consecutive_failures).forEach(y => {
+                        (y.bonuses || []).forEach(m => {
+                            if (m.type === "breakthrough_chance_add") failBonus += m.value;
+                        });
+                    });
+                }
+                if (failBonus > 0) breakdown.push({ source: "Phúc lợi thất bại", value: failBonus });
+
+                // 7. Công Đức hộ thể (Merit)
+                const meritScaling = t.BREAKTHROUGH_MERIT_SCALING;
+                const karmaOffsetRate = t.MERIT_KARMA_OFFSET_RATE?.value || 0;
+                let effectiveMerit = e.merit || 0;
+                if (e.karma > 0 && karmaOffsetRate > 0) {
+                    const neededMerit = Math.ceil(e.karma / karmaOffsetRate);
+                    const meritSpent = Math.min(e.merit || 0, neededMerit);
+                    effectiveMerit = (e.merit || 0) - meritSpent;
+                }
+                if (meritScaling && effectiveMerit > 0) {
+                    const mBonus = effectiveMerit * (meritScaling.bonus_per_point || 0);
+                    if (mBonus > 0) breakdown.push({ source: "Công Đức hộ thể", value: mBonus });
+                }
+
+                // 8. Sự kiện
+                let eventBonus = 0;
+                a.forEach(ev => {
+                    (ev.bonuses || []).forEach(y => {
+                        if (y.type === "breakthrough_chance_add" || y.type === "breakthrough_add") eventBonus += y.value;
+                    });
+                });
+                if (eventBonus > 0) breakdown.push({ source: "Sự kiện", value: eventBonus });
+
+                // 9. Đan dược
+                let pillBonus = 0;
+                (e.active_buffs || []).forEach(p_buff => {
+                    if (p_buff.type === "breakthrough_chance_add_buff" || p_buff.type === "breakthrough_chance_add") pillBonus += p_buff.value;
+                });
+                if (pillBonus > 0) breakdown.push({ source: "Đan dược", value: pillBonus });
+
+                return breakdown;
+            };
+
+            const Qc_local = (eq, t) => {
+                if (!eq.is_upgradable || !eq.upgrade_level || eq.upgrade_level === 0) return eq.bonuses || [];
+                const upgradeData = t.EQUIPMENT_UPGRADES.find(n => n.upgrade_level === eq.upgrade_level);
+                const mult = upgradeData?.stat_multiplier || 1;
+                if (mult === 1) return eq.bonuses || [];
+                return (eq.bonuses || []).map(n => {
+                    const b = { ...n };
+                    if (n.type.endsWith("_add")) b.value = n.value * mult;
+                    else if (n.type.endsWith("_mul")) b.value = (n.value - 1) * mult + 1;
+                    return b;
+                });
+            };
+
+            const pf_local = lv => {
+                if (!lv || lv <= 1) return { qiBonus: 0, breakthroughBonus: 0 };
+                const t = lv - 1;
+                return { qiBonus: t * 0.01, breakthroughBonus: t * 0.002 };
+            };
+
+            // Calculate Speed Multiplier (Qi Multiplier)
             let qiMultiplier = 1;
-            let detailBreakdown = [];
-
-            const root = (gameData.SPIRITUAL_ROOTS || []).find(r => r.id === player.spiritualRoot);
-            if (root && root.bonus) {
-                let rChance = 0;
-                root.bonus.forEach(b => {
-                    if (b.type === 'breakthrough_chance_add') rChance += b.value;
-                    if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1);
-                });
-                if (rChance > 0) detailBreakdown.push(`Linh căn: +${(rChance * 100).toFixed(1)}%`);
-                bonusChance += rChance;
-            }
-
-            const tech = (gameData.TECHNIQUES || []).find(t => t.id === player.activeTechniqueId);
-            if (tech && tech.bonuses) {
-                let tChance = 0;
-                tech.bonuses.forEach(b => {
-                    if (b.type === 'breakthrough_chance_add') tChance += b.value;
-                    if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1);
-                });
-                if (tChance > 0) detailBreakdown.push(`Công pháp: +${(tChance * 100).toFixed(1)}%`);
-                bonusChance += tChance;
-            }
-
-            (player.equipment || []).forEach((eq, idx) => {
-                const nameMatch = eq.name.match(/\+(\d+)$/);
-                const eqLevel = eq.upgrade_level ?? ((nameMatch ? parseInt(nameMatch[1]) : 0) || eq.refine || eq.level || eq.refine_level || eq.enhance || 0);
-
-                const enhanceFactor = 1 + eqLevel * 0.1;
-                let eChance = 0;
-                (eq.bonuses || []).forEach(b => {
-                    const effectiveValue = b.value * enhanceFactor;
-                    if (b.type === 'breakthrough_chance_add') eChance += effectiveValue;
-                    if (b.type === 'breakthrough_chance_multiplier') eChance += (currentRealm.breakthroughChance * (effectiveValue - 1));
-                    if (b.type === 'qi_per_second_multiplier') qiMultiplier += (effectiveValue - 1);
-                });
-                if (eChance > 0) detailBreakdown.push(`${eq.name.split(' ').pop().replace(/\+\d+$/, '')}(+${eqLevel}): +${(eChance * 100).toFixed(1)}%`);
-                bonusChance += eChance;
+            const rootSpeed = (gameData.SPIRITUAL_ROOTS || []).find(r => r.id === player.spiritualRoot);
+            rootSpeed?.bonus?.forEach(b => { if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1); });
+            const techSpeed = (gameData.TECHNIQUES || []).find(t => t.id === player.activeTechniqueId);
+            techSpeed?.bonuses?.forEach(b => { if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1); });
+            (player.equipment || []).forEach(eq => {
+                Qc_local(eq, gameData).forEach(b => { if (b.type === 'qi_per_second_multiplier') qiMultiplier += (b.value - 1); });
             });
 
-            const baseChancePercent = (currentRealm.breakthroughChance || 0) * 100;
-            const bonusChancePercent = bonusChance * 100;
-            const meritChancePercent = (player.merit || 0) * 0.01; // 0.01% mỗi điểm công đức
-            const totalChance = baseChancePercent + bonusChancePercent + meritChancePercent;
+            const breakthroughBreakdown = calcBreakthroughBreakdown(player, gameData, activeEvents);
+            const baseChance = currentRealm.breakthroughChance || 0;
+            const bonusChanceTotal = breakthroughBreakdown.reduce((s, b) => s + b.value, 0);
+            const totalChancePercent = (baseChance + bonusChanceTotal) * 100;
             const totalQiSpeed = currentRealm.baseQiPerSecond * qiMultiplier;
 
             // --- VẼ DASHBOARD ---
@@ -193,7 +279,13 @@ async function runBot() {
             // Stats Row
             const bonusQi = totalQiSpeed - currentRealm.baseQiPerSecond;
             console.log(` Tốc độ: ${C.gre}${formatNum(totalQiSpeed)}/s${C.res} (${C.dim}+${formatNum(bonusQi)}${C.res}) | Thể lực: ${C.bri}${bodyPower}${C.res} | Linh thạch: ${C.yel}${formatNum(stones)}${C.res}`);
-            console.log(` Công đức: ${C.mag}${formatNum(player.merit)}${C.res} | Tỷ lệ Đột phá: ${totalChance > 0 ? C.gre : C.red}${totalChance.toFixed(1)}%${C.res} (${C.dim}${baseChancePercent.toFixed(1)}% + ${bonusChancePercent.toFixed(1)}% + ${meritChancePercent.toFixed(1)}%${C.res}) | Tháp: ${C.cyan}Tầng ${player.tower_floor || 0}${C.res}`);
+            console.log(` Công đức: ${C.mag}${formatNum(player.merit)}${C.res} | Tỷ lệ Đột phá: ${totalChancePercent > 0 ? C.gre : C.red}${totalChancePercent.toFixed(2)}%${C.res} (Cơ bản: ${baseChance * 100}%) | Tháp: ${C.cyan}Tầng ${player.tower_floor || 0}${C.res}`);
+
+            // Chi tiết Đột phá (Dạng rút gọn)
+            if (breakthroughBreakdown.length > 0) {
+                const breakdownStr = breakthroughBreakdown.map(b => `${C.dim}${b.source.split(' ')[0]}:${C.res}${C.gre}+${(b.value * 100).toFixed(1)}%${C.res}`).join(' | ');
+                console.log(` Breakdown: ${breakdownStr}`);
+            }
 
             // Tiến độ Rank tiếp theo
             const nextRealm = gameData.REALMS[player.realmIndex + 1];
@@ -249,14 +341,14 @@ async function runBot() {
                 console.log(`   Trạng thái: ${C.dim}Sẵn sàng${C.res} | Map đề xuất: ${C.yel}${highestExplor ? highestExplor.name : "N/A"}${C.res}`);
 
                 // Automation: Bắt đầu thám hiểm (Đã tắt theo yêu cầu)
-                /*
+
                 if (highestExplor && !currentExplor?.locationId) {
                     addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
                     apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
                         .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
                         .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
                 }
-                */
+
             }
 
             console.log(line);
@@ -339,7 +431,7 @@ async function runBot() {
             }
 
             // 3. Đột phá
-            if (player.qi >= currentRealm.qiThreshold && totalChance > 0) {
+            if (player.qi >= currentRealm.qiThreshold && totalChancePercent > 0) {
                 await apiRequest("/api/breakthrough", "POST", null, token, playerName)
                     .then(res => {
                         if (res.success) addLog(`Đột phá thành công lên tầng mới!`, 'success');
@@ -353,9 +445,9 @@ async function runBot() {
 
 
             // 5. Rèn thể (Chỉ rèn khi tỷ lệ chưa dương)
-            if (!techJustSwitched && player.activeTechniqueId === "tinhthanha" && player.exp >= 10 && qiProgress >= 90 && totalChance <= 0) {
+            if (!techJustSwitched && player.activeTechniqueId === "tinhthanha" && player.exp >= 10 && qiProgress >= 90 && totalChancePercent <= 0) {
                 await apiRequest("/api/temper-body", "POST", null, token, playerName)
-                    .then(() => addLog(`Đã thực hiện rèn thể (Tiến độ: ${qiProgress.toFixed(1)}% | Tỷ lệ: ${totalChance.toFixed(1)}%)`, 'info'))
+                    .then(() => addLog(`Đã thực hiện rèn thể (Tiến độ: ${qiProgress.toFixed(1)}% | Tỷ lệ: ${totalChancePercent.toFixed(1)}%)`, 'info'))
                     .catch(() => { });
             }
 
