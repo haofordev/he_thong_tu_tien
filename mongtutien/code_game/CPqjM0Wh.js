@@ -1,0 +1,1 @@
+function e(t){const o=Math.floor(t/1e3),n=Math.floor(o/60),i=o%60;return`${n} phút ${i.toString().padStart(2,"0")} giây`}function r(t){return typeof t=="string"&&/\.(mp4|webm|ogg)$/i.test(t)}export{e as f,r as i};

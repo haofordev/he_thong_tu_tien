@@ -1,0 +1,1 @@
+const e=.2,a={sword:"devil",devil:"body",body:"sword",van_thanh:"dao_mon",dao_mon:"eye",eye:"van_thanh"},d={};for(const n in a){const o=a[n];o&&(d[o]=n)}const s={sword:"Kiếm Tu",eye:"Thần Tinh",body:"Thể Tu",devil:"Ma Tu",van_thanh:"Văn Thánh",dao_mon:"Đạo Môn"};export{e as C,s as D,a,d as b};
