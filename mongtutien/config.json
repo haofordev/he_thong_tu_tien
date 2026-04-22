@@ -1,0 +1,28 @@
+{
+  "game": {
+    "domain": "mongtutien.me",
+    "api_base": "https://mongtutien.me/api",
+    "socket_url": "wss://mongtutien.me/ws",
+    "servers": [
+      {
+        "id": "s1",
+        "name": "Server 1",
+        "domain": "s1.mongtutien.me",
+        "api_base": "https://s1.mongtutien.me/api",
+        "socket_url": "wss://s1.mongtutien.me/ws"
+      },
+      {
+        "id": "s2",
+        "name": "Server 2",
+        "domain": "s2.mongtutien.me",
+        "api_base": "https://s2.mongtutien.me/api",
+        "socket_url": "wss://s2.mongtutien.me/ws"
+      }
+    ]
+  },
+  "settings": {
+    "timeout": 10000,
+    "reconnect_interval": 3000,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  }
+}

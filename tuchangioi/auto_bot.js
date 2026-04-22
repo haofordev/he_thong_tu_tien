@@ -342,12 +342,12 @@ async function runBot() {
 
                 // Automation: Bắt đầu thám hiểm (Đã tắt theo yêu cầu)
 
-                if (highestExplor && !currentExplor?.locationId) {
-                    addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
-                    apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
-                        .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
-                        .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
-                }
+                // if (highestExplor && !currentExplor?.locationId) {
+                //     addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
+                //     apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
+                //         .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
+                //         .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
+                // }
 
             }
 
