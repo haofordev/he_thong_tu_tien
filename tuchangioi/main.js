@@ -537,26 +537,53 @@ async function runBot() {
             const canGuess = stones > 500 || (isFinalStage && stones > 0);
 
             if (canGuess) {
-                const isStrategicWait = rangeWidth < 100 && rangeWidth > 2 && playerCount > 1;
+                const isStrategicWait = rangeWidth < 100 && rangeWidth > 2 && playerCount > 2;
 
-                if (!lastSyncedWinner && !isStrategicWait && (Date.now() - lastGuessTime > 305000)) {
+                // Main account waits 10s longer (315s total) to let clones go first
+                if (!lastSyncedWinner && !isStrategicWait && (Date.now() - lastGuessTime > 315000)) {
+                    
+                    // --- SYNC CHECK BEFORE GUESS ---
+                    try {
+                        if (fs.existsSync(GUESS_SYNC_FILE)) {
+                            const syncData = JSON.parse(fs.readFileSync(GUESS_SYNC_FILE, 'utf8'));
+                            // Nếu có clone vừa mới đoán (< 15s trước), hãy đồng bộ API để lấy hint mới nhất
+                            if (syncData.globalLastGuessTime && (Date.now() - syncData.globalLastGuessTime < 15000) && syncData.globalLastPlayer !== playerName) {
+                                addLog(`Phát hiện clone vừa đoán, đang đồng bộ API để lấy hint mới...`, 'info');
+                                const gameState = await apiRequest("/api/doanso/game-state", "GET", null, token);
+                                let tempLow = 1, tempHigh = 10000;
+                                (gameState.guesses || []).forEach(g => {
+                                    const num = g.guessNumber;
+                                    const hint = g.hintMessage || "";
+                                    if (hint.includes("lớn hơn")) { if (num <= tempHigh) tempHigh = num - 1; }
+                                    else if (hint.includes("nhỏ hơn")) { if (num >= tempLow) tempLow = num + 1; }
+                                });
+                                if (tempLow !== guessLow || tempHigh !== guessHigh) {
+                                    guessLow = tempLow;
+                                    guessHigh = tempHigh;
+                                    currentGuess = Math.floor((guessLow + guessHigh) / 2);
+                                }
+                            }
+                        }
+                    } catch (e) {}
+
                     // --- SYNC GUESS NUMBER ---
                     let finalGuess = currentGuess;
                     try {
                         let syncData = {};
                         if (fs.existsSync(GUESS_SYNC_FILE)) syncData = JSON.parse(fs.readFileSync(GUESS_SYNC_FILE, 'utf8'));
-
-                        // Nếu số định đoán trùng với số "global" vừa đoán trong 60s
+                        
+                        // Nếu số định đoán vẫn trùng với số "global" vừa đoán trong 60s
                         if (syncData.globalLastGuess === finalGuess && (Date.now() - syncData.globalLastGuessTime < 60000)) {
                             finalGuess = finalGuess + 1;
                             if (finalGuess > guessHigh) finalGuess = currentGuess - 1;
-                            addLog(`Phát hiện trùng số ${currentGuess}, đổi sang ${finalGuess}`, 'warn');
+                            addLog(`Vẫn trùng số ${currentGuess}, đổi sang ${finalGuess}`, 'warn');
                         }
 
                         // Cập nhật thông tin của mình và global
                         syncData[playerName] = { lastGuessTime: Date.now(), lastGuess: finalGuess };
                         syncData.globalLastGuess = finalGuess;
                         syncData.globalLastGuessTime = Date.now();
+                        syncData.globalLastPlayer = playerName;
                         fs.writeFileSync(GUESS_SYNC_FILE, JSON.stringify(syncData, null, 2));
                     } catch (e) { addLog(`Lỗi sync file: ${e.message}`, 'error'); }
 
@@ -596,7 +623,7 @@ async function runBot() {
                 addLog(`Lỗi hệ thống: ${err.message}`, 'error');
             }
         }
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 2000));
     }
 }
 

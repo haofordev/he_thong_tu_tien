@@ -538,6 +538,7 @@ async function runBot() {
                         syncData[playerName] = { lastGuessTime: Date.now(), lastGuess: finalGuess };
                         syncData.globalLastGuess = finalGuess;
                         syncData.globalLastGuessTime = Date.now();
+                        syncData.globalLastPlayer = playerName;
                         fs.writeFileSync(GUESS_SYNC_FILE, JSON.stringify(syncData, null, 2));
                     } catch (e) { addLog(`Lỗi sync file: ${e.message}`, 'error'); }
 
@@ -578,7 +579,7 @@ async function runBot() {
                 addLog(`Lỗi hệ thống: ${err.message}`, 'error');
             }
         }
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 2000));
     }
 }
 
