@@ -6,3 +6,6 @@ data.json
 dist/
 build/
 package-lock.json
+
+# Game Bot Local Data
+tuchangioi/config/guess_sync.json
