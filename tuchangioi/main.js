@@ -9,7 +9,7 @@ const SECRET_KEY = "h0yvgF4WvRSgr+1yvkYea446EX8DMs40+pt0RnWO1Jk=";
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
 const CONFIG_PATH = './config/data.json';
-const TOKEN_FILE = './config/token.text';
+const TOKEN_FILE = './config/main_token.txt';
 const GUESS_SYNC_FILE = './config/guess_sync.json';
 
 // --- Nhật ký hệ thống ---
@@ -118,7 +118,7 @@ async function runBot() {
         } catch (e) {}
     }
 
-    addLog("Bắt đầu chu kỳ tu luyện Chân Giới...", 'success');
+    addLog("Bắt đầu chu kỳ tu luyện Chân Giới (MAIN ACCOUNT)...", 'success');
 
     while (true) {
         try {
@@ -275,7 +275,7 @@ async function runBot() {
             const line = C.cyan + "━".repeat(60) + C.res;
 
             console.log(C.cyan + "┏" + "━".repeat(58) + "┓" + C.res);
-            console.log(C.cyan + "┃" + C.res + C.bri + "            CHÂN GIỚI AUTO ULTIMATE - BETA V2           " + C.res + C.cyan + "┃" + C.res);
+            console.log(C.cyan + "┃" + C.res + C.bri + "            CHÂN GIỚI MAIN BOT - PREMIUM VERSION        " + C.res + C.cyan + "┃" + C.res);
             console.log(C.cyan + "┗" + "━".repeat(58) + "┛" + C.res);
 
             // Row 1: Player Info
@@ -352,15 +352,15 @@ async function runBot() {
 
                 console.log(`   Trạng thái: ${C.dim}Sẵn sàng${C.res} | Map đề xuất: ${C.yel}${highestExplor ? highestExplor.name : "N/A"}${C.res}`);
 
-                // Automation: Bắt đầu thám hiểm (Đã tắt theo yêu cầu)
-
+                // Automation: Bắt đầu thám hiểm (ĐÃ TẮT CHO AC CHÍNH)
+                /*
                 if (highestExplor && !currentExplor?.locationId) {
                     addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
                     apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
                         .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
                         .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
                 }
-
+                */
             }
 
             console.log(line);
@@ -420,21 +420,42 @@ async function runBot() {
                     .catch(() => { });
             }
 
-            // 1b. Chuyển đổi công pháp chiến thuật (Ưu tiên hàng đầu khi > 90%)
+            // 1b. Chuyển đổi công pháp chiến thuật (Động theo yêu cầu)
             const qiProgress = (player.qi / currentRealm.qiThreshold) * 100;
-            const targetTech = qiProgress < 90 ? "thanhtam" : "tinhthanha";
+            let targetTechId = "";
+            let techCriteria = "";
+
+            const availableTechs = (gameData.TECHNIQUES || []).filter(t => player.realmIndex >= t.requiredRealmIndex);
+
+            if (qiProgress < 95) {
+                // Ưu tiên Tốc độ tu luyện lớn nhất
+                techCriteria = "Tốc độ tu luyện tối đa";
+                targetTechId = availableTechs.sort((a, b) => {
+                    const getVal = tech => tech.bonuses.find(bn => bn.type === 'qi_per_second_multiplier')?.value || 0;
+                    return getVal(b) - getVal(a);
+                })[0]?.id;
+            } else {
+                // Ưu tiên Tỉ lệ đột phá cao nhất
+                techCriteria = "Tỷ lệ đột phá tối đa";
+                targetTechId = availableTechs.sort((a, b) => {
+                    const getVal = tech => tech.bonuses.find(bn => bn.type === 'breakthrough_chance_add')?.value || 0;
+                    return getVal(b) - getVal(a);
+                })[0]?.id;
+            }
+
             let techJustSwitched = false;
 
-            if (player.activeTechniqueId !== targetTech) {
+            if (targetTechId && player.activeTechniqueId !== targetTechId) {
                 const switchCooldown = (gameData.TECHNIQUE_SWITCH_COOLDOWN_SECONDS || { value: 60 }).value;
                 const lastSwitch = new Date(player.last_technique_switch_time || 0).getTime();
                 const canSwitch = (Date.now() - lastSwitch) / 1000 > switchCooldown;
 
                 if (canSwitch) {
                     try {
-                        await apiRequest("/api/activate-technique", "POST", { techniqueId: targetTech }, token, playerName);
-                        addLog(`Đã chuyển công pháp sang: ${targetTech === "thanhtam" ? "Thánh Tâm Quyết" : "Tinh Thần Quyết Hạ"}`, 'success');
-                        player.activeTechniqueId = targetTech; // Cập nhật tạm thời để các logic tính toán bên dưới nhận diện được
+                        await apiRequest("/api/activate-technique", "POST", { techniqueId: targetTechId }, token, playerName);
+                        const techName = availableTechs.find(t => t.id === targetTechId)?.name || targetTechId;
+                        addLog(`Đã chuyển sang [${techName}] (${techCriteria})`, 'success');
+                        player.activeTechniqueId = targetTechId; 
                         techJustSwitched = true;
                     } catch (e) {
                         addLog(`Lỗi chuyển công pháp: ${e.message}`, 'error');
@@ -452,12 +473,12 @@ async function runBot() {
                     .catch(e => addLog(`Lỗi đột phá: ${e.message}`, 'error'));
             }
 
-            // 4. Khai mỏ (Logic đã tắt theo yêu cầu)
+            // 4. Khai mỏ (Đã tắt)
             mineStatus = "Đã tắt";
 
 
-            // 5. Rèn thể (Chỉ rèn khi tỷ lệ chưa dương)
-            if (!techJustSwitched && player.activeTechniqueId === "tinhthanha" && player.exp >= 10 && qiProgress >= 90 && totalChancePercent <= 0) {
+            // 5. Rèn thể (Chỉ rèn khi cần thiết)
+            if (!techJustSwitched && qiProgress >= 95 && totalChancePercent <= 0 && player.exp >= 10) {
                 await apiRequest("/api/temper-body", "POST", null, token, playerName)
                     .then(() => addLog(`Đã thực hiện rèn thể (Tiến độ: ${qiProgress.toFixed(1)}% | Tỷ lệ: ${totalChancePercent.toFixed(1)}%)`, 'info'))
                     .catch(() => { });
@@ -477,7 +498,6 @@ async function runBot() {
             }
 
             // 6. Đoán số (Binary Search with Smart Catch-up)
-            // 6a. Đồng bộ trạng thái game (Luôn chạy để lấy dự đoán)
             const syncInterval = lastSyncedWinner ? 120000 : 30000;
             if (Date.now() - lastSyncTime > syncInterval) {
                 try {
@@ -514,7 +534,6 @@ async function runBot() {
                 } catch (e) { }
             }
 
-            // 6b. Gửi lệnh đoán
             const isFinalStage = rangeWidth <= 1;
             const canGuess = stones > 500 || (isFinalStage && stones > 0);
 
@@ -561,7 +580,6 @@ async function runBot() {
                             if (err.includes("kết thúc") || err.includes("isactive")) {
                                 lastGuessTime = Date.now() - 240000;
                             } else if (err.includes("đợi") || err.includes("phút") || err.includes("chưa tới giờ") || err.includes("wait")) {
-                                addLog(`Server báo chờ: Đã cập nhật lại thời gian hồi.`, 'warn');
                                 lastGuessTime = Date.now();
                             } else {
                                 addLog(`Lỗi đoán số: ${e.message}`, 'error');

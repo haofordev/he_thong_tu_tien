@@ -1,5 +1,10 @@
 @echo off
-title CHÂN GIỚI AUTO BOT
 echo Đang khởi động hệ thống tu tiên...
-node auto_bot.js
-pause
+
+:: Khởi chạy Acc Chính
+start "CHÂN GIỚI - MAIN BOT" node main.js
+
+:: Khởi chạy Acc Clone
+start "CHÂN GIỚI - CLONE BOT" node auto_bot.js
+
+exit
