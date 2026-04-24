@@ -107,21 +107,20 @@ async function runBot() {
         } catch (e) { return console.log("[Login Error]", e.message); }
     }
 
-    // Khôi phục thời gian đoán số từ file sync (nếu có)
-    if (fs.existsSync(GUESS_SYNC_FILE)) {
-        try {
-            const syncData = JSON.parse(fs.readFileSync(GUESS_SYNC_FILE, 'utf8'));
-            if (syncData[playerName]?.lastGuessTime) {
-                lastGuessTime = syncData[playerName].lastGuessTime;
-                addLog(`Khôi phục thời gian hồi đoán số: ${new Date(lastGuessTime).toLocaleTimeString()}`, 'info');
-            }
-        } catch (e) {}
-    }
-
     addLog("Bắt đầu chu kỳ tu luyện Chân Giới (MAIN ACCOUNT)...", 'success');
 
     while (true) {
         try {
+            // Đồng bộ thời gian đoán số từ file (để chính xác khi chạy nhiều bot hoặc restart)
+            if (fs.existsSync(GUESS_SYNC_FILE)) {
+                try {
+                    const syncData = JSON.parse(fs.readFileSync(GUESS_SYNC_FILE, 'utf8'));
+                    if (syncData[playerName]?.lastGuessTime) {
+                        lastGuessTime = syncData[playerName].lastGuessTime;
+                    }
+                } catch (e) { }
+            }
+
             const [data, gameData, activeEventsData] = await Promise.all([
                 apiRequest("/api/load", "GET", null, token),
                 apiRequest("/api/game-data", "GET"),
@@ -388,7 +387,7 @@ async function runBot() {
                 const isFinalStage = (guessHigh - guessLow) <= 1;
                 if (stones <= 500 && !isFinalStage) {
                     console.log(`   Trạng thái: ${C.yel}Chờ 2 số cuối (Linh Thạch < 500)${C.res}`);
-                } else if (rangeWidth < 100 && rangeWidth > 2 && playerCount > 1) {
+                } else if (rangeWidth < 100 && rangeWidth > 2 && playerCount > 2) {
                     console.log(`   Trạng thái: ${C.mag}Chờ đồng đội thu hẹp phạm vi...${C.res}`);
                 } else if (guessCd <= 0) {
                     console.log(`   Trạng thái: ${C.gre}Sẵn sàng${C.res}`);
@@ -455,7 +454,7 @@ async function runBot() {
                         await apiRequest("/api/activate-technique", "POST", { techniqueId: targetTechId }, token, playerName);
                         const techName = availableTechs.find(t => t.id === targetTechId)?.name || targetTechId;
                         addLog(`Đã chuyển sang [${techName}] (${techCriteria})`, 'success');
-                        player.activeTechniqueId = targetTechId; 
+                        player.activeTechniqueId = targetTechId;
                         techJustSwitched = true;
                     } catch (e) {
                         addLog(`Lỗi chuyển công pháp: ${e.message}`, 'error');
@@ -546,7 +545,7 @@ async function runBot() {
                     try {
                         let syncData = {};
                         if (fs.existsSync(GUESS_SYNC_FILE)) syncData = JSON.parse(fs.readFileSync(GUESS_SYNC_FILE, 'utf8'));
-                        
+
                         // Nếu số định đoán trùng với số "global" vừa đoán trong 60s
                         if (syncData.globalLastGuess === finalGuess && (Date.now() - syncData.globalLastGuessTime < 60000)) {
                             finalGuess = finalGuess + 1;
