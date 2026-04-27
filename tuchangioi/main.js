@@ -352,14 +352,14 @@ async function runBot() {
                 console.log(`   Trạng thái: ${C.dim}Sẵn sàng${C.res} | Map đề xuất: ${C.yel}${highestExplor ? highestExplor.name : "N/A"}${C.res}`);
 
                 // Automation: Bắt đầu thám hiểm (ĐÃ TẮT CHO AC CHÍNH)
-                /*
+
                 if (highestExplor && !currentExplor?.locationId) {
                     addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
                     apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
                         .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
                         .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
                 }
-                */
+
             }
 
             console.log(line);
@@ -541,7 +541,7 @@ async function runBot() {
 
                 // Main account waits 10s longer (315s total) to let clones go first
                 if (!lastSyncedWinner && !isStrategicWait && (Date.now() - lastGuessTime > 315000)) {
-                    
+
                     // --- SYNC CHECK BEFORE GUESS ---
                     try {
                         if (fs.existsSync(GUESS_SYNC_FILE)) {
@@ -564,14 +564,14 @@ async function runBot() {
                                 }
                             }
                         }
-                    } catch (e) {}
+                    } catch (e) { }
 
                     // --- SYNC GUESS NUMBER ---
                     let finalGuess = currentGuess;
                     try {
                         let syncData = {};
                         if (fs.existsSync(GUESS_SYNC_FILE)) syncData = JSON.parse(fs.readFileSync(GUESS_SYNC_FILE, 'utf8'));
-                        
+
                         // Nếu số định đoán vẫn trùng với số "global" vừa đoán trong 60s
                         if (syncData.globalLastGuess === finalGuess && (Date.now() - syncData.globalLastGuessTime < 60000)) {
                             finalGuess = finalGuess + 1;
