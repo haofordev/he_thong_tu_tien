@@ -1,0 +1,1 @@
+import{E as c,ag as p,ap as e,am as r,C as i,f as u}from"./index-C6IHU2kB.js";const d=c({__name:"ViewRuntimeScope",props:{active:{type:Boolean,default:!0}},setup(t){const a=t,o=p(e,void 0),n=u(()=>a.active&&(o?.value??!0));return i(e,n),(s,m)=>r(s.$slots,"default")}});export{d as _};

@@ -353,12 +353,12 @@ async function runBot() {
 
                 // Automation: Bắt đầu thám hiểm (ĐÃ TẮT CHO AC CHÍNH)
 
-                if (highestExplor && !currentExplor?.locationId) {
-                    addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
-                    apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
-                        .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
-                        .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
-                }
+                // if (highestExplor && !currentExplor?.locationId) {
+                //     addLog(`Bắt đầu thám hiểm: ${highestExplor.name}`, 'info');
+                //     apiRequest("/api/start-exploration", "POST", { locationId: highestExplor.id }, token, playerName)
+                //         .then(() => addLog(`Khởi hành thám hiểm ${highestExplor.name} thành công`, 'success'))
+                //         .catch(e => addLog(`Lỗi khởi hành thám hiểm: ${e.message}`, 'error'));
+                // }
 
             }
 
@@ -497,7 +497,7 @@ async function runBot() {
             }
 
             // 6. Đoán số (Binary Search with Smart Catch-up)
-            const syncInterval = lastSyncedWinner ? 120000 : 30000;
+            const syncInterval = lastSyncedWinner ? 120000 : 3000;
             if (Date.now() - lastSyncTime > syncInterval) {
                 try {
                     const gameState = await apiRequest("/api/doanso/game-state", "GET", null, token);

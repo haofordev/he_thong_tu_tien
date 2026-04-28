@@ -1,1 +1,0 @@
-import{aD as n,aj as m}from"./c6P7858S.js";const s="CultivationPractice";function u(){return n("game-home:view",()=>s)}function w(){const e=u(),i=m("switchView",void 0);function o(a){e.value=a}function t(a){e.value=a,i?.("GameHome")}return{gameHomeView:e,openGameHomeView:t,setGameHomeView:o}}export{w as a,u};

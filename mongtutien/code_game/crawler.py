@@ -4,22 +4,45 @@ import re
 from urllib.parse import urljoin
 
 # Configuration
-BASE_URL = "https://mongtutien.me/_nuxt/"
+BASE_URL = "https://mongtutien.me/assets/"
 TARGET_DIR = r"c:\Users\phong\OneDrive\Desktop\inputdata\he_thong_tu_tien\mongtutien\code_game"
-INITIAL_FILES = ["BDgdJmc1.js", "BpomCNr3.js", "Dm1kgA5T.js", "Icon.5sqgDFqb.css", "-qcpAwUY.js", "CjOBiZzT.js", "CWna86q_.js", "Blhi0KN4.js", "MBorder-B5zwibPL.BnZ4TJgP.css", "Cipd6bfN.js", "GlobalModal.Dk1V32Fx.css", "DGo4YY_3.js", "4bltAmxA.js", "giftcodes.XDDMrMml.css", "BdL7xEfD.js", "DWkJCf6l.js", "DJCXQEuS.js", "CS1e1Uqz.js", "BiUtp8s8.js", "Bzhu4YxG.js", "Co7iXMeQ.js", "MTag.C_RG7waG.css", "BX9r2WLT.js", "input.BOUykrHf.css", "oAqYeQzA.js", "EpU3CA75.js", "checkbox.CYcYAi4a.css", "auth.DZcqo4BB.css", "COMDNNQO.js", "register.o0o9VsJn.css", "BsdIKgNI.js", "BHxYJ0kx.js", "kIn0yDa_.js", "wives-with-draft.CXsamrUd.css", "B3CrSyDs.js", "index.CyZj4fCs.css", "CnqPMBmA.js", "default.dmPL9DYI.css", "DxPZA6P9.js", "error-404.DmmOxcUG.css", "CjwRpyp0.js", "error-500.Dv-yuu0Z.css"]
+INITIAL_FILES = [
+    "index-C6IHU2kB.js", 
+    "index-DjugjTyU.js", 
+    "payloadGuards-tDJF4KGD.js", 
+    "items-DGo4YY_3.js", 
+    "index-BygMT7A9.css", 
+    "auth-B0SCpCo4.js", 
+    "auth-uQ39Jmgq.css", 
+    "topup-ZBqj_kL6.js", 
+    "topup-BF_eNIqx.css", 
+    "online-inspector-CPWl4m6M.js", 
+    "wives-with-draft-Bv2sPUAd.js", 
+    "quality-BH_aoiN8.js", 
+    "wives-with-draft-XEr3CfUa.css", 
+    "index-CSffcNZ_.js", 
+    "AdminQuickBar.vue_vue_type_script_setup_true_lang-C1uoBgdc.js", 
+    "equipment-identity-DJIdo5yr.js", 
+    "RuntimeMetricCard.vue_vue_type_script_setup_true_lang-CIfsoE4F.js", 
+    "giftcodes-BP3V5Wj8.js", 
+    "GlobalModal-B93woogG.js", 
+    "profileFrames-MAQBtN0q.js", 
+    "cosmeticCatalog-B6jlC8at.js", 
+    "statTuning-BR3V3axB.js", 
+    "cosmeticShopConfig-nEzvZ2uC.js", 
+    "GlobalModal-D1HwuNcl.css", 
+    "confirm-CyXNfNVw.js", 
+    "giftcodes-BcpreiK6.css", 
+    "mail-D8omanT3.js", 
+    "players-B-c1hNMT.js", 
+    "runtime-metrics-HE9ogl30.js", 
+    "topup-BOCqv4r9.js", 
+    "topupRewards-CmIXcu51.js", 
+    "economy-BOUqLmAp.js"
+]
 
 if not os.path.exists(TARGET_DIR):
     os.makedirs(TARGET_DIR)
-
-downloaded = set()
-# Add already existing files in the directory to 'downloaded' so we don't redownload them unless we want to scan them
-for f in os.listdir(TARGET_DIR):
-    downloaded.add(f)
-
-queue = [f for f in INITIAL_FILES if f not in downloaded]
-# We also want to scan the existing files if they haven't been scanned
-to_scan = [f for f in downloaded if f.endswith('.js')]
-queue.extend([f for f in INITIAL_FILES if f in downloaded]) # Re-add to ensure they get scanned if needed
 
 def download_file(filename):
     url = urljoin(BASE_URL, filename.lstrip('./'))
@@ -27,7 +50,6 @@ def download_file(filename):
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
             filepath = os.path.join(TARGET_DIR, filename.lstrip('./'))
-            # Ensure subdirectories exist if any (though these seem flat)
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
             with open(filepath, 'wb') as f:
                 f.write(response.content)
@@ -40,21 +62,25 @@ def download_file(filename):
     return None
 
 def find_links(content):
-    # Matches patterns like "./filename.js", "./filename.css", etc.
-    return re.findall(r'["\']\./([a-zA-Z0-9_\-\.]+\.(?:js|css))["\']', content)
+    links = re.findall(r'["\'](?:\./|assets/)?([a-zA-Z0-9_\-\.]+\.(?:js|css))["\']', content)
+    return list(set(links))
+
+def get_basename(filename):
+    if '-' in filename:
+        return filename.rsplit('-', 1)[0]
+    return filename.rsplit('.', 1)[0]
 
 # Main loop
-queue = list(set(INITIAL_FILES)) # Start fresh with initial list
+queue = [f for f in INITIAL_FILES if f.endswith('.js')]
 processed = set()
 
 while queue:
     current = queue.pop(0)
-    if current in processed:
+    if current in processed or not current.endswith('.js'):
         continue
     
     processed.add(current)
     
-    # Download or read existing
     filepath = os.path.join(TARGET_DIR, current.lstrip('./'))
     content = None
     
@@ -71,7 +97,27 @@ while queue:
     if content:
         new_links = find_links(content)
         for link in new_links:
-            if link not in processed and link not in queue:
+            if link.endswith('.js') and link not in processed and link not in queue:
                 queue.append(link)
 
-print("Finished downloading all reachable files.")
+print("Finished downloading all reachable JS files.")
+
+# Cleanup
+print("Starting cleanup...")
+all_files = os.listdir(TARGET_DIR)
+latest_versions = {get_basename(f): f for f in processed}
+
+for f in all_files:
+    filepath = os.path.join(TARGET_DIR, f)
+    if f == "crawler.py": continue
+    
+    if f.endswith('.css'):
+        print(f"Removing CSS file: {f}")
+        os.remove(filepath)
+    elif f.endswith('.js'):
+        basename = get_basename(f)
+        if basename in latest_versions and f != latest_versions[basename]:
+            print(f"Removing old version: {f}")
+            os.remove(filepath)
+
+print("Cleanup finished.")

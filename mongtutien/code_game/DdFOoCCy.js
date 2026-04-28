@@ -1,1 +1,0 @@
-import{m as h}from"./B3CrSyDs.js";const i={low:"Phàm Giới",high:"Cao Nhân",mythic:"Thượng Cổ Dị Thú",primordial:"Thái Cổ Cấm Kỵ",transcendent:"Siêu Thoát Thánh Cảnh",legendary:"Thần Thoại"};function a(n){if(n in i)return i[n];console.log("tier",n);const o=h.find(e=>e.key==n);return console.log("mapTier",o),o?.name}export{a as f};

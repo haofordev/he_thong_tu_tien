@@ -1,0 +1,1 @@
+function t(n){return typeof n=="object"&&n!==null&&!Array.isArray(n)}function i(n,r=""){return typeof n=="string"?n:r}function o(n){return typeof n=="string"?n:void 0}function s(n,r=0){return typeof n=="number"&&Number.isFinite(n)?n:r}function e(n){return typeof n=="number"&&Number.isFinite(n)?n:void 0}export{i as a,s as b,e as c,o as d,t as i};
