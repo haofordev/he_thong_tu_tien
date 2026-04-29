@@ -74,7 +74,7 @@ async function apiRequest(endpoint, method = "GET", payload = null, token = null
 
 async function runBot() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    let token = null, playerName = "", lastGuessTime = 0, lastMineCheck = 0, lastHarvestTime = 0, lastSyncTime = 0, lastTowerTime = 0, mineStatus = "Đang kiểm tra...";
+    let token = null, playerName = "", lastGuessTime = 0, lastMineCheck = 0, lastHarvestTime = 0, lastSyncTime = 0, lastTowerTime = 0, lastMarketCheck = 0, mineStatus = "Đang kiểm tra...";
     let guessLow = 1, guessHigh = 10000, currentGuess = 5000, lastSyncedWinner = "", playerCount = 0;
     const C = {
         res: "\x1b[0m",
@@ -130,7 +130,7 @@ async function runBot() {
             const player = data.player;
             const activeEvents = activeEventsData || [];
             const currentRealm = gameData.REALMS[player.realmIndex];
-            const stones = Number(player.linh_thach || 0);
+            let stones = Number(player.linh_thach || 0);
             const bodyPower = player.body_power || 0;
             const lastChallenges = data.lastChallengeTime || {};
 
@@ -612,6 +612,38 @@ async function runBot() {
                                 lastGuessTime = Date.now();
                             }
                         });
+                }
+            }
+
+            // 7. Tự mua đồ trên chợ
+            if (Date.now() - lastMarketCheck > 5000) { // Kiểm tra mỗi 5s
+                lastMarketCheck = Date.now();
+                try {
+                    const listings = await apiRequest("/api/market/listings", "GET", null, token);
+                    if (Array.isArray(listings)) {
+                        for (const listing of listings) {
+                            if (listing.listing_type === "equipment" && listing.item) {
+                                const rarity = listing.item.rarity;
+                                const price = Number(listing.price);
+                                if ((rarity === "mythical" || rarity === "divine") && price < 1000) {
+                                    addLog(`Phát hiện vật phẩm ngon: ${listing.item.name} (${rarity}) giá ${price}`, 'info');
+                                    if (stones >= price) {
+                                        // Endpoint đúng là /api/market/buy/{id}
+                                        await apiRequest(`/api/market/buy/${listing.id}`, "POST", null, token, playerName)
+                                            .then(() => {
+                                                addLog(`Đã mua thành công: ${listing.item.name}`, 'success');
+                                                stones -= price; // Cập nhật linh thạch tạm thời
+                                            })
+                                            .catch(e => addLog(`Lỗi mua ${listing.item.name}: ${e.message}`, 'error'));
+                                    } else {
+                                        addLog(`Không đủ linh thạch (${stones}) để mua ${listing.item.name}`, 'warn');
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    addLog(`Lỗi kiểm tra chợ: ${e.message}`, 'error');
                 }
             }
 
