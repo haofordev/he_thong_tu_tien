@@ -27,6 +27,7 @@ let currentMobRetryCount = 0; // Số lần thử lại target quá xa
 let scanCount = 0;
 let combatLogs = [];
 let attackFailureCount = 0;
+let latestLevel = 0;
 
 function logCombat(msg) {
     const time = new Date().toLocaleTimeString();
@@ -312,6 +313,7 @@ async function manageChests() {
     } catch (e) { }
 }
 
+
 process.on('unhandledRejection', (reason, promise) => {
     // console.error('[Unhandled Rejection]', reason);
 });
@@ -357,6 +359,7 @@ async function start() {
 
                 if (data?.cultivation_status && data?.home) {
                     const status = data.cultivation_status;
+                    latestLevel = status.level || 0;
                     const res = data.home.resources || {};
                     const wallet = data.home.wallet || {};
 
@@ -414,18 +417,11 @@ async function start() {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_mp');
                     }
 
-                    if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next) {
+                    if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next && ![10, 20, 30].includes(status.level)) {
                         if (status.claimable_exp > 0) await tracker.claimExp(auth.token, auth.charId, auth.config);
                         else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
 
-                    // Tự động nâng cấp Linh Mạch nếu còn ở cấp 0 và đủ linh thạch (>500)
-                    if (data.home.linh_mach && data.home.linh_mach.level === 0 && spiritStones > 500) {
-                        const upRes = await tracker.upgradeLinhMach(auth.token, auth.charId, auth.config);
-                        if (upRes && upRes.ok) {
-                            latestMsg = `[HỆ THỐNG] Đã tự động nâng cấp Linh Mạch (Lvl 0 -> 1)`;
-                        }
-                    }
 
                     // Tự động chuyển chỗ tu luyện bị vô hiệu hóa theo yêu cầu (Bỏ qua Ancient Cave)
                     /*
@@ -492,6 +488,7 @@ async function start() {
         setInterval(() => manageChests(), 60000); // 1 phút check rương một lần
         manageChests();
 
+
         // Farm automation - use auth object to keep token fresh
         setInterval(async () => {
             try {
@@ -555,6 +552,7 @@ async function start() {
                 if (latestHP < 30) reasons.push("Sinh lực");
                 if (latestStamina < 30) reasons.push("Thể lực");
                 if (latestSpirit < 30) reasons.push("Thân hồn");
+                if ([10, 20, 30].includes(latestLevel)) reasons.push("Cấp độ (" + latestLevel + ")");
 
                 if (reasons.length === 0) {
                     await kyngo.triggerKiNgo(token, charId, config);
@@ -564,7 +562,7 @@ async function start() {
                         } catch (e) { }
                     }, 2000);
                 } else {
-                    latestMsg = `[HỆ THỐNG] ${reasons.join("/")} thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
+                    latestMsg = `[HỆ THỐNG] Tạm dừng Kỳ Ngộ do: ${reasons.join(", ")}.`;
                 }
             } catch (e) {
                 // console.error('[ERROR Kỳ Ngộ]', e.message);
