@@ -330,6 +330,9 @@ async function start() {
         const loginData = await loginAndGetInfo(accountIndex);
         Object.assign(auth, loginData, { accountIndex });
 
+        // ✅ GỌI AFK NGAY KHI START
+        await goOffline();
+
         if (Array.isArray(auth.userData.map_sequence)) {
             mapSequence = auth.userData.map_sequence;
         } else if (typeof auth.userData.map_sequence === 'string') {
@@ -460,7 +463,7 @@ async function start() {
                 console.log(`    > [CƠ BẢN] Nhận : ${JSON.stringify(afkRes.reward)}`);
             }
 
-            const realmAfkRes = await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config, activeMapCode);
+            const realmAfkRes = await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
             if (realmAfkRes && (realmAfkRes.reward || realmAfkRes.message)) {
                 console.log(`    > [BÍ CẢNH] Nhận : ${realmAfkRes.message || JSON.stringify(realmAfkRes.reward)}`);
             }
@@ -618,8 +621,8 @@ async function goOffline() {
     const { token, charId, config } = auth;
     if (!token || !charId) return;
     try {
-        console.log(`\n[HỆ THỐNG] Đang thiết lập trạng thái Offline AFK tại: ${activeMapCode}...`);
-        const res = await tracker.startOfflineAFK(token, charId, config, activeMapCode);
+        console.log(`\n[HỆ THỐNG] Đang thiết lập trạng thái Offline AFK tại: bf_tay_bac_c01...`);
+        const res = await tracker.startOfflineAFK(token, charId, config, "bf_tay_bac_c01");
         if (res && res.ok) {
             console.log(`    > Thành công! Bạn có thể yên tâm nghỉ ngơi.`);
         }

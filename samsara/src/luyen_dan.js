@@ -2,7 +2,7 @@ import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
 import * as tracker from './track.js';
 
 
-const TIME_RUN = 1
+const TIME_RUN = 70
 
 async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");
@@ -10,8 +10,8 @@ async function luyenDanLoop() {
 
     console.log(`[HỆ THỐNG] Bắt đầu luyện đan cho: ${auth.userData.email}`);
 
-    const recipeCode = "r_pill_lk_spirit";
-    //const recipeCode = "r_pill_lk_mp";
+    //const recipeCode = "r_pill_lk_spirit";
+    const recipeCode = "r_pill_lk_hp";
 
     let time = 0
     while (time < TIME_RUN) {
@@ -29,7 +29,6 @@ async function luyenDanLoop() {
                 p_times: 1
             });
 
-            console.log(res);
             if (res && res.success) {
                 time++;
                 console.log(` [${time}/${TIME_RUN}] [LUYỆN ĐAN] Thành công: ${res.message || 'Đã tạo 1 đan dược'}`);
@@ -38,9 +37,7 @@ async function luyenDanLoop() {
                 console.error(`[LUYỆN ĐAN] Thất bại`);
 
                 // Kiểm tra nếu thiếu nguyên liệu
-                if (errorMsg.toLowerCase().includes("không đủ") ||
-                    errorMsg.toLowerCase().includes("insufficient") ||
-                    errorMsg.toLowerCase().includes("thiếu")) {
+                if (errorMsg.toLowerCase().includes("not_enough_items")) {
                     console.log(`[HỆ THỐNG] Dừng luyện đan do thiếu nguyên liệu.`);
                     break;
                 }

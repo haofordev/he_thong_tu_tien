@@ -175,7 +175,7 @@ export async function claimOfflineAFK(token, charId, config) {
     return null;
 }
 
-export async function startOfflineAFK(token, charId, config, realmCode = "starter_01") {
+export async function startOfflineAFK(token, charId, config, realmCode = "sect_lk_c01") {
     try {
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_start_offline_afk`, {
             method: 'POST',
@@ -185,9 +185,9 @@ export async function startOfflineAFK(token, charId, config, realmCode = "starte
                 'Content-Type': 'application/json',
                 'content-profile': 'public',
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 p_character_id: charId,
-                p_realm_code: realmCode 
+                p_realm_code: realmCode
             })
         });
         return await res.json();
@@ -466,7 +466,7 @@ export async function harvestCrop(token, charId, config, slot) {
     }
     return null;
 }
- 
+
 export async function getWeeklyContestStatus(token, charId, config, type = "mob_kill") {
     try {
         return await rpcCall(token, charId, config, 'rpc_weekly_contest_get_status', {

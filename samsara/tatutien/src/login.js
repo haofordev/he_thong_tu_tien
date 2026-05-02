@@ -93,7 +93,7 @@ export async function loginAndGetInfo(accountIndex = 0) {
     userData.expires_at = expiresAt;
     fs.writeFileSync(dataPath, JSON.stringify(dataArray, null, 2));
 
-    const map_code = userData.map_code || "starter_01";
+    const map_code = userData.map_code || "sect_lk_c01";
 
     return { token, charId, config, map_code, userData, expiresAt };
 }
@@ -130,7 +130,7 @@ export async function loginWithEmailPass(email, password) {
 
     const charData = await charRes.json();
     if (!charRes.ok || !charData[0]) throw new Error(`Không lấy được nhân vật của ${email}`);
-    
+
     return { token, charId: charData[0].id, charName: charData[0].name, config };
 }
-
+

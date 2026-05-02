@@ -145,7 +145,7 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
     aliveMobs.forEach(m => {
         m.distance = Math.sqrt(Math.pow(myX - m.x, 2) + Math.pow(myY - m.y, 2));
         m.inRange = true;
-    });
+    })
 
     // Ưu tiên Boss > Elite > Normal
     const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss').sort((a, b) => a.distance - b.distance);

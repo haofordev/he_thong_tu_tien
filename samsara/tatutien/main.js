@@ -128,7 +128,7 @@ async function startCombatLoop() {
             const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) : 2000;
 
             // Bù trừ latency: lấy thời gian hồi chiêu trừ đi thời gian mạng đã trôi qua
-            nextWait = Math.max(100, serverWait - latency + 80); // 80ms buffer an toàn
+            nextWait = Math.max(100, serverWait - latency + 100); // 80ms buffer an toàn
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
