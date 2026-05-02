@@ -13,23 +13,21 @@ let auth = {
     expiresAt: 0
 };
 
-
 let latestMsg = "Đang khởi tạo...";
 let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let currentRealmId = null;
-let activeMapCode = "starter_01";
-let bodyPriority = "balanced"; // "balanced", "power" (fire), "survival" (wood)
+let activeMapCode = "sect_lk_c01";
+let bodyPriority = "top_cp"; // Ưu tiên leo Top Tăng Lực Chiến
 let currentMobId = null;
 let currentMobKind = null;
 let currentMobHP = 0;
-let currentMobInRange = true; // Lưu trạng thái target
 let currentMobRetryCount = 0; // Số lần thử lại target quá xa
-let blockedMobId = null; // Chặn target quá xa đã thử 3 lần
 let scanCount = 0;
 let combatLogs = [];
 let attackFailureCount = 0;
+let latestLevel = 0;
 
 function logCombat(msg) {
     const time = new Date().toLocaleTimeString();
@@ -57,10 +55,7 @@ async function startCombatLoop() {
 
     if (!currentMobId) {
         try {
-            // [DEBUG] Xem Realm ID và Snapshot
-            console.log(`[DEBUG] Realm ID hiện tại: ${currentRealmId}`);
             const snapshot = await bicanh.getRealmSnapshot(token, charId, config, currentRealmId);
-            if (!currentMobId) console.log(`[DEBUG] Raw Snapshot:`, JSON.stringify(snapshot).substring(0, 200));
 
             let target = bicanh.findNewTarget(snapshot, charId, auth.charId)
 
@@ -68,7 +63,6 @@ async function startCombatLoop() {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobHP = target.hp || 0;
-                currentMobInRange = true;
                 currentMobRetryCount = 0;
                 scanCount = 0;
 
@@ -100,37 +94,46 @@ async function startCombatLoop() {
         // TỰ ĐỘNG CẮN THUỐC TRONG CHIẾN ĐẤU (MP)
         if (latestMP < 60 && inventoryCounts['pill_lk_mp'] > 0) {
             await tracker.useItem(token, charId, config, 'pill_lk_mp');
-            latestMP += 100; // Ước tính hồi 100 MP
+            latestMP += 50; // Ước tính hồi 100 MP
         }
 
-        // [CHẾ ĐỘ THỬ NGHIỆM]: Ép buộc dùng Đánh Tay (v1) để kiểm tra tính điểm BXH
+        // CHIẾN THUẬT LAI: 
+        // - Nếu quái > 10,000 HP và đủ Mana: Dùng Kỹ năng (v3) để lấy điểm.
+        // - Nếu quái <= 10,000 HP hoặc hết Mana: Dùng Đánh tay (v1) để tiết kiệm.
         let useNormalAttack = true;
+        if (currentMobHP < 5000 && latestMP > 20) {
+            useNormalAttack = false;
+        }
 
-        const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
+        const startTime = Date.now();
+        const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId);
+        const latency = Date.now() - startTime;
 
-        let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        let nextWait = 2800;
+        let nextWait = 2000;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
-            attackFailureCount = 0; // Reset bộ đếm khi có phản hồi thành công
+            attackFailureCount = 0;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
             if (res.hp_after !== undefined) latestHP = res.hp_after;
             if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
 
             const hpLeft = res.mob_hp_after !== undefined ? `| Quái còn: ${res.mob_hp_after}` : "";
-            const mode = "[TAY-TEST] ";
+            const mode = useNormalAttack ? "[TAY] " : "[CHIÊU] ";
             const kindLabel = (currentMobKind === 'boss' || currentMobKind === 'elite') ? `[${currentMobKind.toUpperCase()}] ` : "";
             bossMsg = `${kindLabel}${mode}${res.is_crit ? "[BẠO!] " : ""}Gây: -${res.damage ?? 0} HP ${hpLeft}`;
 
             logCombat(bossMsg);
 
-            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 200 : 0;
-            nextWait = Math.max(2800, serverWait);
+            // Tối ưu thời gian chờ dựa trên Atk Speed từ server
+            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) : 2000;
+
+            // Bù trừ latency: lấy thời gian hồi chiêu trừ đi thời gian mạng đã trôi qua
+            nextWait = Math.max(100, serverWait - latency + 80); // 80ms buffer an toàn
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
                 currentMobKind = null;
-                nextWait = 500;
+                nextWait = 100; // Chuyển mục tiêu mới ngay lập tức
             }
         } else {
             attackFailureCount++;
@@ -145,7 +148,7 @@ async function startCombatLoop() {
                 }
                 nextWait = 3000;
             } else if (res?.reason === 'attack_cooldown') {
-                attackFailureCount = 0;
+                attackFailureCount = 0; // Reset vì vẫn có phản hồi từ server
                 nextWait = (res.remain_sec * 1000) + 200;
             } else if (res?.reason === 'no_mana') {
                 attackFailureCount = 0;
@@ -161,8 +164,21 @@ async function startCombatLoop() {
                 currentMobId = null;
                 currentMobKind = null;
                 nextWait = 200;
+            } else if (res?.reason === 'not_joined') {
+                attackFailureCount = 0;
+                currentRealmId = null;
+                currentMobId = null;
+                bossMsg = `[Hệ thống] Mất kết nối Instance, đang tự động vào lại...`;
+                nextWait = 200;
+            } else if (res?.reason === 'busy') {
+                attackFailureCount = 0;
+                bossMsg = `[Hệ thống] Nhân vật đang bận, đợi một chút...`;
+                nextWait = 1000;
             } else {
-                bossMsg = `[HỆ THỐNG] Lỗi đánh quái: ${res?.message || 'Không có phản hồi'}`;
+                const reason = res?.reason || res?.message || 'Không có phản hồi';
+                bossMsg = `[LỖI] ${reason}`;
+                if (res?.status) bossMsg += ` (HTTP ${res.status})`;
+                logCombat(bossMsg);
                 nextWait = 2000;
             }
         }
@@ -238,8 +254,26 @@ async function manageBodyCult() {
                 targetEl = 'fire';
             } else if (bodyPriority === 'survival') {
                 targetEl = 'wood';
+            } else if (bodyPriority === 'top_cp') {
+                const offensive = ['fire', 'metal'];
+                let bestOffensive = offensive.find(el => {
+                    const cost = body.next_upgrade_cost[el];
+                    const stoneKey = el === 'fire' ? 'hoa' : 'kim';
+                    return (body.stones[`${stoneKey}_linh_thach`] || 0) >= cost.stone_cost;
+                });
+
+                if (bestOffensive) targetEl = bestOffensive;
+                else {
+                    let cheapestCost = 999999;
+                    for (const el of elements) {
+                        const cost = body.next_upgrade_cost[el].ss_cost;
+                        if (cost < cheapestCost) {
+                            cheapestCost = cost;
+                            targetEl = el;
+                        }
+                    }
+                }
             } else {
-                // Balanced: Tìm hệ có cấp thấp nhất
                 let lowestLv = 999;
                 for (const el of elements) {
                     const lv = body[`${el}_level`] || 0;
@@ -291,6 +325,7 @@ async function manageChests() {
     } catch (e) { }
 }
 
+
 process.on('unhandledRejection', (reason, promise) => {
     // console.error('[Unhandled Rejection]', reason);
 });
@@ -336,6 +371,7 @@ async function start() {
 
                 if (data?.cultivation_status && data?.home) {
                     const status = data.cultivation_status;
+                    latestLevel = status.level || 0;
                     const res = data.home.resources || {};
                     const wallet = data.home.wallet || {};
 
@@ -393,18 +429,11 @@ async function start() {
                         await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_mp');
                     }
 
-                    if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next) {
+                    if (status.cultivation_exp_progress + status.claimable_exp >= status.exp_to_next && ![10, 20, 30].includes(status.level)) {
                         if (status.claimable_exp > 0) await tracker.claimExp(auth.token, auth.charId, auth.config);
                         else await tracker.doBreakthrough(auth.token, auth.charId, auth.config);
                     }
 
-                    // Tự động nâng cấp Linh Mạch nếu còn ở cấp 0 và đủ linh thạch (>500)
-                    if (data.home.linh_mach && data.home.linh_mach.level === 0 && spiritStones > 500) {
-                        const upRes = await tracker.upgradeLinhMach(auth.token, auth.charId, auth.config);
-                        if (upRes && upRes.ok) {
-                            latestMsg = `[HỆ THỐNG] Đã tự động nâng cấp Linh Mạch (Lvl 0 -> 1)`;
-                        }
-                    }
 
                     // Tự động chuyển chỗ tu luyện bị vô hiệu hóa theo yêu cầu (Bỏ qua Ancient Cave)
                     /*
@@ -453,7 +482,6 @@ async function start() {
         // 3. VÀO BÍ CẢNH NGAY LẬP TỨC
         // Sử dụng auth thay vì token, charId, config cục bộ
         const realmData = await bicanh.joinSecretRealm(auth.token, auth.charId, auth.config, activeMapCode);
-        console.log(`[DEBUG] Kết quả Join Realm (${activeMapCode}):`, JSON.stringify(realmData));
         currentRealmId = realmData?.realm_id;
 
         await kyngo.enterKiNgo(auth.token, auth.charId, auth.config);
@@ -463,14 +491,15 @@ async function start() {
 
 
 
-        setInterval(() => manageBodyCult(), 300000); // 5 phút check Thể Tu một lần
+        setInterval(() => manageBodyCult(), 30000); // 30 giây check Thể Tu một lần
         manageBodyCult();
 
         setInterval(() => manageGarden(), 300000); // 5 phút check Linh Điền một lần
         manageGarden();
 
-        setInterval(() => manageChests(), 60000);
+        setInterval(() => manageChests(), 60000); // 1 phút check rương một lần
         manageChests();
+
 
         // Farm automation - use auth object to keep token fresh
         setInterval(async () => {
@@ -535,6 +564,7 @@ async function start() {
                 if (latestHP < 30) reasons.push("Sinh lực");
                 if (latestStamina < 30) reasons.push("Thể lực");
                 if (latestSpirit < 30) reasons.push("Thân hồn");
+                if ([10, 20, 30].includes(latestLevel)) reasons.push("Cấp độ (" + latestLevel + ")");
 
                 if (reasons.length === 0) {
                     await kyngo.triggerKiNgo(token, charId, config);
@@ -544,7 +574,7 @@ async function start() {
                         } catch (e) { }
                     }, 2000);
                 } else {
-                    latestMsg = `[HỆ THỐNG] ${reasons.join("/")} thấp (<30), tạm dừng Kỳ Ngộ để hồi phục.`;
+                    latestMsg = `[HỆ THỐNG] Tạm dừng Kỳ Ngộ do: ${reasons.join(", ")}.`;
                 }
             } catch (e) {
                 // console.error('[ERROR Kỳ Ngộ]', e.message);
@@ -593,5 +623,25 @@ function connectRealtime(config) {
 
     return ws;
 }
+
+async function goOffline() {
+    const { token, charId, config } = auth;
+    if (!token || !charId) return;
+    try {
+        console.log(`\n[HỆ THỐNG] Đang thiết lập trạng thái Offline AFK tại: ${activeMapCode}...`);
+        const res = await tracker.startOfflineAFK(token, charId, config, activeMapCode);
+        if (res && res.ok) {
+            console.log(`    > Thành công! Bạn có thể yên tâm nghỉ ngơi.`);
+        }
+    } catch (e) {
+        console.error('[OFFLINE ERROR]', e.message);
+    }
+}
+
+// Bắt sự kiện tắt script để tự động đi AFK
+process.on('SIGINT', async () => {
+    await goOffline();
+    process.exit();
+});
 
 start();

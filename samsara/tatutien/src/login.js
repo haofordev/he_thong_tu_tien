@@ -105,4 +105,32 @@ export async function refreshTokenIfNeeded(accountIndex, currentExpiresAt) {
     }
     return null;
 }
+
+export async function loginWithEmailPass(email, password) {
+    const configPath = path.resolve(__dirname, '../data/config.json');
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
+    const authRes = await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+            'apikey': config.API_KEY,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, gotrue_meta_security: { captcha_token: null } }),
+    });
+
+    const authData = await authRes.json();
+    if (!authRes.ok) throw new Error(`Đăng nhập thất bại (${email}): ${authData.error_description || authData.error}`);
+
+    const token = authData.access_token;
+
+    const charRes = await fetch(`${config.SUPABASE_URL}/rest/v1/characters?select=id,name&limit=1`, {
+        headers: { 'apikey': config.API_KEY, 'Authorization': `Bearer ${token}` }
+    });
+
+    const charData = await charRes.json();
+    if (!charRes.ok || !charData[0]) throw new Error(`Không lấy được nhân vật của ${email}`);
+    
+    return { token, charId: charData[0].id, charName: charData[0].name, config };
+}
 

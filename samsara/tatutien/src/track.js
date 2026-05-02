@@ -466,7 +466,7 @@ export async function harvestCrop(token, charId, config, slot) {
     }
     return null;
 }
-
+ 
 export async function getWeeklyContestStatus(token, charId, config, type = "mob_kill") {
     try {
         return await rpcCall(token, charId, config, 'rpc_weekly_contest_get_status', {
@@ -475,6 +475,65 @@ export async function getWeeklyContestStatus(token, charId, config, type = "mob_
         });
     } catch (e) {
         console.error('[WEEKLY CONTEST ERROR]', e.message);
+    }
+    return null;
+}
+
+export async function listMailbox(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_list_mailbox`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId,
+                p_limit: 50,
+                p_offset: 0
+            })
+        });
+        return await res.json();
+    } catch (e) {
+        // ignore
+    }
+    return null;
+}
+
+export async function readMail(token, charId, config, mailId) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_read_mail', {
+            p_character_id: charId,
+            p_message_id: mailId
+        });
+    } catch (e) {
+        // ignore
+    }
+    return null;
+}
+
+export async function claimMailGift(token, charId, config, mailId) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_claim_mail_gift_v2', {
+            p_character_id: charId,
+            p_message_id: mailId
+        });
+    } catch (e) {
+        // ignore
+    }
+    return null;
+}
+
+export async function deleteReadMails(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_delete_read_mails', {
+            p_character_id: charId
+        });
+    } catch (e) {
+        // ignore
     }
     return null;
 }

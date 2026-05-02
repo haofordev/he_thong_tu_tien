@@ -1,16 +1,20 @@
 import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
 import * as tracker from './track.js';
 
+
+const TIME_RUN = 1
+
 async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");
     let auth = await loginAndGetInfo(accountIndex);
 
     console.log(`[HỆ THỐNG] Bắt đầu luyện đan cho: ${auth.userData.email}`);
 
-    //const recipeCode = "r_pill_lk_spirit";
-    const recipeCode = "r_pill_lk_mp";
+    const recipeCode = "r_pill_lk_spirit";
+    //const recipeCode = "r_pill_lk_mp";
 
-    while (true) {
+    let time = 0
+    while (time < TIME_RUN) {
         try {
             // Check and refresh token
             const newAuth = await refreshTokenIfNeeded(auth.accountIndex, auth.expiresAt);
@@ -25,11 +29,13 @@ async function luyenDanLoop() {
                 p_times: 1
             });
 
-            if (res && res.ok) {
-                console.log(`[LUYỆN ĐAN] Thành công: ${res.message || 'Đã tạo 1 đan dược'}`);
+            console.log(res);
+            if (res && res.success) {
+                time++;
+                console.log(` [${time}/${TIME_RUN}] [LUYỆN ĐAN] Thành công: ${res.message || 'Đã tạo 1 đan dược'}`);
             } else {
                 const errorMsg = res?.message || res?.error_description || res?.error || "Lỗi không xác định";
-                console.error(`[LUYỆN ĐAN] Thất bại: ${errorMsg}`);
+                console.error(`[LUYỆN ĐAN] Thất bại`);
 
                 // Kiểm tra nếu thiếu nguyên liệu
                 if (errorMsg.toLowerCase().includes("không đủ") ||
@@ -44,7 +50,7 @@ async function luyenDanLoop() {
         }
 
         // Đợi 3 giây trước lần tiếp theo
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 200));
     }
 }
 

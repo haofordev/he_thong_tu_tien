@@ -29,11 +29,21 @@ export async function joinSecretRealm(token, charId, config, mapCode) {
 /**
  * Nhận thưởng AFK Bí cảnh
  */
-/*
-export async function claimSecretRealmOfflineAFK(token, charId, config, mapCode) {
+export async function claimSecretRealmOfflineAFK(token, charId, config) {
     try {
-        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_claim_secret_realm_offline_afk`, {
-...
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_claim_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId
+            })
+        });
         const data = await res.json();
         return data;
     } catch (e) {
@@ -41,8 +51,6 @@ export async function claimSecretRealmOfflineAFK(token, charId, config, mapCode)
     }
     return null;
 }
-*/
-export async function claimSecretRealmOfflineAFK() { return null; }
 
 
 /**
@@ -96,12 +104,21 @@ export async function attackMob(token, charId, config, realmId, mobId) {
             },
             body: JSON.stringify(payload)
         });
-        const data = await res.json();
-        return { ...data, httpOk: res.ok };
+
+        const text = await res.text();
+        let data = {};
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error(`[ATTACK MOB] Lỗi parse JSON (Status ${res.status}): ${text.substring(0, 100)}`);
+            return { ok: false, httpOk: res.ok, message: `Lỗi Server (${res.status})` };
+        }
+
+        return { ...data, httpOk: res.ok, status: res.status };
     } catch (e) {
         console.error('[ATTACK MOB ERROR]', e.message);
+        return { ok: false, httpOk: false, message: `Lỗi kết nối: ${e.message}` };
     }
-    return null;
 }
 
 /**

@@ -165,7 +165,10 @@ async function startCombatLoop() {
                 currentMobKind = null;
                 nextWait = 200;
             } else {
-                bossMsg = `[HỆ THỐNG] Lỗi đánh quái: ${res?.message || 'Không có phản hồi'}`;
+                const reason = res?.reason || res?.message || 'Không có phản hồi';
+                bossMsg = `[LỖI] ${reason}`;
+                if (res?.status) bossMsg += ` (HTTP ${res.status})`;
+                logCombat(bossMsg);
                 nextWait = 2000;
             }
         }
@@ -610,5 +613,25 @@ function connectRealtime(config) {
 
     return ws;
 }
+
+async function goOffline() {
+    const { token, charId, config } = auth;
+    if (!token || !charId) return;
+    try {
+        console.log(`\n[HỆ THỐNG] Đang thiết lập trạng thái Offline AFK tại: ${activeMapCode}...`);
+        const res = await tracker.startOfflineAFK(token, charId, config, activeMapCode);
+        if (res && res.ok) {
+            console.log(`    > Thành công! Bạn có thể yên tâm nghỉ ngơi.`);
+        }
+    } catch (e) {
+        console.error('[OFFLINE ERROR]', e.message);
+    }
+}
+
+// Bắt sự kiện tắt script để tự động đi AFK
+process.on('SIGINT', async () => {
+    await goOffline();
+    process.exit();
+});
 
 start();
