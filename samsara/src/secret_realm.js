@@ -73,16 +73,16 @@ export async function getRealmSnapshot(token, charId, config, realmId) {
     return null;
 }
 
-/**
- * Tấn công quái
- */
-export async function attackMob(token, charId, config, realmId, mobId, useV1 = false) {
+export async function attackMob(token, charId, config, realmId, mobId) {
     try {
         const rpcName = 'rpc_attack_realm_mob_v3';
+
         const payload = {
             p_character_id: charId,
             p_realm_id: realmId,
-            p_mob_id: mobId
+            p_mob_id: mobId,
+            p_skill_slot: 0,
+            p_apply_counter: false // Mặc định là false theo logic game
         };
 
         const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/${rpcName}`, {
@@ -92,12 +92,15 @@ export async function attackMob(token, charId, config, realmId, mobId, useV1 = f
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
                 'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
             },
             body: JSON.stringify(payload)
         });
         const data = await res.json();
         return { ...data, httpOk: res.ok };
-    } catch (e) { }
+    } catch (e) {
+        console.error('[ATTACK MOB ERROR]', e.message);
+    }
     return null;
 }
 

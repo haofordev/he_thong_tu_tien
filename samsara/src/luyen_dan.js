@@ -7,8 +7,8 @@ async function luyenDanLoop() {
 
     console.log(`[HỆ THỐNG] Bắt đầu luyện đan cho: ${auth.userData.email}`);
 
-    const recipeCode = "r_pill_lk_spirit";
-    //const recipeCode = "r_pill_lk_mp";
+    //const recipeCode = "r_pill_lk_spirit";
+    const recipeCode = "r_pill_lk_mp";
 
     while (true) {
         try {
@@ -19,10 +19,10 @@ async function luyenDanLoop() {
                 console.log(`[HỆ THỐNG] Đã làm mới token.`);
             }
 
-            const res = await tracker.rpcCall(auth.token, auth.charId, auth.config, 'rpc_craft_guarded', {
+            const res = await tracker.rpcCall(auth.token, auth.charId, auth.config, 'rpc_craft_auto', {
                 p_character_id: auth.charId,
                 p_recipe_code: recipeCode,
-                p_times: 10
+                p_times: 1
             });
 
             if (res && res.ok) {
@@ -44,7 +44,7 @@ async function luyenDanLoop() {
         }
 
         // Đợi 3 giây trước lần tiếp theo
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 500));
     }
 }
 

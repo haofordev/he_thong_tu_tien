@@ -63,7 +63,6 @@ async function startCombatLoop() {
                 currentMobId = target.id;
                 currentMobKind = target.mobKind;
                 currentMobHP = target.hp || 0;
-                currentMobInRange = true;
                 currentMobRetryCount = 0;
                 scanCount = 0;
 
@@ -106,13 +105,14 @@ async function startCombatLoop() {
             useNormalAttack = false;
         }
 
-        const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId, useNormalAttack);
+        const startTime = Date.now();
+        const res = await bicanh.attackMob(token, charId, config, currentRealmId, currentMobId);
+        const latency = Date.now() - startTime;
 
-        let isBoss = (currentMobKind === 'boss' || currentMobKind === 'elite');
-        let nextWait = 2100; // Giảm xuống 2.1 giây để tăng tốc
+        let nextWait = 2000;
 
         if (res && res.httpOk && (res.ok || res.damage !== undefined)) {
-            attackFailureCount = 0; // Reset bộ đếm khi có phản hồi thành công
+            attackFailureCount = 0;
             if (res.mp_after !== undefined) latestMP = res.mp_after;
             if (res.hp_after !== undefined) latestHP = res.hp_after;
             if (res.mob_hp_after !== undefined) currentMobHP = res.mob_hp_after;
@@ -124,17 +124,16 @@ async function startCombatLoop() {
 
             logCombat(bossMsg);
 
-            // Cập nhật tốc độ từ Server
-            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) + 100 : 0;
-            if (res.atk_speed_sec) {
-                process.stdout.write(`\r[TỐC ĐỘ] Server yêu cầu hồi chiêu: ${res.atk_speed_sec}s                    `);
-            }
-            nextWait = Math.max(2100, serverWait);
+            // Tối ưu thời gian chờ dựa trên Atk Speed từ server
+            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) : 2000;
+
+            // Bù trừ latency: lấy thời gian hồi chiêu trừ đi thời gian mạng đã trôi qua
+            nextWait = Math.max(100, serverWait - latency + 80); // 80ms buffer an toàn
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
                 currentMobKind = null;
-                nextWait = 500;
+                nextWait = 100; // Chuyển mục tiêu mới ngay lập tức
             }
         } else {
             attackFailureCount++;
