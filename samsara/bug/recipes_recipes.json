@@ -1,0 +1,1645 @@
+[
+  {
+    "recipe_code": "r_forge_t1_kiem_tuy_lk",
+    "category": "forging",
+    "output_code": "kiem_tuy_lk",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 100,
+      "lk_herb": 200,
+      "lk_wood": 100,
+      "lk_essence": 200
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "lk"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_forge_t2_kiem_tuy_tc",
+    "category": "forging",
+    "output_code": "kiem_tuy_tc",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 100,
+      "tc_herb": 200,
+      "tc_wood": 100,
+      "tc_essence": 200
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "tc"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_lk_1",
+    "category": "forging",
+    "output_code": "eq_weapon_lk_1",
+    "output_qty": 1,
+    "requirements": {
+      "lk_wood": 1,
+      "lk_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "hotfix_linh_moc": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_lk_1",
+    "category": "forging",
+    "output_code": "eq_armor_lk_1",
+    "output_qty": 1,
+    "requirements": {
+      "lk_wood": 1,
+      "lk_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "hotfix_linh_moc": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_hp",
+    "category": "alchemy",
+    "output_code": "pill_lk_hp",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:25:09.890954+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_mp",
+    "category": "alchemy",
+    "output_code": "pill_lk_mp",
+    "output_qty": 1,
+    "requirements": {
+      "lk_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:25:09.890954+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_tc_tu_linh",
+    "category": "talisman",
+    "output_code": "talisman_tc_tu_linh",
+    "output_qty": 1,
+    "requirements": {
+      "tc_beast_hide": 5,
+      "tc_beast_blood": 5,
+      "tc_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "qi_rate",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_kd_tu_linh",
+    "category": "talisman",
+    "output_code": "talisman_kd_tu_linh",
+    "output_qty": 1,
+    "requirements": {
+      "kd_beast_hide": 5,
+      "kd_beast_blood": 5,
+      "kd_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "qi_rate",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_tu_vi",
+    "category": "alchemy",
+    "output_code": "pill_lk_tu_vi",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 5,
+      "lk_essence": 5,
+      "lk_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "kind": "tu_vi",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_forge_t3_kiem_tuy_kd",
+    "category": "forging",
+    "output_code": "kiem_tuy_kd",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 100,
+      "kd_herb": 200,
+      "kd_wood": 100,
+      "kd_essence": 200
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "kd"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_formation_lk_tu_linh",
+    "category": "formation",
+    "output_code": "formation_lk_tu_linh",
+    "output_qty": 1,
+    "requirements": {
+      "lk_array_flag": 5,
+      "lk_array_stone": 5,
+      "lk_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "tu_linh",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_formation_tc_tu_linh",
+    "category": "formation",
+    "output_code": "formation_tc_tu_linh",
+    "output_qty": 1,
+    "requirements": {
+      "tc_array_flag": 5,
+      "tc_array_stone": 5,
+      "tc_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "tu_linh",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_formation_kd_tu_linh",
+    "category": "formation",
+    "output_code": "formation_kd_tu_linh",
+    "output_qty": 1,
+    "requirements": {
+      "kd_array_flag": 5,
+      "kd_array_stone": 5,
+      "kd_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "tu_linh",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_lk_tu_linh",
+    "category": "talisman",
+    "output_code": "talisman_lk_tu_linh",
+    "output_qty": 1,
+    "requirements": {
+      "lk_beast_hide": 5,
+      "lk_beast_blood": 5,
+      "lk_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "qi_rate",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_tu_vi",
+    "category": "alchemy",
+    "output_code": "pill_tc_tu_vi",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 5,
+      "tc_essence": 5,
+      "tc_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "kind": "tu_vi",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_tu_vi",
+    "category": "alchemy",
+    "output_code": "pill_kd_tu_vi",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 5,
+      "kd_essence": 5,
+      "kd_tu_linh_flower": 5
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "kind": "tu_vi",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-02-09T10:12:00.355795+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_spirit",
+    "category": "alchemy",
+    "output_code": "pill_lk_spirit",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 1,
+      "lk_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-03-01T15:58:21.499651+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_spirit",
+    "category": "alchemy",
+    "output_code": "pill_tc_spirit",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 1,
+      "tc_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-03-01T15:58:21.499651+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_spirit",
+    "category": "alchemy",
+    "output_code": "pill_kd_spirit",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 1,
+      "kd_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-03-01T15:58:21.499651+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_minor",
+    "category": "alchemy",
+    "output_code": "pill_lk_minor",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 1,
+      "lk_herb": 10
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:25:09.890954+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_major",
+    "category": "alchemy",
+    "output_code": "pill_lk_major",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 10,
+      "lk_essence": 20
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:25:09.890954+00:00"
+  },
+  {
+    "recipe_code": "r_formation_t1_ngu_hanh_tran_lk",
+    "category": "formation",
+    "output_code": "ngu_hanh_tran_lk",
+    "output_qty": 1,
+    "requirements": {
+      "lk_array_flag": 200,
+      "lk_array_stone": 100
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "lk"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_formation_t2_ngu_hanh_tran_tc",
+    "category": "formation",
+    "output_code": "ngu_hanh_tran_tc",
+    "output_qty": 1,
+    "requirements": {
+      "tc_array_flag": 200,
+      "tc_array_stone": 100
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "tc"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_formation_t3_ngu_hanh_tran_kd",
+    "category": "formation",
+    "output_code": "ngu_hanh_tran_kd",
+    "output_qty": 1,
+    "requirements": {
+      "kd_array_flag": 200,
+      "kd_array_stone": 100
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "kd"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_alchemy_t1_tinh_tam_dan_lk",
+    "category": "alchemy",
+    "output_code": "tinh_tam_dan_lk",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 100,
+      "lk_essence": 100,
+      "lk_beast_blood": 100
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "lk"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_alchemy_t2_tinh_tam_dan_tc",
+    "category": "alchemy",
+    "output_code": "tinh_tam_dan_tc",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 100,
+      "tc_essence": 100,
+      "tc_beast_blood": 100
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "tc"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_alchemy_t3_tinh_tam_dan_kd",
+    "category": "alchemy",
+    "output_code": "tinh_tam_dan_kd",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 100,
+      "kd_essence": 100,
+      "kd_beast_blood": 100
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "kd"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_t1_tay_tuy_phu_lk",
+    "category": "talisman",
+    "output_code": "tay_tuy_phu_lk",
+    "output_qty": 1,
+    "requirements": {
+      "lk_beast_hide": 100,
+      "lk_beast_blood": 200
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "lk"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_t2_tay_tuy_phu_tc",
+    "category": "talisman",
+    "output_code": "tay_tuy_phu_tc",
+    "output_qty": 1,
+    "requirements": {
+      "tc_beast_hide": 100,
+      "tc_beast_blood": 200
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "tc"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_t3_tay_tuy_phu_kd",
+    "category": "talisman",
+    "output_code": "tay_tuy_phu_kd",
+    "output_qty": 1,
+    "requirements": {
+      "kd_beast_hide": 100,
+      "kd_beast_blood": 200
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "realm_code": "kd"
+    },
+    "created_at": "2026-04-15T08:43:07.86694+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_realm",
+    "category": "alchemy",
+    "output_code": "pill_lk_realm",
+    "output_qty": 1,
+    "requirements": {
+      "core_lk_tc": 10
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:25:09.890954+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_linh_thu",
+    "category": "alchemy",
+    "output_code": "lk_linh_thu_dan",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 1,
+      "lk_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {},
+    "created_at": "2026-04-26T16:56:58.047122+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_linh_thu",
+    "category": "alchemy",
+    "output_code": "tc_linh_thu_dan",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 1,
+      "tc_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {},
+    "created_at": "2026-04-26T16:56:58.047122+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_linh_thu",
+    "category": "alchemy",
+    "output_code": "kd_linh_thu_dan",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 1,
+      "kd_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {},
+    "created_at": "2026-04-26T16:56:58.047122+00:00"
+  },
+  {
+    "recipe_code": "r_pill_na_linh_thu",
+    "category": "alchemy",
+    "output_code": "na_linh_thu_dan",
+    "output_qty": 1,
+    "requirements": {
+      "na_herb": 1,
+      "na_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {},
+    "created_at": "2026-04-26T16:56:58.047122+00:00"
+  },
+  {
+    "recipe_code": "r_pill_lk_sta",
+    "category": "alchemy",
+    "output_code": "pill_lk_sta",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 1,
+      "lk_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:25:09.890954+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_hp",
+    "category": "alchemy",
+    "output_code": "pill_tc_hp",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_mp",
+    "category": "alchemy",
+    "output_code": "pill_tc_mp",
+    "output_qty": 1,
+    "requirements": {
+      "tc_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_sta",
+    "category": "alchemy",
+    "output_code": "pill_tc_sta",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 1,
+      "tc_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_minor",
+    "category": "alchemy",
+    "output_code": "pill_tc_minor",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 1,
+      "tc_herb": 10
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_major",
+    "category": "alchemy",
+    "output_code": "pill_tc_major",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 10,
+      "tc_essence": 20
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_minor",
+    "category": "alchemy",
+    "output_code": "pill_kd_minor",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 1,
+      "kd_herb": 10
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_major",
+    "category": "alchemy",
+    "output_code": "pill_kd_major",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 10,
+      "kd_essence": 20
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_tc_realm",
+    "category": "alchemy",
+    "output_code": "pill_tc_realm",
+    "output_qty": 1,
+    "requirements": {
+      "core_tc_kd": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_hp",
+    "category": "alchemy",
+    "output_code": "pill_kd_hp",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_mp",
+    "category": "alchemy",
+    "output_code": "pill_kd_mp",
+    "output_qty": 1,
+    "requirements": {
+      "kd_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_sta",
+    "category": "alchemy",
+    "output_code": "pill_kd_sta",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 1,
+      "kd_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_pill_kd_realm",
+    "category": "alchemy",
+    "output_code": "pill_kd_realm",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 2,
+      "core_tc_kd": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:29:12.098443+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_lk_2",
+    "category": "forging",
+    "output_code": "eq_weapon_lk_2",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_lk_2",
+    "category": "forging",
+    "output_code": "eq_armor_lk_2",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_lk_2",
+    "category": "forging",
+    "output_code": "eq_accessory_lk_2",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 2,
+      "lk_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_lk_2",
+    "category": "forging",
+    "output_code": "eq_boots_lk_2",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 2,
+      "lk_herb": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_lk_3",
+    "category": "forging",
+    "output_code": "eq_weapon_lk_3",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 7
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_lk_3",
+    "category": "forging",
+    "output_code": "eq_armor_lk_3",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 7
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_lk_3",
+    "category": "forging",
+    "output_code": "eq_accessory_lk_3",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 4,
+      "lk_essence": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_lk_3",
+    "category": "forging",
+    "output_code": "eq_boots_lk_3",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 4,
+      "lk_herb": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_tc_1",
+    "category": "forging",
+    "output_code": "eq_weapon_tc_1",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_tc_1",
+    "category": "forging",
+    "output_code": "eq_armor_tc_1",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_lk_1",
+    "category": "forging",
+    "output_code": "eq_accessory_lk_1",
+    "output_qty": 1,
+    "requirements": {
+      "lk_wood": 1,
+      "lk_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "hotfix_linh_moc": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_lk_1",
+    "category": "forging",
+    "output_code": "eq_boots_lk_1",
+    "output_qty": 1,
+    "requirements": {
+      "lk_wood": 1,
+      "lk_essence": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "hotfix_linh_moc": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_tc_1",
+    "category": "forging",
+    "output_code": "eq_accessory_tc_1",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 2,
+      "tc_essence": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_tc_1",
+    "category": "forging",
+    "output_code": "eq_boots_tc_1",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 2,
+      "tc_herb": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_tc_2",
+    "category": "forging",
+    "output_code": "eq_weapon_tc_2",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 7
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_tc_2",
+    "category": "forging",
+    "output_code": "eq_armor_tc_2",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 7
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_tc_2",
+    "category": "forging",
+    "output_code": "eq_accessory_tc_2",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 4,
+      "tc_essence": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_tc_2",
+    "category": "forging",
+    "output_code": "eq_boots_tc_2",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 4,
+      "tc_herb": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_tc_3",
+    "category": "forging",
+    "output_code": "eq_weapon_tc_3",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 10,
+      "tc_essence": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_tc_3",
+    "category": "forging",
+    "output_code": "eq_armor_tc_3",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 10,
+      "tc_herb": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_tc_3",
+    "category": "forging",
+    "output_code": "eq_accessory_tc_3",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 6,
+      "tc_essence": 6
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_tc_3",
+    "category": "forging",
+    "output_code": "eq_boots_tc_3",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 6,
+      "tc_herb": 6
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_kd_1",
+    "category": "forging",
+    "output_code": "eq_weapon_kd_1",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 7
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_kd_1",
+    "category": "forging",
+    "output_code": "eq_armor_kd_1",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 7
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_kd_1",
+    "category": "forging",
+    "output_code": "eq_accessory_kd_1",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 4,
+      "kd_essence": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_kd_1",
+    "category": "forging",
+    "output_code": "eq_boots_kd_1",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 4,
+      "kd_herb": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_kd_2",
+    "category": "forging",
+    "output_code": "eq_weapon_kd_2",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 10,
+      "kd_essence": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_kd_2",
+    "category": "forging",
+    "output_code": "eq_armor_kd_2",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 10,
+      "kd_herb": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_kd_2",
+    "category": "forging",
+    "output_code": "eq_accessory_kd_2",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 6,
+      "kd_essence": 6
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_kd_2",
+    "category": "forging",
+    "output_code": "eq_boots_kd_2",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 6,
+      "kd_herb": 6
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_weapon_kd_3",
+    "category": "forging",
+    "output_code": "eq_weapon_kd_3",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 14,
+      "kd_essence": 6
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_armor_kd_3",
+    "category": "forging",
+    "output_code": "eq_armor_kd_3",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 14,
+      "kd_herb": 6
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_accessory_kd_3",
+    "category": "forging",
+    "output_code": "eq_accessory_kd_3",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 10,
+      "kd_essence": 8
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_forge_eq_boots_kd_3",
+    "category": "forging",
+    "output_code": "eq_boots_kd_3",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 10,
+      "kd_herb": 8
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true
+    },
+    "created_at": "2026-01-20T10:38:45.279988+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_lk_atk",
+    "category": "talisman",
+    "output_code": "talisman_lk_atk",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 1,
+      "lk_beast_hide": 1,
+      "lk_beast_blood": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "atk",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_lk_def",
+    "category": "talisman",
+    "output_code": "talisman_lk_def",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 1,
+      "lk_beast_hide": 2,
+      "lk_beast_blood": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "def",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_lk_hp",
+    "category": "talisman",
+    "output_code": "talisman_lk_hp",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 2,
+      "lk_beast_hide": 1,
+      "lk_beast_blood": 1
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "hp",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_lk_crit",
+    "category": "talisman",
+    "output_code": "talisman_lk_crit",
+    "output_qty": 1,
+    "requirements": {
+      "lk_essence": 2,
+      "lk_beast_hide": 1,
+      "lk_beast_blood": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "crit",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_tc_atk",
+    "category": "talisman",
+    "output_code": "talisman_tc_atk",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 2,
+      "tc_beast_hide": 2,
+      "tc_beast_blood": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "atk",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_tc_def",
+    "category": "talisman",
+    "output_code": "talisman_tc_def",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 2,
+      "tc_beast_hide": 3,
+      "tc_beast_blood": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "def",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_tc_hp",
+    "category": "talisman",
+    "output_code": "talisman_tc_hp",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 4,
+      "tc_beast_hide": 2,
+      "tc_beast_blood": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "hp",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_tc_crit",
+    "category": "talisman",
+    "output_code": "talisman_tc_crit",
+    "output_qty": 1,
+    "requirements": {
+      "tc_essence": 4,
+      "tc_beast_hide": 2,
+      "tc_beast_blood": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "crit",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_kd_atk",
+    "category": "talisman",
+    "output_code": "talisman_kd_atk",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 3,
+      "kd_beast_hide": 3,
+      "kd_beast_blood": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "atk",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_kd_def",
+    "category": "talisman",
+    "output_code": "talisman_kd_def",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 3,
+      "kd_beast_hide": 4,
+      "kd_beast_blood": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "def",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_kd_hp",
+    "category": "talisman",
+    "output_code": "talisman_kd_hp",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 6,
+      "kd_beast_hide": 3,
+      "kd_beast_blood": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "hp",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_talisman_kd_crit",
+    "category": "talisman",
+    "output_code": "talisman_kd_crit",
+    "output_qty": 1,
+    "requirements": {
+      "kd_essence": 6,
+      "kd_beast_hide": 3,
+      "kd_beast_blood": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "buff": "crit",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_lk_tiger",
+    "category": "formation",
+    "output_code": "formation_lk_tiger",
+    "output_qty": 1,
+    "requirements": {
+      "lk_ore": 2,
+      "lk_array_flag": 2,
+      "lk_array_stone": 1,
+      "lk_beast_blood": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "tiger",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_lk_turtle",
+    "category": "formation",
+    "output_code": "formation_lk_turtle",
+    "output_qty": 1,
+    "requirements": {
+      "lk_herb": 2,
+      "lk_array_flag": 1,
+      "lk_beast_hide": 3,
+      "lk_array_stone": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "turtle",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_lk_dragon",
+    "category": "formation",
+    "output_code": "formation_lk_dragon",
+    "output_qty": 1,
+    "requirements": {
+      "lk_essence": 3,
+      "lk_array_flag": 2,
+      "lk_array_stone": 2,
+      "lk_beast_blood": 2
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "dragon",
+      "realm_code": "lk"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_tc_tiger",
+    "category": "formation",
+    "output_code": "formation_tc_tiger",
+    "output_qty": 1,
+    "requirements": {
+      "tc_ore": 3,
+      "tc_array_flag": 3,
+      "tc_array_stone": 2,
+      "tc_beast_blood": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "tiger",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_tc_turtle",
+    "category": "formation",
+    "output_code": "formation_tc_turtle",
+    "output_qty": 1,
+    "requirements": {
+      "tc_herb": 4,
+      "tc_array_flag": 2,
+      "tc_beast_hide": 5,
+      "tc_array_stone": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "turtle",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_tc_dragon",
+    "category": "formation",
+    "output_code": "formation_tc_dragon",
+    "output_qty": 1,
+    "requirements": {
+      "tc_essence": 5,
+      "tc_array_flag": 3,
+      "tc_array_stone": 3,
+      "tc_beast_blood": 3
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "dragon",
+      "realm_code": "tc"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_kd_tiger",
+    "category": "formation",
+    "output_code": "formation_kd_tiger",
+    "output_qty": 1,
+    "requirements": {
+      "kd_ore": 5,
+      "kd_array_flag": 4,
+      "kd_array_stone": 3,
+      "kd_beast_blood": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "tiger",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_kd_turtle",
+    "category": "formation",
+    "output_code": "formation_kd_turtle",
+    "output_qty": 1,
+    "requirements": {
+      "kd_herb": 6,
+      "kd_array_flag": 3,
+      "kd_beast_hide": 7,
+      "kd_array_stone": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "turtle",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  },
+  {
+    "recipe_code": "r_formation_kd_dragon",
+    "category": "formation",
+    "output_code": "formation_kd_dragon",
+    "output_qty": 1,
+    "requirements": {
+      "kd_essence": 7,
+      "kd_array_flag": 4,
+      "kd_array_stone": 4,
+      "kd_beast_blood": 4
+    },
+    "success_rate": 10,
+    "meta": {
+      "v2": true,
+      "type": "dragon",
+      "realm_code": "kd"
+    },
+    "created_at": "2026-01-31T14:16:12.472206+00:00"
+  }
+]

@@ -2,7 +2,7 @@ import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
 import * as tracker from './track.js';
 
 
-const TIME_RUN = 700
+const TIME_RUN = 274
 
 async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");
@@ -10,10 +10,10 @@ async function luyenDanLoop() {
 
     console.log(`[HỆ THỐNG] Bắt đầu luyện đan cho: ${auth.userData.email}`);
 
-    //const recipeCode = "r_pill_lk_spirit";
+    const recipeCode = "r_pill_lk_spirit";
     //const recipeCode = "r_pill_lk_mp";
     //const recipeCode = "r_forge_eq_accessory_lk_1";
-    const recipeCode = "r_pill_lk_sta";
+    //const recipeCode = "r_pill_lk_sta";
 
     let time = 0
     while (time < TIME_RUN) {

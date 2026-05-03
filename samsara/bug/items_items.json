@@ -1,0 +1,7739 @@
+[
+  {
+    "id": "2ebcdc7a-c1e7-46b2-8087-4c5133d8ee74",
+    "code": "fire_spirit_stone_lk",
+    "name": "Hỏa Linh Thạch (LK)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "07cef814-3f65-4881-8df6-511ba262eb9e",
+    "code": "metal_spirit_stone_lk",
+    "name": "Kim Linh Thạch (LK)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "4608502f-ad31-4467-a610-cf581165f1f7",
+    "code": "spirit_stone",
+    "name": "Spirit Stone",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "e3992019-48e3-44a0-89a4-44231bf4865b",
+    "code": "water_spirit_stone_lk",
+    "name": "Thủy Linh Thạch (LK)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "1c55aaa2-e134-45a3-8e15-fdc0c19a9fc9",
+    "code": "wood_spirit_stone_lk",
+    "name": "Mộc Linh Thạch (LK)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "2d91c30b-11b0-445e-b55d-a812435525f6",
+    "code": "earth_spirit_stone_lk",
+    "name": "Thổ Linh Thạch (LK)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "53e74dd8-57d2-457b-9448-2393d37052b1",
+    "code": "fire_spirit_stone_tc",
+    "name": "Hỏa Linh Thạch (TC)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "10362869-1f3e-4757-90a0-af5a91277710",
+    "code": "metal_spirit_stone_tc",
+    "name": "Kim Linh Thạch (TC)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "9220d4d9-cd68-48b2-826a-13d2871883c6",
+    "code": "water_spirit_stone_tc",
+    "name": "Thủy Linh Thạch (TC)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "508823e8-1acf-46b8-b8b2-1385d30e93f5",
+    "code": "wood_spirit_stone_tc",
+    "name": "Mộc Linh Thạch (TC)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "0d1f0ba9-cbd1-4083-82df-f6d2c08893af",
+    "code": "earth_spirit_stone_tc",
+    "name": "Thổ Linh Thạch (TC)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "16329432-22c3-4eb7-8d80-29710debe7e3",
+    "code": "fire_spirit_stone_kd",
+    "name": "Hỏa Linh Thạch (KD)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "b159a135-be62-4346-81e9-cb8f938d5252",
+    "code": "metal_spirit_stone_kd",
+    "name": "Kim Linh Thạch (KD)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "2005228a-85eb-44f6-8a0a-db67682ed802",
+    "code": "water_spirit_stone_kd",
+    "name": "Thủy Linh Thạch (KD)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "179eecd5-06e8-46ac-a6ce-5948404579a2",
+    "code": "wood_spirit_stone_kd",
+    "name": "Mộc Linh Thạch (KD)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "af4ed588-d367-4552-8ca6-926df54769e2",
+    "code": "earth_spirit_stone_kd",
+    "name": "Thổ Linh Thạch (KD)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "46dd2f8e-7453-4fb9-8597-8b71f8f2d9be",
+    "code": "token_copper",
+    "name": "Token Đồng",
+    "description": "Dùng cho Trùng Sinh & Tẩy Nguyên. Hồi phục tự động.",
+    "item_type": "token",
+    "rarity": "common",
+    "effects": {
+      "token_type": "copper"
+    }
+  },
+  {
+    "id": "c242831c-8971-47eb-9ff1-146e59faa8a5",
+    "code": "token_silver",
+    "name": "Token Bạc",
+    "description": "Dùng cho Trùng Sinh & Tẩy Nguyên nâng cao.",
+    "item_type": "token",
+    "rarity": "rare",
+    "effects": {
+      "token_type": "silver"
+    }
+  },
+  {
+    "id": "96ac3add-fb5b-4ffb-8213-cee1e2649c92",
+    "code": "token_gold",
+    "name": "Token Vàng",
+    "description": "Dùng cho Trùng Sinh & Tẩy Nguyên tối cao.",
+    "item_type": "token",
+    "rarity": "legendary",
+    "effects": {
+      "token_type": "gold"
+    }
+  },
+  {
+    "id": "aa0e1956-c55d-4e0f-8059-8b8f33cb164f",
+    "code": "region_transfer_ticket",
+    "name": "Vé Chuyển Vực",
+    "description": "Chuyển đến vực khác, tự động tẩy tủy: join tông môn mới + công pháp phù hợp linh căn tại vực đích.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "685ce458-dd38-4378-a0f2-1344b19ac6ea",
+    "code": "name_change_card",
+    "name": "Thẻ Đổi Tên",
+    "description": "Cho phép đặt lại đạo hiệu của bản thân. Dùng trong túi đồ.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "3c52c231-0dc6-444e-a846-b8ffc59e8414",
+    "code": "outfit_hong_ky_y_full",
+    "name": "Hồng Kỳ Y",
+    "description": "Outfit limited Đại Lễ Ngũ Nhất 2026",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "0e09cb21-8a66-4514-a24d-1099bca09d48",
+    "code": "outfit_hong_ky_chan_quan",
+    "name": "Hồng Kỳ Chân Quân",
+    "description": "Outfit ULTRA Phúc Lộc Bậc 10M",
+    "item_type": "cosmetic",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "6ee7c5d2-91c6-4743-91a1-eef02a4a710d",
+    "code": "mount_hong_dang_tinh",
+    "name": "Hồng Đăng Tinh",
+    "description": "Mount đèn lồng linh",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "97887358-06e2-4680-8717-5947ac610919",
+    "code": "refinement_stone_tc",
+    "name": "TC Đá Tinh Luyện II",
+    "description": "Đá tinh luyện (Trúc Cơ).",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "e4272974-f17e-4793-8f68-3822b3a2dbe3",
+    "code": "refinement_stone_kd",
+    "name": "KD Đá Tinh Luyện III",
+    "description": "Đá tinh luyện (Kết Đan).",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "71bf288b-f9e3-4ace-9b28-416aeae7b5ef",
+    "code": "mount_hong_phuong",
+    "name": "Hồng Phượng",
+    "description": "Mount limited Phúc Lộc Bậc 3M",
+    "item_type": "cosmetic",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "6e5fe704-73e8-4ef8-b62f-547a41a5884d",
+    "code": "frame_ngu_nhat",
+    "name": "Frame Ngũ Nhất Đại Lễ",
+    "description": "Avatar frame kỷ niệm",
+    "item_type": "cosmetic",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "3e0f1aed-46d9-4a62-9ed4-349df46942a9",
+    "code": "frame_dai_tu_si",
+    "name": "Frame Đại Tu Sĩ",
+    "description": "Avatar frame Phúc Lộc Bậc 1M",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "4b65f048-6f45-4192-8220-2e4060f09b46",
+    "code": "frame_tham_du",
+    "name": "Frame Tham Dự",
+    "description": "Frame điểm danh đủ 7 ngày",
+    "item_type": "cosmetic",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "abbf3b51-5168-4e20-8ad3-53ef44c726f2",
+    "code": "skin_hong_ky_kiem",
+    "name": "Hồng Kỳ Kiếm",
+    "description": "Skin vũ khí cosmetic",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "f64ab387-3bb5-4c3c-8b71-06429ac7f183",
+    "code": "skin_hong_ky_sat",
+    "name": "Hồng Kỳ Sát",
+    "description": "Skin vũ khí Phúc Lộc 300K",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "4c2f55ed-1b86-4df9-8c0e-aa3d5d31104d",
+    "code": "skin_hong_ky_dan_kiem",
+    "name": "Hồng Kỳ Đan Kiếm",
+    "description": "Skin vũ khí Anchor Day 7",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "28867d95-324c-4cc5-adad-72494054b129",
+    "code": "skin_dai_le_2026",
+    "name": "Đại Lễ 2026",
+    "description": "Skin vũ khí Flash 30/4",
+    "item_type": "cosmetic",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "6c97f1c9-b994-4c36-9e95-5b50d922a6bc",
+    "code": "pet_tieu_hong_dang",
+    "name": "Tiểu Hồng Đăng",
+    "description": "Pet đèn lồng nhỏ",
+    "item_type": "cosmetic",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "e3fc361d-ea0f-4e40-b44a-61f6a1d39dea",
+    "code": "pet_tieu_hong",
+    "name": "Tiểu Hồng",
+    "description": "Pet chuột đỏ Flash 1/5",
+    "item_type": "cosmetic",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "6fe39ec4-0c15-459a-8ab0-ea7a59c47f42",
+    "code": "chest_high",
+    "name": "Rương Cao Cấp",
+    "description": "Mở ra item ngẫu nhiên cao",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "e126c6dc-2299-4a56-9153-e19f99f087d6",
+    "code": "exp_pill_high",
+    "name": "EXP Đan Cao",
+    "description": "+EXP tu vi cao",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "28f23fef-d4c3-4d46-8cae-7d807326ca89",
+    "code": "break_pill_big",
+    "name": "Breakthrough Pill (Big)",
+    "description": "Boost big breakthrough success",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "break_kind": "big",
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      },
+      "break_bonus_pct": 12
+    }
+  },
+  {
+    "id": "e1c9c98a-a681-4872-b8aa-7fb7720e9ba9",
+    "code": "pill_boi_nguyen",
+    "name": "Đan Bồi Nguyên",
+    "description": "Hồi MP nhanh",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "505e0915-5220-48db-89aa-d1ff80b86440",
+    "code": "material_luyen_khi_cao",
+    "name": "Material Luyện Khí Cao",
+    "description": "Vật liệu refine vũ khí cao",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "5cfac53e-1e3e-46ce-ba3c-1cc34c4b534a",
+    "code": "lk_herb",
+    "name": "LK Herb",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "b0f2d10a-e545-42cf-bba5-2ad0bb7872c3",
+    "code": "lk_essence",
+    "name": "LK Essence",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "f78fd7cc-1e73-47b3-b94a-53212764fa2d",
+    "code": "lk_ore",
+    "name": "LK Ore",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "4478e963-ae65-4e8c-b2f5-f038125803e8",
+    "code": "tc_herb",
+    "name": "TC Herb",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "56c23974-88b1-402a-854e-d4dc49bc6902",
+    "code": "tc_essence",
+    "name": "TC Essence",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "1c8b9c54-f8fd-4d09-a517-2b5903ef3462",
+    "code": "tc_ore",
+    "name": "TC Ore",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "de3355d7-d92f-4356-948f-dca63defdfcb",
+    "code": "kd_herb",
+    "name": "KD Herb",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "1108387b-540d-4cb1-b1eb-26e3396e93bf",
+    "code": "kd_essence",
+    "name": "KD Essence",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "cf379fde-0d3e-4dc0-89dc-a1a1f5bb990b",
+    "code": "kd_ore",
+    "name": "KD Ore",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "dc397ada-a960-45d8-9df6-eede40adb46b",
+    "code": "pill_lk_tu_vi",
+    "name": "Tu Vi Đan I",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "exp_delta": 1000
+    }
+  },
+  {
+    "id": "a6078a2f-3d69-47c7-a236-8859ece9d31c",
+    "code": "pill_tc_tu_vi",
+    "name": "Tu Vi Đan II",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "exp_delta": 4000
+    }
+  },
+  {
+    "id": "dbb73926-d3e7-46f9-b84e-c89f4f935ff0",
+    "code": "rebirth_card",
+    "name": "Thẻ Trùng Sinh",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "f3bbff69-06cb-4e53-98b5-dac0f2bd786a",
+    "code": "material_luyen_dan_cao",
+    "name": "Material Luyện Đan Cao",
+    "description": "Vật liệu luyện đan cao",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "8efc8603-9a0a-4fb0-9d2a-7e67107d75d2",
+    "code": "sect_banner_hong_ky",
+    "name": "Sect Banner Hồng Kỳ",
+    "description": "Banner cho sect",
+    "item_type": "cosmetic",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "10d1b769-720f-42e9-9e32-7e3294bd684e",
+    "code": "outfit_hong_ky_anh_hung",
+    "name": "Hồng Kỳ Anh Hùng",
+    "description": "Outfit Top 3 Tranh Đoạt Linh Đồ",
+    "item_type": "cosmetic",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "100616fc-4da4-429e-a954-439787dd3d85",
+    "code": "formation_lk_tu_linh",
+    "name": "Tụ Linh Trận I",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          20
+        ],
+        "qi_rate_flat": [
+          1,
+          20
+        ]
+      }
+    }
+  },
+  {
+    "id": "5cadfdc4-1c5a-460a-97ee-4c7bb5856daa",
+    "code": "formation_tc_tu_linh",
+    "name": "Tụ Linh Trận II",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          30
+        ],
+        "qi_rate_flat": [
+          1,
+          50
+        ]
+      }
+    }
+  },
+  {
+    "id": "104cfd74-81b1-4803-bf0e-1125d9141f64",
+    "code": "formation_kd_tu_linh",
+    "name": "Tụ Linh Trận III",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          40
+        ],
+        "qi_rate_flat": [
+          1,
+          100
+        ]
+      }
+    }
+  },
+  {
+    "id": "3beeab79-af1d-4490-9926-c8d25d74843d",
+    "code": "talisman_lk_tu_linh",
+    "name": "Tụ Linh Phù I",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          30
+        ],
+        "qi_rate_flat": [
+          1,
+          50
+        ]
+      }
+    }
+  },
+  {
+    "id": "37d0496b-913d-4dd1-a26f-6f90e47cb9c4",
+    "code": "talisman_tc_tu_linh",
+    "name": "Tụ Linh Phù II",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          40
+        ],
+        "qi_rate_flat": [
+          1,
+          100
+        ]
+      }
+    }
+  },
+  {
+    "id": "e04a146d-f0b9-438f-88e8-6164d7fcbba2",
+    "code": "talisman_kd_tu_linh",
+    "name": "Tụ Linh Phù III",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          50
+        ],
+        "qi_rate_flat": [
+          1,
+          200
+        ]
+      }
+    }
+  },
+  {
+    "id": "03d05ea0-4781-4829-a641-64d7f6e063fd",
+    "code": "core_tc_kd",
+    "name": "KD Core TC→KD",
+    "description": null,
+    "item_type": "material",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "ae667928-b292-4644-87b2-44e312f6e1c0",
+    "code": "pill_tc_sta",
+    "name": "TC Stamina Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_stamina": 10
+    }
+  },
+  {
+    "id": "ea872ea2-e4b8-4ea7-a0f7-2a314c4faeee",
+    "code": "pill_kd_sta",
+    "name": "KD Stamina Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_stamina": 15
+    }
+  },
+  {
+    "id": "eb315d5f-3a8a-42d3-89ff-816d741bed38",
+    "code": "eq_weapon_lk_1",
+    "name": "LK Weapon I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "adf4200c-3a8a-4fe7-a0dd-04bf514d2f98",
+    "code": "eq_armor_lk_1",
+    "name": "LK Armor I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "85cc3138-de56-4290-9218-c1384c0f4544",
+    "code": "eq_accessory_lk_1",
+    "name": "LK Accessory I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "d7ead0fb-eba5-4f34-af6d-0a2880e601b4",
+    "code": "eq_boots_lk_1",
+    "name": "LK Boots I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "7c7aabdc-c674-47bb-93df-9dc8dc0f1e4c",
+    "code": "eq_weapon_lk_2",
+    "name": "LK Weapon II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "8e909e9f-2434-487f-bdbd-0db2e3d68716",
+    "code": "eq_armor_lk_2",
+    "name": "LK Armor II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "df269803-5595-45a3-8d64-cf6916a2ef7e",
+    "code": "eq_accessory_lk_2",
+    "name": "LK Accessory II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "0a5b842e-d0a9-4a9e-a2a4-1bfbebd8b873",
+    "code": "eq_boots_lk_2",
+    "name": "LK Boots II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "da41ed3d-9701-425e-b4e2-6151a6a398aa",
+    "code": "eq_weapon_lk_3",
+    "name": "LK Weapon III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "da83496e-d995-4d21-9726-f02d0dd6d730",
+    "code": "eq_armor_lk_3",
+    "name": "LK Armor III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "67a16305-70a6-4211-9323-4f4273ce1ecd",
+    "code": "eq_accessory_lk_3",
+    "name": "LK Accessory III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "e9c73059-7592-4f69-8d4a-3311f1bbd371",
+    "code": "eq_boots_lk_3",
+    "name": "LK Boots III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "25a79e1a-608d-47b2-8ae9-bdc976fb2b04",
+    "code": "eq_weapon_tc_1",
+    "name": "TC Weapon I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "efe410e1-f185-41ff-9e32-fa6cf1f1350d",
+    "code": "eq_armor_tc_1",
+    "name": "TC Armor I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "6412b461-0778-4af8-8485-cd05870cc095",
+    "code": "eq_accessory_tc_1",
+    "name": "TC Accessory I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "95fa6325-53f9-46dc-a63e-95c55a2e6f90",
+    "code": "eq_boots_tc_1",
+    "name": "TC Boots I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "bdb49e6e-1988-4923-832a-cc012063c99c",
+    "code": "pill_lk_sta",
+    "name": "LK Stamina Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_stamina": 5
+    }
+  },
+  {
+    "id": "f4f47606-7ce5-4a83-931c-437eee317780",
+    "code": "eq_weapon_tc_2",
+    "name": "TC Weapon II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "2b4fd4e5-d4b4-4827-85eb-36d02542db0a",
+    "code": "eq_armor_tc_2",
+    "name": "TC Armor II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "0a7beddf-0c48-48b4-ae4d-eea0a4d88d83",
+    "code": "eq_accessory_tc_2",
+    "name": "TC Accessory II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "2fcae6e3-064a-43d0-afde-4662cd6fdafa",
+    "code": "eq_boots_tc_2",
+    "name": "TC Boots II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "19a5890e-a3ee-486f-b558-e116ce2b6d4b",
+    "code": "eq_weapon_tc_3",
+    "name": "TC Weapon III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "4cad023e-0edf-437a-8f5c-ad9ef7e47849",
+    "code": "eq_armor_tc_3",
+    "name": "TC Armor III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "b142d511-bc99-4721-96ad-1e9784bd81f6",
+    "code": "eq_accessory_tc_3",
+    "name": "TC Accessory III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "692b753f-3472-4d29-989f-a1d38d189bf9",
+    "code": "eq_boots_tc_3",
+    "name": "TC Boots III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "76c88b92-7594-4ac6-a29d-ef391d97dfac",
+    "code": "eq_weapon_kd_1",
+    "name": "KD Weapon I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "8b2980c6-2e9a-4d91-8716-3f2b3b56d4c2",
+    "code": "eq_armor_kd_1",
+    "name": "KD Armor I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "db962d26-c453-4fa3-8d9a-6eab69d2f083",
+    "code": "eq_accessory_kd_1",
+    "name": "KD Accessory I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "2564de2d-8bac-431b-a1ef-972bc9b1f53f",
+    "code": "eq_boots_kd_1",
+    "name": "KD Boots I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "df0497fe-2f1d-4a19-8463-eaf65261ac08",
+    "code": "eq_weapon_kd_2",
+    "name": "KD Weapon II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "c4dd2fce-86f1-4815-9614-ca65bd084e42",
+    "code": "eq_armor_kd_2",
+    "name": "KD Armor II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "98ff15e2-091a-4205-9748-389ec78bb1a3",
+    "code": "eq_accessory_kd_2",
+    "name": "KD Accessory II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "94d846d0-03c9-4f57-98b0-a283d9cac30d",
+    "code": "eq_boots_kd_2",
+    "name": "KD Boots II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "4b2a065d-3611-4272-a7c0-d8881bfb9061",
+    "code": "eq_weapon_kd_3",
+    "name": "KD Weapon III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "46412506-8959-4539-9675-a213e233f9d7",
+    "code": "eq_armor_kd_3",
+    "name": "KD Armor III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "19a80cc1-67a0-483d-a7ff-31024e8c5ad8",
+    "code": "eq_accessory_kd_3",
+    "name": "KD Accessory III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "6f33d849-8edd-4e84-983a-1894376008e2",
+    "code": "eq_boots_kd_3",
+    "name": "KD Boots III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "c6ac27e2-30a6-41fa-8eab-49fc52e91f10",
+    "code": "dao_tam_dan",
+    "name": "Đạo Tâm Đan",
+    "description": "Arena: breakthrough boost",
+    "item_type": "consumable",
+    "rarity": "uncommon",
+    "effects": {}
+  },
+  {
+    "id": "ec8732b1-5a29-4812-8ecf-dfc43ff4ba3b",
+    "code": "core_lk_tc",
+    "name": "TC Core LK→TC",
+    "description": null,
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "0f18351e-7ff4-40ac-8933-9c77c24f5e3b",
+    "code": "tech_2_sect",
+    "name": "Tâm Pháp Tông Môn I",
+    "description": "Đổi bằng cống hiến tông môn.",
+    "item_type": "technique",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "a0e8f910-78aa-457a-ae2d-80a21658d09d",
+    "code": "tech_3_sect",
+    "name": "Tâm Pháp Tông Môn II",
+    "description": "Đổi bằng cống hiến tông môn.",
+    "item_type": "technique",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "62fc748f-a0dd-40d9-9fcf-85c482ecd081",
+    "code": "lk_beast_blood",
+    "name": "LK Beast Blood Essence",
+    "description": "Tinh huyết linh thú (Luyện Khí)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "7a33e036-0835-43ec-b700-c66ccf3aa93e",
+    "code": "lk_beast_hide",
+    "name": "LK Beast Hide",
+    "description": "Da linh thú (Luyện Khí)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "bfd1369e-870d-4323-9d74-1fed34ff78da",
+    "code": "tc_beast_blood",
+    "name": "TC Beast Blood Essence",
+    "description": "Tinh huyết linh thú (Trúc Cơ)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "1ebdc89f-35cf-4c45-94a9-a811c71d8ccd",
+    "code": "tc_beast_hide",
+    "name": "TC Beast Hide",
+    "description": "Da linh thú (Trúc Cơ)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "cac8fbe2-74a7-480c-b018-da6c2895d09a",
+    "code": "kd_beast_blood",
+    "name": "KD Beast Blood Essence",
+    "description": "Tinh huyết linh thú (Kết Đan)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "e9be167f-07a2-470c-bb9d-8cf7b3cdd15c",
+    "code": "kd_beast_hide",
+    "name": "KD Beast Hide",
+    "description": "Da linh thú (Kết Đan)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "6e1c13f9-d25b-4f1b-ab00-0f879d2683f2",
+    "code": "ngo_dao_thu",
+    "name": "Ngộ Đạo Thư",
+    "description": "Arena: cultivation EXP boost",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "7bae71bd-3878-4ddf-b0f4-1c1c263bfc45",
+    "code": "co_phap_dan",
+    "name": "Cổ Pháp Đan",
+    "description": "Arena: technique mastery boost",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "28d27936-9394-4e30-8713-9f5b2001d02f",
+    "code": "huyen_thiet_quang",
+    "name": "Huyền Thiết Quặng",
+    "description": "Arena: equipment enhancement",
+    "item_type": "material",
+    "rarity": "uncommon",
+    "effects": {}
+  },
+  {
+    "id": "8e43570c-dc25-4be6-a14c-e30ad16a6fee",
+    "code": "hoan_nguyen_dan",
+    "name": "Hoàn Nguyên Đan",
+    "description": "Arena: full HP restore",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "48cbfd48-384f-4f3f-a37c-e9d0c643bb1b",
+    "code": "artifact_hk_atk_1",
+    "name": "Hồng Kỳ Đoản Đao",
+    "description": "Cổ vật +100 ATK",
+    "item_type": "artifact",
+    "rarity": "common",
+    "effects": {
+      "atk_flat": 100
+    }
+  },
+  {
+    "id": "37fe7a65-f5ab-46dc-9e18-369d6c91fce9",
+    "code": "artifact_hk_atk_2",
+    "name": "Hồng Kỳ Trường Đao",
+    "description": "Cổ vật +500 ATK",
+    "item_type": "artifact",
+    "rarity": "rare",
+    "effects": {
+      "atk_flat": 500
+    }
+  },
+  {
+    "id": "6c86c049-3bcc-491f-a920-4265c3919ff9",
+    "code": "artifact_hk_atk_3",
+    "name": "Hồng Kỳ Bảo Đao",
+    "description": "Cổ vật +1000 ATK",
+    "item_type": "artifact",
+    "rarity": "rare",
+    "effects": {
+      "atk_flat": 1000
+    }
+  },
+  {
+    "id": "612063ef-a9fe-46a6-8a21-28f5b1849559",
+    "code": "artifact_hk_atk_4",
+    "name": "Hồng Kỳ Linh Đao",
+    "description": "Cổ vật +2000 ATK",
+    "item_type": "artifact",
+    "rarity": "epic",
+    "effects": {
+      "atk_flat": 2000
+    }
+  },
+  {
+    "id": "06fd4727-2ee7-4b0a-960b-ab3e0b15712d",
+    "code": "artifact_hk_atk_5",
+    "name": "Hồng Kỳ Tiên Đao",
+    "description": "Cổ vật +5000 ATK",
+    "item_type": "artifact",
+    "rarity": "epic",
+    "effects": {
+      "atk_flat": 5000
+    }
+  },
+  {
+    "id": "c36ddc8e-53d9-4369-adea-1333bf08a9b4",
+    "code": "artifact_hk_atk_6",
+    "name": "Hồng Kỳ Đế Đao",
+    "description": "Cổ vật +10000 ATK",
+    "item_type": "artifact",
+    "rarity": "legendary",
+    "effects": {
+      "atk_flat": 10000
+    }
+  },
+  {
+    "id": "480d50c8-a9d3-4400-bad3-586d5b461329",
+    "code": "artifact_hk_def_1",
+    "name": "Hồng Kỳ Phù Bài",
+    "description": "Cổ vật +100 DEF",
+    "item_type": "artifact",
+    "rarity": "common",
+    "effects": {
+      "def_flat": 100
+    }
+  },
+  {
+    "id": "f57f4625-5b6f-4b7c-88f5-91805b98fedc",
+    "code": "artifact_hk_def_2",
+    "name": "Hồng Kỳ Hộ Tâm Kính",
+    "description": "Cổ vật +500 DEF",
+    "item_type": "artifact",
+    "rarity": "rare",
+    "effects": {
+      "def_flat": 500
+    }
+  },
+  {
+    "id": "34f4261f-014e-4fd8-b0e1-c1e0b72d5920",
+    "code": "lk_array_flag",
+    "name": "LK Array Flag",
+    "description": "Trận kỳ (Luyện Khí)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "6bacbfd9-ded5-42d0-8b85-3145c5f14609",
+    "code": "lk_array_stone",
+    "name": "LK Array Stone",
+    "description": "Trận thạch (Luyện Khí)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "8e31e8cf-69a6-4f00-b77b-687acc3c07fe",
+    "code": "tc_array_flag",
+    "name": "TC Array Flag",
+    "description": "Trận kỳ (Trúc Cơ)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "300ecedd-69b8-4339-bb0d-ff9671baa398",
+    "code": "tc_array_stone",
+    "name": "TC Array Stone",
+    "description": "Trận thạch (Trúc Cơ)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "23e1bf51-1e2a-4683-b996-761df2fa97e7",
+    "code": "kd_array_flag",
+    "name": "KD Array Flag",
+    "description": "Trận kỳ (Kết Đan)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "46650a07-289d-486d-b1cd-68cfe9133ff1",
+    "code": "kd_array_stone",
+    "name": "KD Array Stone",
+    "description": "Trận thạch (Kết Đan)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "efe01e76-1bbf-424f-b7b7-0b98fac2629a",
+    "code": "artifact_hk_def_3",
+    "name": "Hồng Kỳ Linh Khải",
+    "description": "Cổ vật +1000 DEF",
+    "item_type": "artifact",
+    "rarity": "rare",
+    "effects": {
+      "def_flat": 1000
+    }
+  },
+  {
+    "id": "0eb4fb9c-3e28-41ce-8ed6-63cdad629571",
+    "code": "artifact_hk_def_4",
+    "name": "Hồng Kỳ Bảo Giáp",
+    "description": "Cổ vật +2000 DEF",
+    "item_type": "artifact",
+    "rarity": "epic",
+    "effects": {
+      "def_flat": 2000
+    }
+  },
+  {
+    "id": "826e3644-a60c-4eae-b4ad-3a1f09d97a90",
+    "code": "artifact_hk_def_5",
+    "name": "Hồng Kỳ Tiên Giáp",
+    "description": "Cổ vật +5000 DEF",
+    "item_type": "artifact",
+    "rarity": "epic",
+    "effects": {
+      "def_flat": 5000
+    }
+  },
+  {
+    "id": "f257e00f-d99d-4087-a84b-2644ea749884",
+    "code": "artifact_hk_def_6",
+    "name": "Hồng Kỳ Đế Giáp",
+    "description": "Cổ vật +10000 DEF",
+    "item_type": "artifact",
+    "rarity": "legendary",
+    "effects": {
+      "def_flat": 10000
+    }
+  },
+  {
+    "id": "83a58165-7175-4f76-96b6-c8a3d0004465",
+    "code": "artifact_hk_hp_1",
+    "name": "Hồng Kỳ Sinh Châu",
+    "description": "Cổ vật +500 HP",
+    "item_type": "artifact",
+    "rarity": "common",
+    "effects": {
+      "hp_flat": 500
+    }
+  },
+  {
+    "id": "317c5ab9-b074-4a97-92e8-730d905958b2",
+    "code": "artifact_hk_hp_2",
+    "name": "Hồng Kỳ Linh Hồn Châu",
+    "description": "Cổ vật +2500 HP",
+    "item_type": "artifact",
+    "rarity": "rare",
+    "effects": {
+      "hp_flat": 2500
+    }
+  },
+  {
+    "id": "5ece66f9-75cc-4672-b36a-693f90216e2b",
+    "code": "artifact_hk_hp_3",
+    "name": "Hồng Kỳ Bảo Mệnh Châu",
+    "description": "Cổ vật +5000 HP",
+    "item_type": "artifact",
+    "rarity": "rare",
+    "effects": {
+      "hp_flat": 5000
+    }
+  },
+  {
+    "id": "23aa5d2f-f3d7-499d-aa2d-84a04e983189",
+    "code": "artifact_hk_hp_4",
+    "name": "Hồng Kỳ Trường Sinh Châu",
+    "description": "Cổ vật +10000 HP",
+    "item_type": "artifact",
+    "rarity": "epic",
+    "effects": {
+      "hp_flat": 10000
+    }
+  },
+  {
+    "id": "967701ac-48df-450c-87f2-b70e771bd44b",
+    "code": "artifact_hk_hp_5",
+    "name": "Hồng Kỳ Tiên Linh Châu",
+    "description": "Cổ vật +25000 HP",
+    "item_type": "artifact",
+    "rarity": "epic",
+    "effects": {
+      "hp_flat": 25000
+    }
+  },
+  {
+    "id": "a1022bf1-22ac-470c-bea0-5b4a826687e8",
+    "code": "seed_lk_spirit_grass",
+    "name": "Seed: Spirit Grass (LK)",
+    "description": "Hạt giống linh thảo (LK)",
+    "item_type": "seed",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "75d9183a-5380-4c71-bf31-d6d3335ce15a",
+    "code": "seed_lk_soul_fruit",
+    "name": "Seed: Soul Fruit (LK)",
+    "description": "Hạt giống linh quả (LK)",
+    "item_type": "seed",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "bd042d40-79d6-4a11-90f6-e4b860fe58e4",
+    "code": "artifact_hk_hp_6",
+    "name": "Hồng Kỳ Đế Linh Châu",
+    "description": "Cổ vật +50000 HP",
+    "item_type": "artifact",
+    "rarity": "legendary",
+    "effects": {
+      "hp_flat": 50000
+    }
+  },
+  {
+    "id": "b926e7d4-d878-4619-b12c-b7fdc6cff508",
+    "code": "pet_hong_ky_linh",
+    "name": "Hồng Kỳ Linh Thú",
+    "description": "Linh thú đỏ rực hồn lửa",
+    "item_type": "cosmetic",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "c45c400d-6063-4fd3-8ab4-e64000743353",
+    "code": "lk_linh_thu_dan",
+    "name": "Linh Thú Đan (LK)",
+    "description": "Đan dược cho linh thú T1 ăn để tăng EXP. Chế từ 1 LK Herb + 1 LK Essence. +5 EXP/đan.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pet_exp": 5
+    }
+  },
+  {
+    "id": "8d18db13-43ed-414d-b6f4-abbf8213ef3b",
+    "code": "seed_tc_spirit_grass",
+    "name": "Seed: Spirit Grass (TC)",
+    "description": "Hạt giống linh thảo (TC)",
+    "item_type": "seed",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "5fe41907-9acc-4e57-8162-7ee786358bf8",
+    "code": "seed_tc_soul_fruit",
+    "name": "Seed: Soul Fruit (TC)",
+    "description": "Hạt giống linh quả (TC)",
+    "item_type": "seed",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "98ac1e3d-4322-4cda-8202-ee7e8e04891a",
+    "code": "seed_kd_spirit_grass",
+    "name": "Seed: Spirit Grass (KD)",
+    "description": "Hạt giống linh thảo (KD)",
+    "item_type": "seed",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "c503056c-55fc-450c-9f1a-33c67cb0ecaf",
+    "code": "seed_kd_soul_fruit",
+    "name": "Seed: Soul Fruit (KD)",
+    "description": "Hạt giống linh quả (KD)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "0d8f573c-32b2-4ee6-baca-e489f081a610",
+    "code": "hoa_linh_thach",
+    "name": "Fire Spirit Stone",
+    "description": "Hỏa Linh Thạch — dùng để luyện thể hệ Hỏa.",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "8df30d93-9511-44f6-ae1e-17996430435a",
+    "code": "moc_linh_thach",
+    "name": "Wood Spirit Stone",
+    "description": "Mộc Linh Thạch — dùng để luyện thể hệ Mộc.",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "7cdbc941-3935-4dc4-b9db-5435abf36d02",
+    "code": "tho_linh_thach",
+    "name": "Earth Spirit Stone",
+    "description": "Thổ Linh Thạch — dùng để luyện thể hệ Thổ.",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "d29603d5-4dbf-443a-92d6-e2d24c9edcda",
+    "code": "thuy_linh_thach",
+    "name": "Water Spirit Stone",
+    "description": "Thủy Linh Thạch — dùng để luyện thể hệ Thủy.",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "9c4c2a1a-7e2f-4687-b45f-26ec7299b57d",
+    "code": "kim_linh_thach",
+    "name": "Metal Spirit Stone",
+    "description": "Kim Linh Thạch — dùng để luyện thể hệ Kim.",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "f57207c4-dd32-45ab-9577-aedcdea72c1e",
+    "code": "pk_token",
+    "name": "Lệnh Bài PK",
+    "description": "Tự động trừ 1 cái khi đánh PK quá lượt ngày — cho thêm 1 trận.",
+    "item_type": "token",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "d549b466-dcbf-413e-b72f-2a826a39151c",
+    "code": "lk_tu_linh_flower",
+    "name": "LK Tu Linh Flower",
+    "description": "Tụ Linh Hoa 30 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "2435e76a-f6af-403a-bf78-fb6173fba8f3",
+    "code": "tc_tu_linh_flower",
+    "name": "TC Tu Linh Flower",
+    "description": "Tụ Linh Hoa 100 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "e0ef6389-a90b-45a6-964f-0fc5c14b1163",
+    "code": "kd_tu_linh_flower",
+    "name": "KD Tu Linh Flower",
+    "description": "Tụ Linh Hoa 300 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "43ad1540-afb4-4884-9405-39383f2f0ac5",
+    "code": "seed_lk_tu_linh_flower",
+    "name": "Seed: Tu Linh Flower (LK)",
+    "description": "Hạt giống Tụ Linh Hoa (LK)",
+    "item_type": "seed",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "7f7795db-b12a-47bd-92ba-f289ae56c12a",
+    "code": "seed_tc_tu_linh_flower",
+    "name": "Seed: Tu Linh Flower (TC)",
+    "description": "Hạt giống Tụ Linh Hoa (TC)",
+    "item_type": "seed",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "c11166ed-8a56-4be1-b151-40d9c5ef46f2",
+    "code": "tc_linh_thu_dan",
+    "name": "Linh Thú Đan (TC)",
+    "description": "Đan dược cho linh thú T2 ăn để tăng EXP. Chế từ 1 TC Herb + 1 TC Essence. +5 EXP/đan.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pet_exp": 5
+    }
+  },
+  {
+    "id": "b731b444-89b0-4dfa-bc5c-2b79146d206b",
+    "code": "seed_kd_tu_linh_flower",
+    "name": "Seed: Tu Linh Flower (KD)",
+    "description": "Hạt giống Tụ Linh Hoa (KD)",
+    "item_type": "seed",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "35f923c3-05ce-42c7-94bd-ebf4a909df48",
+    "code": "kd_linh_thu_dan",
+    "name": "Linh Thú Đan (KD)",
+    "description": "Đan dược cho linh thú T3 ăn để tăng EXP. Chế từ 1 KD Herb + 1 KD Essence. +5 EXP/đan.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pet_exp": 5
+    }
+  },
+  {
+    "id": "cb3bf361-2317-4f73-be18-c958054c288f",
+    "code": "na_linh_thu_dan",
+    "name": "Linh Thú Đan (NA)",
+    "description": "Đan dược cho linh thú T4 ăn để tăng EXP. Chế từ 1 NA Herb + 1 NA Essence. +5 EXP/đan.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pet_exp": 5
+    }
+  },
+  {
+    "id": "3aa4c931-35c2-44dd-8146-099ebaed6c46",
+    "code": "lk_wood",
+    "name": "LK Wood",
+    "description": "Linh Mộc 30 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "8cdb7ee1-facb-431d-ac11-832ec2114c57",
+    "code": "tc_wood",
+    "name": "TC Wood",
+    "description": "Linh Mộc 100 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "7b3151bf-8c07-48ce-a360-0175c636d8b7",
+    "code": "kd_wood",
+    "name": "KD Wood",
+    "description": "Linh Mộc 300 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "ddb93dbf-94ec-4948-84da-780e00b623c8",
+    "code": "refinement_stone_lk",
+    "name": "LK Đá Tinh Luyện I",
+    "description": "Đá tinh luyện (Luyện Khí).",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "1530de0c-5c29-446f-b0d5-e13088874465",
+    "code": "pill_lk_spirit",
+    "name": "LK Spirit Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_spirit": 10
+    }
+  },
+  {
+    "id": "4ffcb60c-0816-4bf2-a27c-cfd0fb1d1208",
+    "code": "pill_tc_spirit",
+    "name": "TC Spirit Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_spirit": 20
+    }
+  },
+  {
+    "id": "479d43b2-c693-4790-b47a-999f4f46db3f",
+    "code": "pill_kd_spirit",
+    "name": "KD Spirit Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_spirit": 30
+    }
+  },
+  {
+    "id": "2db76939-8b2b-4d5b-9067-12be2a29420e",
+    "code": "di_huong",
+    "name": "Dị Hương",
+    "description": "Hương thơm kỳ lạ không linh thú nào cưỡng lại được. Đảm bảo quy thuận.",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "e319e0d4-942c-4b63-9f2f-ba37d029a7e9",
+    "code": "beast_rename",
+    "name": "Đổi Tên Lệnh",
+    "description": "Cuộn giấy đặc biệt cho phép đặt lại tên linh sủng.",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "909d4234-0fe4-49ac-84a7-1a074b5dc352",
+    "code": "pill_na_tu_vi",
+    "name": "Tu Vi Đan IV",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "0f9bacc7-ca73-4718-b62f-19b05d2ab0f8",
+    "code": "pill_na_hp",
+    "name": "NA HP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "4d3cf8d7-7f90-477a-bf08-64e92b6ec151",
+    "code": "pill_na_mp",
+    "name": "NA MP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "9fb5e544-ff45-4b12-8d4b-f21ff5024fc3",
+    "code": "pill_na_spirit",
+    "name": "NA Spirit Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d3ebf90d-276c-4f2e-9b69-718484c2f8f8",
+    "code": "pill_na_minor",
+    "name": "NA Minor Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "17f847fc-68c9-4d41-860a-2c5c42b8ca52",
+    "code": "pill_na_major",
+    "name": "NA Major Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "2a65741d-5e97-44fc-918e-405c7c439757",
+    "code": "pill_kd_realm_10",
+    "name": "Kết Anh Đan 10%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "833ead78-1073-4291-a1fb-6432ed698797",
+    "code": "pill_na_realm",
+    "name": "NA Realm Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "6dfed7a6-47a4-4aa2-b9a0-7cdf914abb11",
+    "code": "pill_na_realm_10",
+    "name": "Hóa Thần Đan 10%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "31f5bcec-08ab-4aef-82a8-63aa8de0aadd",
+    "code": "eq_weapon_na_1",
+    "name": "NA Weapon I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "f9c55aaf-36fa-4d2e-8669-ad226b12ae0d",
+    "code": "eq_weapon_na_2",
+    "name": "NA Weapon II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d191f14c-d660-4279-a3e1-47d196218995",
+    "code": "eq_weapon_na_3",
+    "name": "NA Weapon III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "df52cd3d-b352-4093-906b-2b20aafe2505",
+    "code": "eq_armor_na_1",
+    "name": "NA Armor I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "399c6f0d-9252-4a1d-92c4-509a226969e6",
+    "code": "eq_armor_na_2",
+    "name": "NA Armor II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "2ecb0d68-9ff3-4f47-b8f8-60478199d361",
+    "code": "eq_armor_na_3",
+    "name": "NA Armor III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "2705bb20-fb08-4b7f-8b05-36b9f4221243",
+    "code": "eq_boots_na_1",
+    "name": "NA Boots I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "b194e216-1878-4886-bd73-82620f2581c3",
+    "code": "eq_boots_na_2",
+    "name": "NA Boots II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d9d9e8b7-fdf5-4937-b3e8-a4fbdb91c53e",
+    "code": "eq_boots_na_3",
+    "name": "NA Boots III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "8e5e503a-f12e-4b13-9039-9b75b7d2607b",
+    "code": "eq_accessory_na_1",
+    "name": "NA Accessory I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "380f4017-700c-491b-bd79-31219d647f6d",
+    "code": "eq_accessory_na_2",
+    "name": "NA Accessory II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "48cd92b8-c2bd-4967-828f-5876a84085d6",
+    "code": "eq_accessory_na_3",
+    "name": "NA Accessory III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "73f78efe-3cc1-458a-ba69-bbffc213a0c9",
+    "code": "pill_na_sta",
+    "name": "NA Stamina Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "heal_stamina": 25
+    }
+  },
+  {
+    "id": "15060731-66d9-4b5b-99e3-c3e421fa1e76",
+    "code": "dien_tho_dan_10",
+    "name": "Diên Thọ Đan — 10 Năm",
+    "description": "Kéo dài tuổi thọ thêm 10 năm.",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "lifespan_years": 10
+    }
+  },
+  {
+    "id": "ad9f989f-f36f-4fb3-b9c5-3982ed0286c2",
+    "code": "dien_tho_dan_50",
+    "name": "Diên Thọ Đan — 50 Năm",
+    "description": "Kéo dài tuổi thọ thêm 50 năm.",
+    "item_type": "consumable",
+    "rarity": "uncommon",
+    "effects": {
+      "lifespan_years": 50
+    }
+  },
+  {
+    "id": "b3da1d61-2415-4b98-869b-996328fba309",
+    "code": "dien_tho_dan_100",
+    "name": "Diên Thọ Đan — 100 Năm",
+    "description": "Kéo dài tuổi thọ thêm 100 năm.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "lifespan_years": 100
+    }
+  },
+  {
+    "id": "91111e87-4e43-4ff5-b2e0-55daca399189",
+    "code": "dien_tho_dan_500",
+    "name": "Diên Thọ Đan — 500 Năm",
+    "description": "Kéo dài tuổi thọ thêm 500 năm.",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "lifespan_years": 500
+    }
+  },
+  {
+    "id": "e5b5d928-7af5-4984-8055-7a800806968b",
+    "code": "fire_spirit_stone_na",
+    "name": "Hỏa Linh Thạch (NA)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "771ffd48-6234-4555-9682-98dd4d56c3dd",
+    "code": "metal_spirit_stone_na",
+    "name": "Kim Linh Thạch (NA)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "b4c9f674-5726-4cc2-922c-fc5bd22c098c",
+    "code": "water_spirit_stone_na",
+    "name": "Thủy Linh Thạch (NA)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "47010490-2f91-4fa1-83a0-b704e5e021cb",
+    "code": "wood_spirit_stone_na",
+    "name": "Mộc Linh Thạch (NA)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "2f7b7480-6045-4ce0-a964-5618fde7065f",
+    "code": "earth_spirit_stone_na",
+    "name": "Thổ Linh Thạch (NA)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "c9b3a0aa-61f0-490d-9279-0172e7f8f1a9",
+    "code": "fire_spirit_stone_ht",
+    "name": "Hỏa Linh Thạch (HT)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "9694d193-f6df-48ec-a423-420fe095e4e8",
+    "code": "metal_spirit_stone_ht",
+    "name": "Kim Linh Thạch (HT)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "d4e32716-0a8b-4601-93b9-937495753718",
+    "code": "water_spirit_stone_ht",
+    "name": "Thủy Linh Thạch (HT)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "b750ae0d-ad47-4951-9472-9c4456de4116",
+    "code": "wood_spirit_stone_ht",
+    "name": "Mộc Linh Thạch (HT)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "b96db4fa-db42-481a-b81d-b0dc0f7f2abc",
+    "code": "earth_spirit_stone_ht",
+    "name": "Thổ Linh Thạch (HT)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "9a5d15f8-7eee-443f-836e-f949119cf232",
+    "code": "fire_spirit_stone_lh",
+    "name": "Hỏa Linh Thạch (LH)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "f7740f9e-a5f2-45fd-b290-33b06076233a",
+    "code": "metal_spirit_stone_lh",
+    "name": "Kim Linh Thạch (LH)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "9ac5f505-d99b-4867-99f1-93a795c99bec",
+    "code": "water_spirit_stone_lh",
+    "name": "Thủy Linh Thạch (LH)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "4fe79d22-a6ab-434e-9020-3c6de90a54d9",
+    "code": "wood_spirit_stone_lh",
+    "name": "Mộc Linh Thạch (LH)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "68dc7505-0040-4510-ab66-9f3c0093c36e",
+    "code": "earth_spirit_stone_lh",
+    "name": "Thổ Linh Thạch (LH)",
+    "description": null,
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "9dac490e-e7b7-4b80-85af-9033bc382c4a",
+    "code": "na_herb",
+    "name": "NA Herb",
+    "description": "Linh Thảo (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "bdb569c0-8b5b-4996-827d-3904ba0206c8",
+    "code": "na_wood",
+    "name": "NA Wood",
+    "description": "Linh Mộc 600 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "93aae7bf-46c5-4362-941b-ba008c112a7d",
+    "code": "na_ore",
+    "name": "NA Ore",
+    "description": "Khoáng Thạch (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "405eb31a-7d95-40a3-9cad-254b2b472596",
+    "code": "na_essence",
+    "name": "NA Essence",
+    "description": "Linh Thủy (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "a58906c8-3124-4ccc-9920-16f02bf7c196",
+    "code": "na_beast_hide",
+    "name": "NA Beast Hide",
+    "description": "Da linh thú (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "86acc344-ca9f-43f6-9721-af428676591b",
+    "code": "na_beast_blood",
+    "name": "NA Beast Blood Essence",
+    "description": "Tinh huyết linh thú (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "dce0d3fe-bf19-4b2f-a13e-08f9820fa287",
+    "code": "na_array_flag",
+    "name": "NA Array Flag",
+    "description": "Trận kỳ (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "e92c38e8-61d7-4704-89fa-ec3737a7d939",
+    "code": "na_array_stone",
+    "name": "NA Array Stone",
+    "description": "Trận thạch (Nguyên Anh)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d0e48a81-f32d-4922-aa00-114033ff479f",
+    "code": "na_tu_linh_flower",
+    "name": "NA Tu Linh Flower",
+    "description": "Tụ Linh Hoa 600 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "795b7a4a-5246-47dd-bc1c-638531294041",
+    "code": "ht_herb",
+    "name": "HT Herb",
+    "description": "Linh Thảo (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "b227065e-4d6b-480b-977d-a991ba02af69",
+    "code": "ht_wood",
+    "name": "HT Wood",
+    "description": "Linh Mộc 1200 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "45371cc7-40de-4a6b-b46a-4e43564221ee",
+    "code": "ht_ore",
+    "name": "HT Ore",
+    "description": "Khoáng Thạch (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "43210eb5-52da-45a0-9008-1ff3af4b28c8",
+    "code": "ht_essence",
+    "name": "HT Essence",
+    "description": "Linh Thủy (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "f174e8b1-8122-4b2e-abe9-54871a7e8bcd",
+    "code": "ht_beast_hide",
+    "name": "HT Beast Hide",
+    "description": "Da linh thú (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "f829c2eb-0953-48ed-b5ea-5515e1f37597",
+    "code": "ht_beast_blood",
+    "name": "HT Beast Blood Essence",
+    "description": "Tinh huyết linh thú (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "bdb6799d-b6d7-4109-9620-30f4493e2688",
+    "code": "ht_array_flag",
+    "name": "HT Array Flag",
+    "description": "Trận kỳ (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "aaba67b9-7021-47e8-a13f-63f7688f178e",
+    "code": "ht_array_stone",
+    "name": "HT Array Stone",
+    "description": "Trận thạch (Hóa Thần)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "3d082324-d4b8-4f55-85c6-4ddb948050f2",
+    "code": "ht_tu_linh_flower",
+    "name": "HT Tu Linh Flower",
+    "description": "Tụ Linh Hoa 1200 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "4cd51221-0693-4e6e-8e5a-fd32918fb22b",
+    "code": "lh_herb",
+    "name": "LH Herb",
+    "description": "Linh Thảo (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "16a7f2a1-e144-46fb-aaa4-efb90624dbe8",
+    "code": "lh_wood",
+    "name": "LH Wood",
+    "description": "Linh Mộc 2400 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "9bdfa99c-de0a-4e98-9ca0-76c1091572a9",
+    "code": "lh_ore",
+    "name": "LH Ore",
+    "description": "Khoáng Thạch (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "ea621a6e-50f4-4943-aa66-3984e558a78b",
+    "code": "lh_essence",
+    "name": "LH Essence",
+    "description": "Linh Thủy (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "d2009c2f-f50b-4dcf-9189-99cb60fb14ea",
+    "code": "lh_beast_hide",
+    "name": "LH Beast Hide",
+    "description": "Da linh thú (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "de56bf4b-4cb3-42cb-92e2-bc1dfdfe928a",
+    "code": "lh_beast_blood",
+    "name": "LH Beast Blood Essence",
+    "description": "Tinh huyết linh thú (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d29553b5-3779-47a5-9ec1-8bcd762fdffa",
+    "code": "lh_array_flag",
+    "name": "LH Array Flag",
+    "description": "Trận kỳ (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d1b5cc15-c6aa-4800-b73e-85148e9ddc02",
+    "code": "lh_array_stone",
+    "name": "LH Array Stone",
+    "description": "Trận thạch (Luyện Hư)",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "b2e81c11-fcd9-4974-937f-961e07534859",
+    "code": "lh_tu_linh_flower",
+    "name": "LH Tu Linh Flower",
+    "description": "Tụ Linh Hoa 2400 Năm",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "460f5796-bde5-413a-99a6-ea2743d189cf",
+    "code": "mob_chest_stone_1_1",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b19e671a-58ae-4fbc-ab13-99e308061d20",
+    "code": "mob_chest_stone_1_2",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fb01d019-3b5b-4f41-a172-5a3c3f2a8370",
+    "code": "mob_chest_stone_1_3",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d6006eae-3ab6-403b-ab92-bc0b0f7fe68d",
+    "code": "mob_chest_stone_1_4",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0b2ece94-ff36-4a8d-93a2-378a1ff4571d",
+    "code": "mob_chest_stone_1_5",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a8fab72e-56df-4560-aebf-d4877a3f9614",
+    "code": "mob_chest_stone_1_6",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "949acda3-8009-4199-806a-e6105a94de1e",
+    "code": "mob_chest_stone_1_7",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e1f133b4-415c-499f-a686-ff54e7a1b3bd",
+    "code": "mob_chest_stone_1_8",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "72511b5a-8cdf-466b-9a74-36821ee8077c",
+    "code": "mob_chest_stone_1_9",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e1532ffe-94e1-45c7-8f0c-e15b8d31b115",
+    "code": "mob_chest_stone_1_10",
+    "name": "Rương Linh Thạch (1)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ccd0bbf2-d708-4776-a49b-e1620ee487d7",
+    "code": "mob_chest_stone_2_1",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "4d608796-3d9a-4e86-9231-e43f9c1eae54",
+    "code": "mob_chest_stone_2_2",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "95455170-d787-47e5-9af7-267e97b7242d",
+    "code": "mob_chest_stone_2_3",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ff8c522d-7650-4a48-90dc-ef58ba8e2895",
+    "code": "mob_chest_stone_2_4",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bfff2cdd-3cba-4def-87c6-e2f428a73823",
+    "code": "mob_chest_stone_2_5",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ebd43940-12ec-4653-86b7-d930f81eb339",
+    "code": "mob_chest_stone_2_6",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "cb22c9b8-13c0-4c51-9d56-8ee47dd132e6",
+    "code": "mob_chest_stone_2_7",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5c792e85-0fa3-4c6d-9f80-ba545f9a58b1",
+    "code": "mob_chest_stone_2_8",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "463b4f95-a448-4a3c-a3f0-482179006ae4",
+    "code": "mob_chest_stone_2_9",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "07ccadc8-cdac-48ef-bc7f-f3598afc19ed",
+    "code": "mob_chest_stone_2_10",
+    "name": "Rương Linh Thạch (2)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "29072b27-1522-4a37-aa5e-f6d2ed1fc690",
+    "code": "mob_chest_stone_3_1",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "748eda4b-7333-4119-ae32-c072264af416",
+    "code": "mob_chest_stone_3_2",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d9521e31-ceea-41d0-ae31-2da8a6e8244b",
+    "code": "mob_chest_stone_3_3",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "31dc7110-ae2c-44c5-8242-7b5db678805d",
+    "code": "mob_chest_stone_3_4",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "56e7a529-22d4-485d-9642-e116de4ac849",
+    "code": "mob_chest_stone_3_5",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "1c343615-60a4-46e5-8ef0-35f55aa4ba41",
+    "code": "mob_chest_stone_3_6",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "255f9c4e-a2bc-4ee1-a3f7-cb52e3603cea",
+    "code": "mob_chest_stone_3_7",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8c67b883-0234-4662-93b1-b52fc892a9f1",
+    "code": "mob_chest_stone_3_8",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0df55440-d631-461a-b0df-dae3107ba58b",
+    "code": "mob_chest_stone_3_9",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "3b3280d5-1c46-4113-a2ad-2fd1b5c9a787",
+    "code": "mob_chest_stone_3_10",
+    "name": "Rương Linh Thạch (3)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a688ac74-d59b-495c-8b69-be02f47afe6a",
+    "code": "mob_chest_stone_4_1",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ef224371-5fa1-4fc8-a7d0-d08e6ac5ed0f",
+    "code": "mob_chest_stone_4_2",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "2854caf9-9454-4a12-8291-62b4ce463de4",
+    "code": "mob_chest_stone_4_3",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fc1f9bc2-ef57-4357-a939-5180df309cb5",
+    "code": "mob_chest_stone_4_4",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fad7f2d3-bfaa-4b26-864f-1670896ce4f7",
+    "code": "mob_chest_stone_4_5",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "355968eb-ebe2-43ad-9c65-9d657a759c96",
+    "code": "mob_chest_stone_4_6",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "4feb46f4-95f5-4a48-85be-f801c006a3d0",
+    "code": "mob_chest_stone_4_7",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e80445ab-87b3-44d0-bac3-ec701dcdc4d3",
+    "code": "mob_chest_stone_4_8",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d0179112-adea-48a6-a54b-eb985a3bc471",
+    "code": "mob_chest_stone_4_9",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f9af2357-ac9a-4d84-8f87-94f7671a4d3e",
+    "code": "mob_chest_stone_4_10",
+    "name": "Rương Linh Thạch (4)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "cb793296-a607-48e1-b375-16587ea5fafa",
+    "code": "mob_chest_stone_5_1",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "1919b89c-901a-4258-8870-d6958e7386c5",
+    "code": "mob_chest_stone_5_2",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e19538f6-23e9-4213-a2cc-d2935f5230f6",
+    "code": "mob_chest_stone_5_3",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b7e1c433-0005-41e7-83a5-199d7bf0974b",
+    "code": "mob_chest_stone_5_4",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "37dabc2c-8a16-4ca3-9c45-7e92980d1753",
+    "code": "mob_chest_stone_5_5",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fc16b5c2-6b8b-4bf2-b088-2277a481eee6",
+    "code": "mob_chest_stone_5_6",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0a8191d0-4af9-4414-9bea-3b20a134e5e3",
+    "code": "mob_chest_stone_5_7",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e64c13e1-24f0-4616-9baa-e543b44107ce",
+    "code": "mob_chest_stone_5_8",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5219bb0a-6a15-42e8-82f9-7932d6bf10e1",
+    "code": "mob_chest_stone_5_9",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "23e862e8-62dd-4352-b24b-3c8d136d569e",
+    "code": "mob_chest_stone_5_10",
+    "name": "Rương Linh Thạch (5)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8a4c57f0-cd9e-4ab6-8245-e74abf39308f",
+    "code": "mob_chest_stone_6_1",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "032b9fbb-ea64-4baa-9e08-50d3cd44ecc0",
+    "code": "mob_chest_stone_6_2",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "14860ea7-e400-4cb7-ba17-93f8702a49a8",
+    "code": "mob_chest_stone_6_3",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "19417bb2-7ca3-4555-889c-550375623d7d",
+    "code": "mob_chest_stone_6_4",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "44dbeb0f-3f3f-4d6c-9e9c-89e2df79ec13",
+    "code": "mob_chest_stone_6_5",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "2eb059ca-646b-443e-a05a-fb4b804f1537",
+    "code": "mob_chest_stone_6_6",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "1dbb4333-b430-47ef-b70b-8bcb084edf04",
+    "code": "mob_chest_stone_6_7",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ebc527ac-b7e0-40df-b0c9-618b1f67a0cd",
+    "code": "mob_chest_stone_6_8",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0c59caa7-d487-41ad-a30b-1765d71eb6f3",
+    "code": "mob_chest_stone_6_9",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "1666aeae-2f94-49c0-be61-cc7ecfd0c680",
+    "code": "mob_chest_stone_6_10",
+    "name": "Rương Linh Thạch (6)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5c63422d-1ac2-4775-aeed-747b45ab5e71",
+    "code": "mob_chest_stone_7_1",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bc5c8f17-7f3f-4b76-9ef0-b6ea81e5a6db",
+    "code": "mob_chest_stone_7_2",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "aa7c5cca-34d9-4ffa-9c93-514c784733f0",
+    "code": "mob_chest_stone_7_3",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5936bf1d-c500-4983-a454-fc430dc4c07f",
+    "code": "mob_chest_stone_7_4",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "65a44085-c528-497a-8bfb-f9cfe491ebc4",
+    "code": "mob_chest_stone_7_5",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "15eab4a9-c7d8-4810-923b-373f14f670a0",
+    "code": "mob_chest_stone_7_6",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d46c361a-7b81-47e1-8334-dd60e3c61108",
+    "code": "mob_chest_stone_7_7",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "46ff9f0e-55c8-49b5-a7af-0801b4d6d1b7",
+    "code": "mob_chest_stone_7_8",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "db64bf79-72d8-4f1f-9a6e-931ac3380fb5",
+    "code": "mob_chest_stone_7_9",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "126bc91f-dde5-41a6-acc1-ea43b5392531",
+    "code": "mob_chest_stone_7_10",
+    "name": "Rương Linh Thạch (7)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "9134d097-63e0-42e2-980e-6689ebbaedd7",
+    "code": "mob_chest_stone_8_1",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "eadd2ec4-5f2b-437f-86e2-2183ea985b06",
+    "code": "mob_chest_stone_8_2",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "70710cd6-1df5-4f5a-ad8b-68b7ee5b4036",
+    "code": "mob_chest_stone_8_3",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7dce6fee-c24f-439f-be87-c6bd6cdb5513",
+    "code": "mob_chest_stone_8_4",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e8abc82f-b37e-49db-86ae-d87f04bcf0a4",
+    "code": "mob_chest_stone_8_5",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fa42dd62-8f4a-4e3d-9bb1-47864a453b5f",
+    "code": "mob_chest_stone_8_6",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f27f25fe-734e-4a95-a1a7-cbc40a4cd4b0",
+    "code": "mob_chest_stone_8_7",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a9c36963-b003-4fec-9fc9-a2429146da33",
+    "code": "mob_chest_stone_8_8",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "18c21099-190b-4cb0-a30a-52c2dc8f3467",
+    "code": "mob_chest_stone_8_9",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "43277980-c3e4-40c0-802e-c76720877961",
+    "code": "mob_chest_stone_8_10",
+    "name": "Rương Linh Thạch (8)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "277cefdf-fe89-4dcb-a952-5eff9231fe4b",
+    "code": "mob_chest_stone_9_1",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "038d2bb8-c368-4923-a24b-de0657682587",
+    "code": "mob_chest_stone_9_2",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "c7ce5842-04c6-48a5-b85f-7805d73408d6",
+    "code": "mob_chest_stone_9_3",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "586937a7-9b21-4751-a81d-975a077fe17f",
+    "code": "mob_chest_stone_9_4",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "cc72a125-dedf-467a-ac44-cf854e7ff77a",
+    "code": "mob_chest_stone_9_5",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "4f8220a7-a832-4b7a-9308-547faf9a84d6",
+    "code": "mob_chest_stone_9_6",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "2fb2b828-82d3-43d3-81bd-fc7b36c68402",
+    "code": "mob_chest_stone_9_7",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "9c897527-dad3-4904-b81f-0147c3719ddb",
+    "code": "mob_chest_stone_9_8",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "9b1c373a-fbf6-4673-a590-baa0d7b4f0c1",
+    "code": "mob_chest_stone_9_9",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7c2abebd-058d-4f82-a38c-69e110b555b0",
+    "code": "mob_chest_stone_9_10",
+    "name": "Rương Linh Thạch (9)",
+    "description": "Rương linh thạch, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "91ff1527-9dfd-463f-8f92-327625941f1d",
+    "code": "eq_accessory_ht_1",
+    "name": "HT Accessory I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "d39d1735-4276-4738-8860-58cd0b11a834",
+    "code": "eq_accessory_ht_2",
+    "name": "HT Accessory II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "bedc948d-a06f-4d5a-9ca5-51d60b5bb291",
+    "code": "eq_accessory_ht_3",
+    "name": "HT Accessory III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "45225491-b00e-4aa5-bc7c-7f9fc3ffe3c8",
+    "code": "eq_armor_ht_1",
+    "name": "HT Armor I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "8ebedddb-20c1-4b7a-9774-e650e5e8bb05",
+    "code": "eq_armor_ht_2",
+    "name": "HT Armor II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "3757c5aa-686a-401d-9f00-182b094ca182",
+    "code": "eq_armor_ht_3",
+    "name": "HT Armor III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "2ce7382d-c9e2-4b97-a863-c3c6b6d3d8f7",
+    "code": "eq_boots_ht_1",
+    "name": "HT Boots I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "208991a9-56b0-419a-829b-27293ad8c2fd",
+    "code": "eq_boots_ht_2",
+    "name": "HT Boots II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "cc41b48f-e2ed-46ab-b8d3-a086755c102b",
+    "code": "eq_boots_ht_3",
+    "name": "HT Boots III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "9438d687-15d1-4b2c-824f-2d9668d08952",
+    "code": "eq_weapon_ht_1",
+    "name": "HT Weapon I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "6f600b56-0f3e-45ab-a516-2cf5639bf3b5",
+    "code": "eq_weapon_ht_2",
+    "name": "HT Weapon II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "ef62b8c8-243c-4091-bf0a-53b0a86b4156",
+    "code": "eq_weapon_ht_3",
+    "name": "HT Weapon III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "da7e03e8-3bff-4282-87ef-249d7b22ef29",
+    "code": "eq_accessory_lh_1",
+    "name": "LH Accessory I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "ab4534b1-52f2-4411-b775-c7fdf802e07e",
+    "code": "eq_accessory_lh_2",
+    "name": "LH Accessory II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "03980b47-9bec-4e54-9328-4cbcc1b431bd",
+    "code": "eq_accessory_lh_3",
+    "name": "LH Accessory III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "4d3b6323-e096-4305-a09a-8d7758461020",
+    "code": "eq_armor_lh_1",
+    "name": "LH Armor I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "f80ca9fd-1a50-4591-bef6-7c825205541b",
+    "code": "eq_armor_lh_2",
+    "name": "LH Armor II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "1a9211d1-3c4a-4522-b4cb-abf25dc33b3c",
+    "code": "eq_armor_lh_3",
+    "name": "LH Armor III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "b06dc23a-87dc-4b36-b679-0982321e48fb",
+    "code": "eq_boots_lh_1",
+    "name": "LH Boots I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "d29aaa49-dbae-45da-a11b-7d6770a22269",
+    "code": "eq_boots_lh_2",
+    "name": "LH Boots II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "7f977838-0dd6-40ad-9735-623fe4a4efc1",
+    "code": "eq_boots_lh_3",
+    "name": "LH Boots III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "a9471a4e-1de7-4670-afbc-967ecabdd1db",
+    "code": "eq_weapon_lh_1",
+    "name": "LH Weapon I",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "a5f2b27d-21cb-46d3-b350-b568ab0161cf",
+    "code": "eq_weapon_lh_2",
+    "name": "LH Weapon II",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "02ce00bc-5b05-4d40-b664-6e6dcd84d97b",
+    "code": "eq_weapon_lh_3",
+    "name": "LH Weapon III",
+    "description": null,
+    "item_type": "equipment",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "a9d547bc-edec-41e3-8875-4248381e7332",
+    "code": "pill_ht_hp",
+    "name": "HT HP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_hp": 24000
+    }
+  },
+  {
+    "id": "9773b1ef-a10a-4e6c-95ec-e476a9e93ba4",
+    "code": "pill_ht_mp",
+    "name": "HT MP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_mp": 1500
+    }
+  },
+  {
+    "id": "5ecde574-c4e0-4504-8907-9bf01f100c3d",
+    "code": "pill_ht_spirit",
+    "name": "HT Spirit Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_spirit": 40
+    }
+  },
+  {
+    "id": "39876601-7cfc-496f-8ba4-b79e1f181b93",
+    "code": "pill_ht_sta",
+    "name": "HT Stamina Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_stamina": 20
+    }
+  },
+  {
+    "id": "f028c922-d32e-4b06-bd4b-ef460445556c",
+    "code": "pill_ht_tu_vi",
+    "name": "Tu Vi Đan V",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "exp_delta": 180000
+    }
+  },
+  {
+    "id": "9726bfa4-685f-41f9-985e-b660bd41effc",
+    "code": "pill_ht_minor",
+    "name": "HT Minor Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "hoa_than"
+      },
+      "break_minor": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "cea91e04-e075-4acf-8c69-b9701dbd16de",
+    "code": "pill_ht_major",
+    "name": "HT Major Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "hoa_than"
+      },
+      "break_major": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "bed87639-ac3f-4688-8f57-7fb7e23b2a5b",
+    "code": "pill_ht_realm",
+    "name": "HT→LH Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "luyen_hu"
+      },
+      "break_realm": "ht_lh",
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "231b9148-852d-417d-a903-d0968cc2c260",
+    "code": "pill_ht_realm_10",
+    "name": "Luyện Hư Đan 10%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "luyen_hu",
+        "break_bonus_pct": 10
+      },
+      "break_bonus_pct": 10
+    }
+  },
+  {
+    "id": "e81f75a3-c6d4-4234-a2b6-9f268360edda",
+    "code": "pill_lh_hp",
+    "name": "LH HP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_hp": 72000
+    }
+  },
+  {
+    "id": "005e9f14-4530-4fab-a3dd-73cadecf71bb",
+    "code": "pill_lh_mp",
+    "name": "LH MP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_mp": 4500
+    }
+  },
+  {
+    "id": "640f6788-695e-4956-9580-6ec97fb8044d",
+    "code": "pill_lh_spirit",
+    "name": "LH Spirit Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_spirit": 60
+    }
+  },
+  {
+    "id": "07e1ec8e-fe00-4d9e-83d3-9c4983802a12",
+    "code": "mob_chest_4_1",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f9497cdc-e705-4371-ac82-207913303845",
+    "code": "mob_chest_4_2",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a0119723-5617-4f56-bfc7-62e712ef1fcc",
+    "code": "mob_chest_4_3",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "99fbe55f-ed10-4011-8a42-3d6183be4a28",
+    "code": "mob_chest_4_4",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "83379491-0135-4e6a-8fe5-e227fe5d3b5f",
+    "code": "mob_chest_4_5",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "42661d89-6e2c-4a11-9fc6-ade8af7533a2",
+    "code": "mob_chest_4_6",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a4f19bc0-63df-491c-8c16-1ee33ae15863",
+    "code": "mob_chest_4_7",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bbbbf918-b1a3-4439-b01f-cae5fc3c55fe",
+    "code": "mob_chest_4_8",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "834e61ee-dc04-49b0-84d4-020b9d174de9",
+    "code": "mob_chest_4_9",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "21809ca4-5563-4d0c-986b-7ddea6f2b03e",
+    "code": "mob_chest_4_10",
+    "name": "Mob Chest (4)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "aadfe67b-e9aa-425c-b54d-e402bdcafa54",
+    "code": "mob_chest_5_1",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "eb744470-258e-4962-b2a8-5c8460fd71f2",
+    "code": "mob_chest_5_2",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "932bf28a-7bf0-4fa5-8fb7-7fd2021081c6",
+    "code": "mob_chest_5_3",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6c2e67cd-0df3-46ff-9656-95e5c9203e3c",
+    "code": "mob_chest_5_4",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "84a72bfd-f51c-4e92-9c9d-a6d1f8056d51",
+    "code": "mob_chest_5_5",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "4baedde1-507a-4cc1-9cac-46508d5b9393",
+    "code": "mob_chest_5_6",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "69d304d1-955a-440e-8950-d2a50918726b",
+    "code": "mob_chest_5_7",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "82c98ea5-7633-48f4-9744-c69394de3d4c",
+    "code": "mob_chest_5_8",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "3ffc4b82-f683-4270-8dd1-111b612703fd",
+    "code": "mob_chest_5_9",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6940d85b-4149-4af7-a6ee-7a0379c80bf0",
+    "code": "mob_chest_5_10",
+    "name": "Mob Chest (5)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "af881eab-45ce-49b2-b8cc-5ed552b2711d",
+    "code": "mob_chest_6_1",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "f7db55c3-7f87-4cd1-818d-ecaa9191b6ad",
+    "code": "mob_chest_6_2",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "939c2e51-ce76-45fd-8819-909c371e5664",
+    "code": "mob_chest_6_3",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "94ad1e8b-f1dd-43dc-bd33-63115e1812fb",
+    "code": "mob_chest_6_4",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "99bde014-6a71-42af-8f2f-478118fed80d",
+    "code": "mob_chest_6_5",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "83e73ef6-b1f6-4972-bfd1-b1c4a68b453b",
+    "code": "mob_chest_6_6",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "f026721c-12c7-4eea-801b-c5fc9e5cbdb1",
+    "code": "mob_chest_6_7",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "c0b9f931-8127-4a0f-a53b-72ad46ebdada",
+    "code": "mob_chest_6_8",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "4db542af-ea47-4cd6-a31f-a89142d6f3fe",
+    "code": "mob_chest_6_9",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "38a01c89-9fdf-4791-a310-3cc2b2749fcf",
+    "code": "mob_chest_6_10",
+    "name": "Mob Chest (6)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "3f2c7391-9535-42a7-90e5-9781235a4271",
+    "code": "mob_chest_7_1",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "34e08806-ddfa-45d7-9b14-a23249ce53c9",
+    "code": "mob_chest_7_2",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "635461ad-ccb1-4c43-a408-100b1ac7dc1d",
+    "code": "mob_chest_7_3",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a09aad2d-03c9-4f6f-abc3-8ad465ebc0a2",
+    "code": "mob_chest_7_4",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ed558f02-089c-401d-96da-86560745cee2",
+    "code": "mob_chest_7_5",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "88a5ebb8-33ea-4f8d-aed8-4af9a7194537",
+    "code": "mob_chest_7_6",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f73c986d-af87-4eda-81de-7ec6bad286bb",
+    "code": "mob_chest_7_7",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "92f5a617-ebe5-473b-ad45-17237b3496aa",
+    "code": "mob_chest_7_8",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "be39bd45-fc87-4d25-811c-a96319d00f9a",
+    "code": "mob_chest_7_9",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "4f4102ce-4f15-400a-bcc9-dbbd19995fbb",
+    "code": "mob_chest_7_10",
+    "name": "Mob Chest (7)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bea2bb9a-ff26-475d-86a5-142eb842c89e",
+    "code": "mob_chest_8_1",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "a9e60cc2-4c11-4be3-9c71-625a3a843f8a",
+    "code": "mob_chest_8_2",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "fdad72de-1a38-4909-9ccb-5b4fabda4eeb",
+    "code": "mob_chest_8_3",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "6277a8ad-1cd5-4fb8-b9b4-934997773304",
+    "code": "mob_chest_8_4",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "46837d34-52e6-4906-8aaa-de3ef27908c2",
+    "code": "mob_chest_8_5",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "38240a1f-3561-4b50-b33e-08c0370a5969",
+    "code": "mob_chest_8_6",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "87203507-17bd-470b-bbb0-04837d0345ef",
+    "code": "mob_chest_8_7",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "54b11fba-9ac3-440d-a194-d0a82d1ec0c1",
+    "code": "mob_chest_8_8",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "5c22c767-8437-421e-80fa-ed9b2907c46f",
+    "code": "mob_chest_8_9",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "b1264dc4-2718-4430-b2a2-7308d30ba330",
+    "code": "mob_chest_8_10",
+    "name": "Mob Chest (8)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "a3c8ba88-e0fa-416f-b89b-3560c62e2f7a",
+    "code": "mob_chest_9_1",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "0c758785-4cd5-4ca4-ba1c-55c52fe467de",
+    "code": "mob_chest_9_2",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "eca00c03-5668-4707-8670-f7d81d16f6f4",
+    "code": "mob_chest_9_3",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "923c0743-bd94-4d0d-a11b-6edd9070cdcb",
+    "code": "mob_chest_9_4",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "494dd02f-c4c0-41e1-abc1-06bcdba3b9b1",
+    "code": "mob_chest_9_5",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "e2198fe0-8e3b-4c1f-8f02-1861658210c2",
+    "code": "mob_chest_9_6",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "819bf137-eac1-41da-bdff-5b3f91def3f5",
+    "code": "mob_chest_9_7",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "a230619a-b01d-42d2-b782-bcf0baafc779",
+    "code": "mob_chest_9_8",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "e541fe46-1605-4bf5-a80e-6b0cbd0a249c",
+    "code": "mob_chest_9_9",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "5b88515e-5caa-4da5-b65d-25fb3d4fd236",
+    "code": "mob_chest_9_10",
+    "name": "Mob Chest (9)",
+    "description": "Open to receive materials",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "27711cf0-33f6-46a7-ad80-d40b193ca91b",
+    "code": "mob_chest_1_1",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "73890abe-8584-42b4-a591-dee619e3b982",
+    "code": "mob_chest_1_2",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "980b6418-0ba5-4ef4-9e2a-0786270c98ae",
+    "code": "mob_chest_1_3",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "62c403e5-ce1e-4cd8-a249-3f04e8000224",
+    "code": "mob_chest_1_4",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5c34efb7-9c5f-4416-a52c-9d140aa8a5a8",
+    "code": "mob_chest_1_5",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7447a481-1b0e-4ec5-b455-8536ccc01385",
+    "code": "mob_chest_1_6",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "29ff1982-0d39-411e-bd4c-15fba0a3fba5",
+    "code": "mob_chest_1_7",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f849b6f7-7851-4783-a876-c4e35242ddf7",
+    "code": "mob_chest_1_8",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "98688e4b-16d6-44f7-9882-de9dacc535d1",
+    "code": "mob_chest_1_9",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ace7797e-aeba-41eb-b9c8-845beeb7844b",
+    "code": "mob_chest_1_10",
+    "name": "Mob Chest 1",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "3dfec552-d24b-4014-907f-6443e2a1200b",
+    "code": "mob_chest_2_1",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5641f250-bab2-4232-b80c-937ed548c8ef",
+    "code": "mob_chest_2_2",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "550dd28f-34ec-4ea4-8ee3-8eee84aed4c7",
+    "code": "mob_chest_2_3",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b32a85f9-6554-46ce-a462-c45477c6a42d",
+    "code": "mob_chest_2_4",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a528c8ff-41f7-4c55-83da-91574a1e9183",
+    "code": "mob_chest_2_5",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0d5e5d8d-7942-43e3-8d3c-262637d8db77",
+    "code": "mob_chest_2_6",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "503fda58-9b1d-4ebb-adf4-27f562512389",
+    "code": "mob_chest_2_7",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fa44f905-8b2c-425a-89a3-28c6479b6d40",
+    "code": "mob_chest_2_8",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "2bba2b0a-8d68-42f6-ae16-efe8dcc186dd",
+    "code": "mob_chest_2_9",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8027be9c-fb3c-4b01-9ca7-79cbdc16cc02",
+    "code": "mob_chest_2_10",
+    "name": "Mob Chest 2",
+    "description": null,
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8cf276ca-df51-4844-9d4a-e4ec0071773f",
+    "code": "mob_chest_3_1",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "2215b242-b58f-4b55-998b-a3fc0fe0414d",
+    "code": "mob_chest_3_2",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "b8318c50-9c8c-492e-90bc-d1cad2a20a5d",
+    "code": "mob_chest_3_3",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "45846e01-bd89-42cf-b63a-1b6ab8455612",
+    "code": "mob_chest_3_4",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "ebf11d36-4aa7-4c73-a064-4b38be9ce496",
+    "code": "mob_chest_3_5",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "cfee4d84-1b83-4fa3-8244-20d2a33a2257",
+    "code": "mob_chest_3_6",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "32a0c824-3004-4b1c-8617-b325b66dba5f",
+    "code": "mob_chest_3_7",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "6882bf03-92c8-4749-9882-3c8ae65b5da6",
+    "code": "mob_chest_3_8",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "e944a2b0-ae22-4b48-9908-c9b15072855b",
+    "code": "mob_chest_3_9",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "86c054cf-ebb9-4fff-9fda-f876ec664b38",
+    "code": "mob_chest_3_10",
+    "name": "Mob Chest 3",
+    "description": null,
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 2
+    }
+  },
+  {
+    "id": "95c202d1-1303-46ec-a5d9-974a60c31c29",
+    "code": "mob_chest_merit_1_1",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "c5698a91-06a9-4b32-a98f-0d46c9886c24",
+    "code": "mob_chest_merit_1_2",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "21dc9851-1893-4e7e-9d63-1aaf709c18fc",
+    "code": "mob_chest_merit_1_3",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "3a2b1875-6963-4ff9-b208-74e2d4721dd6",
+    "code": "mob_chest_merit_1_4",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d4d939fa-ffb0-4fec-afe3-323946285d02",
+    "code": "mob_chest_merit_1_5",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "dd3307b4-669a-43f8-b130-bd6653adee94",
+    "code": "mob_chest_merit_1_6",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "731f63ea-6e9e-4e7a-a336-6159f21f8554",
+    "code": "mob_chest_merit_1_7",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6fd41da8-b641-4a0f-bda9-d561cb6a3931",
+    "code": "mob_chest_merit_1_8",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a442f3a5-3bd3-4b6c-8d9b-04832fe22aa5",
+    "code": "mob_chest_merit_1_9",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e4eac276-d358-4547-8d4c-a1276cf601aa",
+    "code": "mob_chest_merit_1_10",
+    "name": "Rương Công Huân (1)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b5b6e465-ce4f-486d-b690-43258161162f",
+    "code": "mob_chest_merit_2_1",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a52a763a-4333-4cc7-8bf8-caef2791345d",
+    "code": "mob_chest_merit_2_2",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "121f29f1-2a96-402f-86d2-ccfdc2288ea2",
+    "code": "mob_chest_merit_2_3",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "652131dd-48dd-44e4-8611-112e7c57f6d3",
+    "code": "mob_chest_merit_2_4",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a2ad1b4d-6576-47ee-98a9-44c306704a38",
+    "code": "mob_chest_merit_2_5",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "15bfd0d4-3f0f-42e4-ba73-de2a65ab60c1",
+    "code": "mob_chest_merit_2_6",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "c23389b2-bdb2-4eba-9cbd-8f0dbfcc288e",
+    "code": "mob_chest_merit_2_7",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b480a5e2-841c-4938-bf9b-34f83773901e",
+    "code": "mob_chest_merit_2_8",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a53714c5-a454-4bd2-bee0-c5ed37fee505",
+    "code": "mob_chest_merit_2_9",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "384f8eae-605f-4ce5-9855-51656b3f811c",
+    "code": "mob_chest_merit_2_10",
+    "name": "Rương Công Huân (2)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0a47d4eb-1f91-466b-a7b9-0e8e6dfefb17",
+    "code": "mob_chest_merit_3_1",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bcd59151-1183-413c-92a1-e9db0056f7ea",
+    "code": "mob_chest_merit_3_2",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b845cecb-3485-4dd5-ae0c-b6ac28bf4c3f",
+    "code": "mob_chest_merit_3_3",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "783b43d0-d2dc-4e1d-8576-01a0514d4b43",
+    "code": "mob_chest_merit_3_4",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a18b0a5e-9a6d-4f8d-b08d-07ef03403976",
+    "code": "mob_chest_merit_3_5",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6c10b0b5-05a5-4026-a4e4-13cebdc8b36d",
+    "code": "mob_chest_merit_3_6",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d70b8a1e-7e77-40a2-8b2c-13fa862e01db",
+    "code": "mob_chest_merit_3_7",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b679d85f-8278-4b16-92e6-f8e615809382",
+    "code": "mob_chest_merit_3_8",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bee6460b-eb87-4394-a738-11e6f7b4fd0b",
+    "code": "mob_chest_merit_3_9",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7fd29d6e-965b-4f58-aa16-071bb98b8dbf",
+    "code": "mob_chest_merit_3_10",
+    "name": "Rương Công Huân (3)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "87be2d3c-0ce8-492d-b440-0718f231b60e",
+    "code": "mob_chest_merit_4_1",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b5a73d27-5e80-453c-83d3-2117f43fc6b6",
+    "code": "mob_chest_merit_4_2",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "1ad14dc4-e4ba-46a8-b41f-7bba0f642956",
+    "code": "mob_chest_merit_4_3",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e695efe8-4e29-4ddb-9abb-ee53202394e7",
+    "code": "mob_chest_merit_4_4",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "35d56f1b-553d-46d3-a49a-7a4f93a37803",
+    "code": "mob_chest_merit_4_5",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "875ce4e4-74d8-4f2c-a428-972e6254cce5",
+    "code": "mob_chest_merit_4_6",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f01e4e17-f207-4aea-aeaa-65a850a5d249",
+    "code": "mob_chest_merit_4_7",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "c3e67640-4a6c-4fa5-96af-4fbab79357ff",
+    "code": "mob_chest_merit_4_8",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e7bb9b45-c3dc-4da4-8ba7-c989169374cf",
+    "code": "mob_chest_merit_4_9",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b09667a4-c013-4c49-8203-749e98720cc1",
+    "code": "mob_chest_merit_4_10",
+    "name": "Rương Công Huân (4)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "510f5ea2-059c-435a-9518-0a1143867c85",
+    "code": "mob_chest_merit_5_1",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0f2eaa18-a764-4b33-8fb7-b0f1ff543242",
+    "code": "mob_chest_merit_5_2",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "19306b12-7efe-40e8-abc5-3af27f90fca2",
+    "code": "mob_chest_merit_5_3",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "dba74953-1253-488f-9742-30bb50a577f1",
+    "code": "mob_chest_merit_5_4",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8b02df4e-af33-4f5d-b5fe-dce2e49d4e70",
+    "code": "mob_chest_merit_5_5",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6275f064-1612-4214-b734-bdb0907755b5",
+    "code": "mob_chest_merit_5_6",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7343f8da-5867-46b4-8f8c-bc351a33a28f",
+    "code": "mob_chest_merit_5_7",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8443fa89-861b-477f-be87-07f7cc0ac673",
+    "code": "mob_chest_merit_5_8",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "2c0f7ad8-57be-4e3a-b040-29292901b76e",
+    "code": "mob_chest_merit_5_9",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "3cef005c-ab86-45d5-928a-51fdf09ced0b",
+    "code": "mob_chest_merit_5_10",
+    "name": "Rương Công Huân (5)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "183778e1-857c-4ad0-8aac-8633dea4434d",
+    "code": "mob_chest_merit_6_1",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "69ec46e7-0d09-439b-ba05-8fac2a4bd133",
+    "code": "mob_chest_merit_6_2",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0ece09eb-ab2b-41d1-b199-0adcc5620714",
+    "code": "pill_lh_sta",
+    "name": "LH Stamina Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "heal_stamina": 30
+    }
+  },
+  {
+    "id": "eef32b42-58d9-4d56-afd7-4183ae51c781",
+    "code": "mob_chest_merit_6_3",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "bbfd87bd-78e5-4b6b-9002-34f17cd9a0fa",
+    "code": "mob_chest_merit_6_4",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f352519f-7d11-4682-b5a8-7102dda866f8",
+    "code": "mob_chest_merit_6_5",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "3a785aa6-465b-4c7e-9384-66c11dc3b5fd",
+    "code": "mob_chest_merit_6_6",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "aafd32f0-da0b-436b-8913-854bc27e38b5",
+    "code": "mob_chest_merit_6_7",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "71d49b6b-019b-4702-8b95-324fe4e495ab",
+    "code": "mob_chest_merit_6_8",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "54ce69d4-32c4-4e18-8078-9444f5bdc3cd",
+    "code": "mob_chest_merit_6_9",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5b4bcd5f-5286-435e-82b6-882e0295806b",
+    "code": "mob_chest_merit_6_10",
+    "name": "Rương Công Huân (6)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b413e8a4-5a0d-4c85-9121-c2d3b76c35b7",
+    "code": "mob_chest_merit_7_1",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0b026821-9d19-483a-a13f-a19068b3edbd",
+    "code": "mob_chest_merit_7_2",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6f364979-d548-45d4-89db-07d6878df3ae",
+    "code": "mob_chest_merit_7_3",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "110eb443-5b8b-43b3-8022-6bdb2eb2a66f",
+    "code": "mob_chest_merit_7_4",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0091658e-7c5e-4a2e-a61d-15cdba010a63",
+    "code": "mob_chest_merit_7_5",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "578f3cc4-58a6-4c1f-906b-bf1f2d941f74",
+    "code": "mob_chest_merit_7_6",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f0b24277-2c49-48a9-a573-ac9ecb6e78c2",
+    "code": "mob_chest_merit_7_7",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "21cc33c9-e35f-4fbe-b35c-96277ace7bd3",
+    "code": "mob_chest_merit_7_8",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "aadb3d2c-7a85-4eef-87c8-5fa3944391a5",
+    "code": "mob_chest_merit_7_9",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8e03504a-9cb5-4f27-b014-4a3714a4343d",
+    "code": "mob_chest_merit_7_10",
+    "name": "Rương Công Huân (7)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "71bb821a-f3c5-4e86-b000-5d65a2dedaf4",
+    "code": "mob_chest_merit_8_1",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e4ade836-2633-487e-93e2-a82cc3a43ab8",
+    "code": "mob_chest_merit_8_2",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7a547855-e57c-4838-ac17-23f8c654b7a3",
+    "code": "mob_chest_merit_8_3",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "c2d194d1-d677-46f4-b5ae-c1adc1419397",
+    "code": "mob_chest_merit_8_4",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8dd09a2c-ec74-4d32-a350-9d80cbb62367",
+    "code": "mob_chest_merit_8_5",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "663336b6-2574-41da-8551-274d90a66984",
+    "code": "mob_chest_merit_8_6",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "be7ca6ef-ea56-40c2-ab5b-ee61b56bb156",
+    "code": "mob_chest_merit_8_7",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "fb7eb26a-0965-436c-950c-9bdefaba381f",
+    "code": "mob_chest_merit_8_8",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7035657c-17bf-4c7e-b13a-564dc5f739f4",
+    "code": "mob_chest_merit_8_9",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a10c8794-166c-42cb-863f-6aab6850bddd",
+    "code": "mob_chest_merit_8_10",
+    "name": "Rương Công Huân (8)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ee4a6b08-bb7b-4b10-ace3-19cd5eb8096f",
+    "code": "mob_chest_merit_9_1",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "723abe71-4d46-478d-966e-4954c9aacb21",
+    "code": "mob_chest_merit_9_2",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "5780c4c2-999b-42b6-bc44-6a49986a9a8e",
+    "code": "mob_chest_merit_9_3",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "b5115dd1-0a90-4272-85e2-bfaeb6e1c650",
+    "code": "mob_chest_merit_9_4",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "af86f9e4-dcd6-4643-90b8-263e0c899772",
+    "code": "mob_chest_merit_9_5",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7642036e-cd55-4e4d-a9b4-835e60f4b586",
+    "code": "mob_chest_merit_9_6",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "21208037-9e3d-46ff-b99f-3a6bf2347ddf",
+    "code": "mob_chest_merit_9_7",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "84f695c9-0f9c-41ce-bb7e-fde672a7faa7",
+    "code": "mob_chest_merit_9_8",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ebb5b56b-a02c-4f35-b7c1-92d80e7bc4ba",
+    "code": "mob_chest_merit_9_9",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0cb9b6bc-6275-4d7c-9997-65d354358742",
+    "code": "mob_chest_merit_9_10",
+    "name": "Rương Công Huân (9)",
+    "description": "Rương công huân chiến trường, chứa tài nguyên.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "82a8d77f-2446-40ee-94b2-9eacf05f37c7",
+    "code": "pill_lh_tu_vi",
+    "name": "Tu Vi Đan VI",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "exp_delta": 540000
+    }
+  },
+  {
+    "id": "fea5f0a8-a0bf-4717-be49-6ce6e8abe555",
+    "code": "pill_lh_minor",
+    "name": "LH Minor Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "luyen_hu"
+      },
+      "break_minor": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "6fe37853-c792-40cc-823a-b09676318a5f",
+    "code": "pill_lh_major",
+    "name": "LH Major Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "luyen_hu"
+      },
+      "break_major": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "3d663e38-615f-45de-ba57-b71fb542e5e1",
+    "code": "pill_lh_realm",
+    "name": "LH Ascend Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "hop_dao"
+      },
+      "break_realm": "lh_next",
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "cee6971b-f376-4238-beba-1c1282b84880",
+    "code": "pill_lh_realm_10",
+    "name": "Hợp Đạo Đan 10%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "hop_dao",
+        "break_bonus_pct": 10
+      },
+      "break_bonus_pct": 10
+    }
+  },
+  {
+    "id": "66301992-97fe-466c-8150-febedd9db84a",
+    "code": "talisman_na_atk",
+    "name": "NA Talisman: ATK",
+    "description": "Phù tăng ATK (NA) 180s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "atk": 15000,
+      "duration_sec": 180
+    }
+  },
+  {
+    "id": "4df39d55-6a14-4973-8565-cba8e8258318",
+    "code": "talisman_na_def",
+    "name": "NA Talisman: DEF",
+    "description": "Phù tăng DEF (NA) 180s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "def": 9000,
+      "duration_sec": 180
+    }
+  },
+  {
+    "id": "0bac3bcb-98fe-42cc-9c7f-999e9a7906a4",
+    "code": "talisman_na_hp",
+    "name": "NA Talisman: HP",
+    "description": "Phù tăng HP (NA) 180s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "hp": 30000,
+      "duration_sec": 180
+    }
+  },
+  {
+    "id": "bf0620ef-f031-4d6d-a13f-7ffce03223c6",
+    "code": "talisman_na_crit",
+    "name": "NA Talisman: CRIT",
+    "description": "Phù tăng CRIT (NA) 180s",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "hp": 21000,
+      "atk": 9000,
+      "def": 6000,
+      "duration_sec": 180
+    }
+  },
+  {
+    "id": "45a67c0a-feff-4a07-a956-ab1dda30a2d0",
+    "code": "talisman_na_tu_linh",
+    "name": "Tụ Linh Phù IV",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          60
+        ],
+        "qi_rate_flat": [
+          1,
+          400
+        ]
+      }
+    }
+  },
+  {
+    "id": "473551c6-a69b-4931-92c1-4589d73182dc",
+    "code": "talisman_ht_atk",
+    "name": "HT Talisman: ATK",
+    "description": "Phù tăng ATK (HT) 240s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "atk": 45000,
+      "duration_sec": 240
+    }
+  },
+  {
+    "id": "0477c685-714c-44fc-9856-9ee1592a68b9",
+    "code": "talisman_ht_def",
+    "name": "HT Talisman: DEF",
+    "description": "Phù tăng DEF (HT) 240s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "def": 27000,
+      "duration_sec": 240
+    }
+  },
+  {
+    "id": "c4795ce2-93ff-4d87-b457-0149052af08c",
+    "code": "talisman_ht_hp",
+    "name": "HT Talisman: HP",
+    "description": "Phù tăng HP (HT) 240s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "hp": 90000,
+      "duration_sec": 240
+    }
+  },
+  {
+    "id": "5f23f47e-0be1-4d96-ae3e-7466182d92ec",
+    "code": "talisman_ht_crit",
+    "name": "HT Talisman: CRIT",
+    "description": "Phù tăng CRIT (HT) 240s",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 63000,
+      "atk": 27000,
+      "def": 18000,
+      "duration_sec": 240
+    }
+  },
+  {
+    "id": "6154e96d-2bdf-48ed-b67c-6b510c412006",
+    "code": "talisman_ht_tu_linh",
+    "name": "Tụ Linh Phù V",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          70
+        ],
+        "qi_rate_flat": [
+          1,
+          800
+        ]
+      }
+    }
+  },
+  {
+    "id": "18720100-c434-49ad-beb6-42bc2d9071ec",
+    "code": "talisman_lh_atk",
+    "name": "LH Talisman: ATK",
+    "description": "Phù tăng ATK (LH) 300s",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "atk": 135000,
+      "duration_sec": 300
+    }
+  },
+  {
+    "id": "e16a9add-23a4-4700-ab59-4abf1f901cc0",
+    "code": "talisman_lh_def",
+    "name": "LH Talisman: DEF",
+    "description": "Phù tăng DEF (LH) 300s",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "def": 81000,
+      "duration_sec": 300
+    }
+  },
+  {
+    "id": "7cd864e8-95d7-4d75-b75c-9c6c36ea5087",
+    "code": "talisman_lh_hp",
+    "name": "LH Talisman: HP",
+    "description": "Phù tăng HP (LH) 300s",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "hp": 270000,
+      "duration_sec": 300
+    }
+  },
+  {
+    "id": "037ee1ae-3a7e-4444-a2c2-01b2711f1be0",
+    "code": "talisman_lh_crit",
+    "name": "LH Talisman: CRIT",
+    "description": "Phù tăng CRIT (LH) 300s",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 189000,
+      "atk": 81000,
+      "def": 54000,
+      "duration_sec": 300
+    }
+  },
+  {
+    "id": "bf1b25e8-023d-4636-8cc8-b374ce2b9e2c",
+    "code": "talisman_lh_tu_linh",
+    "name": "Tụ Linh Phù VI",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          80
+        ],
+        "qi_rate_flat": [
+          1,
+          1600
+        ]
+      }
+    }
+  },
+  {
+    "id": "be3b4c09-f3d7-4c07-9e9c-8fc641ded13b",
+    "code": "formation_na_dragon",
+    "name": "NA Formation: Dragon",
+    "description": "Trận bạo kích (NA) 6h",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "atk": 15000,
+      "duration_sec": 21600
+    }
+  },
+  {
+    "id": "649dbd7e-72e3-403a-8944-93b743e53be3",
+    "code": "formation_na_tiger",
+    "name": "NA Formation: Tiger",
+    "description": "Trận công (NA) 6h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "def": 9000,
+      "duration_sec": 21600
+    }
+  },
+  {
+    "id": "5cd41203-d1c8-4f1e-85f2-07080a4228ad",
+    "code": "formation_na_turtle",
+    "name": "NA Formation: Turtle",
+    "description": "Trận thủ (NA) 6h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 30000,
+      "duration_sec": 21600
+    }
+  },
+  {
+    "id": "7cc8fa0a-4660-4eb0-94ab-3727e3170c9d",
+    "code": "formation_na_tu_linh",
+    "name": "Tụ Linh Trận IV",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          50
+        ],
+        "qi_rate_flat": [
+          1,
+          200
+        ]
+      }
+    }
+  },
+  {
+    "id": "e052ff38-78f6-4149-a28b-c54ad4d6cf69",
+    "code": "formation_ht_dragon",
+    "name": "HT Formation: Dragon",
+    "description": "Trận bạo kích (HT) 8h",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "atk": 45000,
+      "duration_sec": 28800
+    }
+  },
+  {
+    "id": "dcb0e92e-c2b9-4e99-b5e7-b5d89500aa62",
+    "code": "formation_ht_tiger",
+    "name": "HT Formation: Tiger",
+    "description": "Trận công (HT) 8h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "def": 27000,
+      "duration_sec": 28800
+    }
+  },
+  {
+    "id": "1dd9306b-df14-4458-8cd2-b1821aecbd4f",
+    "code": "formation_ht_turtle",
+    "name": "HT Formation: Turtle",
+    "description": "Trận thủ (HT) 8h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 90000,
+      "duration_sec": 28800
+    }
+  },
+  {
+    "id": "24717107-ea8e-452d-b3a7-e65002428b72",
+    "code": "formation_ht_tu_linh",
+    "name": "Tụ Linh Trận V",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          60
+        ],
+        "qi_rate_flat": [
+          1,
+          400
+        ]
+      }
+    }
+  },
+  {
+    "id": "5118c76a-7c60-4e5f-9a0e-fa5ace93ac09",
+    "code": "formation_lh_dragon",
+    "name": "LH Formation: Dragon",
+    "description": "Trận bạo kích (LH) 12h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "atk": 135000,
+      "duration_sec": 43200
+    }
+  },
+  {
+    "id": "0b97682f-fa8a-4b3f-aae2-0889d2c3e6cf",
+    "code": "formation_lh_tiger",
+    "name": "LH Formation: Tiger",
+    "description": "Trận công (LH) 12h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "def": 81000,
+      "duration_sec": 43200
+    }
+  },
+  {
+    "id": "b7c5a0ef-538e-4f4e-a9de-ef09fd4fcdde",
+    "code": "formation_lh_turtle",
+    "name": "LH Formation: Turtle",
+    "description": "Trận thủ (LH) 12h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 270000,
+      "duration_sec": 43200
+    }
+  },
+  {
+    "id": "b7061572-5cb3-4653-827b-2bb67b2f287e",
+    "code": "formation_lh_tu_linh",
+    "name": "Tụ Linh Trận VI",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "roll_ranges": {
+        "qi_rate_pct": [
+          1,
+          70
+        ],
+        "qi_rate_flat": [
+          1,
+          800
+        ]
+      }
+    }
+  },
+  {
+    "id": "7ec1459c-40e0-4ebb-910d-24bd200b3d46",
+    "code": "refinement_stone_na",
+    "name": "NA Đá Tinh Luyện IV",
+    "description": "Đá tinh luyện (Nguyên Anh).",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "24a52d69-15d2-4829-bef8-f047e7b5077f",
+    "code": "refinement_stone_ht",
+    "name": "HT Đá Tinh Luyện V",
+    "description": "Đá tinh luyện (Hóa Thần).",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "90ee3ee8-6ce6-4270-bf04-10bc9ab2d9fa",
+    "code": "refinement_stone_lh",
+    "name": "LH Đá Tinh Luyện VI",
+    "description": "Đá tinh luyện (Luyện Hư).",
+    "item_type": "material",
+    "rarity": "common",
+    "effects": {}
+  },
+  {
+    "id": "52457783-61be-41fe-9462-cbbff2db82ea",
+    "code": "seed_na_soul_fruit",
+    "name": "Seed: Soul Fruit (NA)",
+    "description": "Hạt giống linh quả (NA)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "afde634c-0ade-4bdf-82a4-057126d78a11",
+    "code": "seed_na_spirit_grass",
+    "name": "Seed: Spirit Grass (NA)",
+    "description": "Hạt giống linh thảo (NA)",
+    "item_type": "seed",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "e6f2656d-7e6d-4fd7-9aec-30abc8ecb919",
+    "code": "seed_na_tu_linh_flower",
+    "name": "Seed: Tu Linh Flower (NA)",
+    "description": "Hạt giống Tụ Linh Hoa (NA)",
+    "item_type": "seed",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "50cbb3e7-ae8b-42e2-9bce-a89e00e30094",
+    "code": "seed_ht_soul_fruit",
+    "name": "Seed: Soul Fruit (HT)",
+    "description": "Hạt giống linh quả (HT)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "27bf4c8a-6071-4e4b-84ef-d1b86e05f168",
+    "code": "seed_ht_spirit_grass",
+    "name": "Seed: Spirit Grass (HT)",
+    "description": "Hạt giống linh thảo (HT)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "a296b60c-f3b9-42f6-9717-e55184604b9c",
+    "code": "seed_ht_tu_linh_flower",
+    "name": "Seed: Tu Linh Flower (HT)",
+    "description": "Hạt giống Tụ Linh Hoa (HT)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "d170f410-193c-4f72-b491-6e63c8a91f68",
+    "code": "seed_lh_soul_fruit",
+    "name": "Seed: Soul Fruit (LH)",
+    "description": "Hạt giống linh quả (LH)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "156ed079-f550-4fde-8ff3-16f26ee69f90",
+    "code": "seed_lh_spirit_grass",
+    "name": "Seed: Spirit Grass (LH)",
+    "description": "Hạt giống linh thảo (LH)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "bf5dbfdd-4388-408e-ab1d-3e8747172dc6",
+    "code": "seed_lh_tu_linh_flower",
+    "name": "Seed: Tu Linh Flower (LH)",
+    "description": "Hạt giống Tụ Linh Hoa (LH)",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "3ae758e3-bbca-4233-b2fb-bd6f56b5a4ab",
+    "code": "kim_linh_truc_raw_lk",
+    "name": "Kim Linh Truc Raw (LK)",
+    "description": "Kim Linh Trúc tươi (LK).",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "7b47ff96-53b2-43ed-a50a-a1767ea2bacc",
+    "code": "kim_linh_truc_raw_tc",
+    "name": "Kim Linh Truc Raw (TC)",
+    "description": "Kim Linh Trúc tươi (TC).",
+    "item_type": "material",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "cd750b77-05ab-4331-b74e-077397300d50",
+    "code": "kim_linh_truc_raw_kd",
+    "name": "Kim Linh Truc Raw (KD)",
+    "description": "Kim Linh Trúc tươi (KD).",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "b2775bc1-cfb3-4340-9537-78260ff5609a",
+    "code": "kim_linh_truc_raw_na",
+    "name": "Kim Linh Truc Raw (NA)",
+    "description": "Kim Linh Trúc tươi (NA).",
+    "item_type": "material",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "2873bb98-6c53-432f-a868-78f76d8ff897",
+    "code": "kim_linh_truc_raw_ht",
+    "name": "Kim Linh Truc Raw (HT)",
+    "description": "Kim Linh Trúc tươi (HT).",
+    "item_type": "material",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "3583e805-9110-4506-9943-45a11b31d70d",
+    "code": "kim_linh_truc_raw_lh",
+    "name": "Kim Linh Truc Raw (LH)",
+    "description": "Kim Linh Trúc tươi (LH).",
+    "item_type": "material",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "c0c18c26-397e-4eb1-8197-d5642cc47029",
+    "code": "seed_lk_kim_linh_truc",
+    "name": "Seed: Kim Linh Truc (LK)",
+    "description": "Hạt giống Kim Linh Trúc (LK).",
+    "item_type": "seed",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "ffb78a1f-bed3-44fa-816e-f3f1bceb52df",
+    "code": "seed_tc_kim_linh_truc",
+    "name": "Seed: Kim Linh Truc (TC)",
+    "description": "Hạt giống Kim Linh Trúc (TC).",
+    "item_type": "seed",
+    "rarity": "rare",
+    "effects": {}
+  },
+  {
+    "id": "7211eb87-02a6-49ff-aa4b-0b97b8d650bc",
+    "code": "seed_kd_kim_linh_truc",
+    "name": "Seed: Kim Linh Truc (KD)",
+    "description": "Hạt giống Kim Linh Trúc (KD).",
+    "item_type": "seed",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "50c9dd2e-8279-4d41-83e8-f7fb5f62f754",
+    "code": "seed_na_kim_linh_truc",
+    "name": "Seed: Kim Linh Truc (NA)",
+    "description": "Hạt giống Kim Linh Trúc (NA).",
+    "item_type": "seed",
+    "rarity": "epic",
+    "effects": {}
+  },
+  {
+    "id": "f2f190d6-91cf-452b-b9cc-23297f7c9e30",
+    "code": "seed_ht_kim_linh_truc",
+    "name": "Seed: Kim Linh Truc (HT)",
+    "description": "Hạt giống Kim Linh Trúc (HT).",
+    "item_type": "seed",
+    "rarity": "legendary",
+    "effects": {}
+  },
+  {
+    "id": "d0c0c4c3-335f-46e1-a3f6-8652fb541b68",
+    "code": "seed_lh_kim_linh_truc",
+    "name": "Seed: Kim Linh Truc (LH)",
+    "description": "Hạt giống Kim Linh Trúc (LH).",
+    "item_type": "seed",
+    "rarity": "mythic",
+    "effects": {}
+  },
+  {
+    "id": "ad771693-2113-4a4a-8b43-019147513eee",
+    "code": "kiem_tuy_lk",
+    "name": "Kiem Tuy (LK)",
+    "description": "Ngu Hanh Sword part: Kiem Tuy LK.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 1,
+      "ngu_hanh_part_type": "kiem_tuy"
+    }
+  },
+  {
+    "id": "50ccbd9c-6c0a-4ee0-bc5e-c8202cd2b979",
+    "code": "kiem_tuy_tc",
+    "name": "Kiem Tuy (TC)",
+    "description": "Ngu Hanh Sword part: Kiem Tuy TC.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 2,
+      "ngu_hanh_part_type": "kiem_tuy"
+    }
+  },
+  {
+    "id": "28620c24-e750-4982-ab31-592603da1a96",
+    "code": "kiem_tuy_kd",
+    "name": "Kiem Tuy (KD)",
+    "description": "Ngu Hanh Sword part: Kiem Tuy KD.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 3,
+      "ngu_hanh_part_type": "kiem_tuy"
+    }
+  },
+  {
+    "id": "ea69bb75-2c5a-4267-b4be-30edbe70b3b8",
+    "code": "kiem_tuy_na",
+    "name": "Kiem Tuy (NA)",
+    "description": "Ngu Hanh Sword part: Kiem Tuy NA.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 4,
+      "ngu_hanh_part_type": "kiem_tuy"
+    }
+  },
+  {
+    "id": "4c892516-e771-44d5-9c75-8b60c7bc95bf",
+    "code": "kiem_tuy_ht",
+    "name": "Kiem Tuy (HT)",
+    "description": "Ngu Hanh Sword part: Kiem Tuy HT.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "legendary",
+    "effects": {
+      "ngu_hanh_tier": 5,
+      "ngu_hanh_part_type": "kiem_tuy"
+    }
+  },
+  {
+    "id": "35b40317-2f34-4404-aed7-0f57d25245b3",
+    "code": "kiem_tuy_lh",
+    "name": "Kiem Tuy (LH)",
+    "description": "Ngu Hanh Sword part: Kiem Tuy LH.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "mythic",
+    "effects": {
+      "ngu_hanh_tier": 6,
+      "ngu_hanh_part_type": "kiem_tuy"
+    }
+  },
+  {
+    "id": "e7491261-4cc4-4c27-8c24-4bf1116e66f4",
+    "code": "tay_tuy_phu_lk",
+    "name": "Tay Tuy Phu (LK)",
+    "description": "Ngu Hanh Sword part: Tay Tuy Phu LK.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 1,
+      "ngu_hanh_part_type": "tay_tuy_phu"
+    }
+  },
+  {
+    "id": "ecaf2633-7f66-44eb-80d8-c8999a08fd42",
+    "code": "tay_tuy_phu_tc",
+    "name": "Tay Tuy Phu (TC)",
+    "description": "Ngu Hanh Sword part: Tay Tuy Phu TC.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 2,
+      "ngu_hanh_part_type": "tay_tuy_phu"
+    }
+  },
+  {
+    "id": "d0ed4efc-f1b7-4e09-974a-9b20db790819",
+    "code": "tay_tuy_phu_kd",
+    "name": "Tay Tuy Phu (KD)",
+    "description": "Ngu Hanh Sword part: Tay Tuy Phu KD.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 3,
+      "ngu_hanh_part_type": "tay_tuy_phu"
+    }
+  },
+  {
+    "id": "8cee9cde-e655-4e49-8979-d78c7551263b",
+    "code": "tay_tuy_phu_na",
+    "name": "Tay Tuy Phu (NA)",
+    "description": "Ngu Hanh Sword part: Tay Tuy Phu NA.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 4,
+      "ngu_hanh_part_type": "tay_tuy_phu"
+    }
+  },
+  {
+    "id": "bce0eb14-e249-4ca6-bc63-aa71e72f9c2d",
+    "code": "tay_tuy_phu_ht",
+    "name": "Tay Tuy Phu (HT)",
+    "description": "Ngu Hanh Sword part: Tay Tuy Phu HT.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "legendary",
+    "effects": {
+      "ngu_hanh_tier": 5,
+      "ngu_hanh_part_type": "tay_tuy_phu"
+    }
+  },
+  {
+    "id": "2c7cd1c6-3974-4cc9-bbe0-34597501a5ac",
+    "code": "tay_tuy_phu_lh",
+    "name": "Tay Tuy Phu (LH)",
+    "description": "Ngu Hanh Sword part: Tay Tuy Phu LH.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "mythic",
+    "effects": {
+      "ngu_hanh_tier": 6,
+      "ngu_hanh_part_type": "tay_tuy_phu"
+    }
+  },
+  {
+    "id": "5a768f97-81c7-4752-8b6d-6c3c989895cf",
+    "code": "ngu_hanh_tran_lk",
+    "name": "Ngu Hanh Tran (LK)",
+    "description": "Ngu Hanh Sword part: Ngu Hanh Tran LK.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 1,
+      "ngu_hanh_part_type": "ngu_hanh_tran"
+    }
+  },
+  {
+    "id": "17076099-5bc0-4958-9cde-4e50638e01ad",
+    "code": "ngu_hanh_tran_tc",
+    "name": "Ngu Hanh Tran (TC)",
+    "description": "Ngu Hanh Sword part: Ngu Hanh Tran TC.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 2,
+      "ngu_hanh_part_type": "ngu_hanh_tran"
+    }
+  },
+  {
+    "id": "51653cc4-1de5-4719-997c-233630c548d4",
+    "code": "ngu_hanh_tran_kd",
+    "name": "Ngu Hanh Tran (KD)",
+    "description": "Ngu Hanh Sword part: Ngu Hanh Tran KD.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 3,
+      "ngu_hanh_part_type": "ngu_hanh_tran"
+    }
+  },
+  {
+    "id": "bd372d62-a79d-45dd-af13-627636356192",
+    "code": "ngu_hanh_tran_na",
+    "name": "Ngu Hanh Tran (NA)",
+    "description": "Ngu Hanh Sword part: Ngu Hanh Tran NA.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 4,
+      "ngu_hanh_part_type": "ngu_hanh_tran"
+    }
+  },
+  {
+    "id": "f2034f26-f476-489c-b7c2-ba34b4dc45b2",
+    "code": "ngu_hanh_tran_ht",
+    "name": "Ngu Hanh Tran (HT)",
+    "description": "Ngu Hanh Sword part: Ngu Hanh Tran HT.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "legendary",
+    "effects": {
+      "ngu_hanh_tier": 5,
+      "ngu_hanh_part_type": "ngu_hanh_tran"
+    }
+  },
+  {
+    "id": "b71aa57c-79a7-49fc-881d-59868852c294",
+    "code": "ngu_hanh_tran_lh",
+    "name": "Ngu Hanh Tran (LH)",
+    "description": "Ngu Hanh Sword part: Ngu Hanh Tran LH.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "mythic",
+    "effects": {
+      "ngu_hanh_tier": 6,
+      "ngu_hanh_part_type": "ngu_hanh_tran"
+    }
+  },
+  {
+    "id": "bf7e866f-6445-46fa-be31-4497ef44a350",
+    "code": "tinh_tam_dan_lk",
+    "name": "Tinh Tam Dan (LK)",
+    "description": "Ngu Hanh Sword part: Tinh Tam Dan LK.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 1,
+      "ngu_hanh_part_type": "tinh_tam_dan"
+    }
+  },
+  {
+    "id": "83706f82-3656-4780-9720-732d5d9a2758",
+    "code": "tinh_tam_dan_tc",
+    "name": "Tinh Tam Dan (TC)",
+    "description": "Ngu Hanh Sword part: Tinh Tam Dan TC.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 2,
+      "ngu_hanh_part_type": "tinh_tam_dan"
+    }
+  },
+  {
+    "id": "93516a80-bcdf-4475-85ed-4e624dc05652",
+    "code": "tinh_tam_dan_kd",
+    "name": "Tinh Tam Dan (KD)",
+    "description": "Ngu Hanh Sword part: Tinh Tam Dan KD.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 3,
+      "ngu_hanh_part_type": "tinh_tam_dan"
+    }
+  },
+  {
+    "id": "34851eb0-23a7-446b-a13a-581508218abf",
+    "code": "tinh_tam_dan_na",
+    "name": "Tinh Tam Dan (NA)",
+    "description": "Ngu Hanh Sword part: Tinh Tam Dan NA.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 4,
+      "ngu_hanh_part_type": "tinh_tam_dan"
+    }
+  },
+  {
+    "id": "409e1020-aa02-4c71-a333-1fcb9e29c475",
+    "code": "tinh_tam_dan_ht",
+    "name": "Tinh Tam Dan (HT)",
+    "description": "Ngu Hanh Sword part: Tinh Tam Dan HT.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "legendary",
+    "effects": {
+      "ngu_hanh_tier": 5,
+      "ngu_hanh_part_type": "tinh_tam_dan"
+    }
+  },
+  {
+    "id": "7c1f3da2-2961-4eaf-8246-e948ce167061",
+    "code": "tinh_tam_dan_lh",
+    "name": "Tinh Tam Dan (LH)",
+    "description": "Ngu Hanh Sword part: Tinh Tam Dan LH.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "mythic",
+    "effects": {
+      "ngu_hanh_tier": 6,
+      "ngu_hanh_part_type": "tinh_tam_dan"
+    }
+  },
+  {
+    "id": "b68ba605-250a-4acd-9538-56cd968a019b",
+    "code": "kim_linh_truc_lk",
+    "name": "Kim Linh Truc (LK)",
+    "description": "Ngu Hanh Sword part: Kim Linh Truc LK.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 1,
+      "ngu_hanh_part_type": "kim_linh_truc"
+    }
+  },
+  {
+    "id": "85547ebf-c20f-4bb9-b79c-7c7c47ac5541",
+    "code": "kim_linh_truc_tc",
+    "name": "Kim Linh Truc (TC)",
+    "description": "Ngu Hanh Sword part: Kim Linh Truc TC.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "rare",
+    "effects": {
+      "ngu_hanh_tier": 2,
+      "ngu_hanh_part_type": "kim_linh_truc"
+    }
+  },
+  {
+    "id": "706989ca-435c-4807-9786-7dd874b6bf89",
+    "code": "kim_linh_truc_kd",
+    "name": "Kim Linh Truc (KD)",
+    "description": "Ngu Hanh Sword part: Kim Linh Truc KD.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 3,
+      "ngu_hanh_part_type": "kim_linh_truc"
+    }
+  },
+  {
+    "id": "ef260f93-9306-421d-b879-eb7db6792079",
+    "code": "kim_linh_truc_na",
+    "name": "Kim Linh Truc (NA)",
+    "description": "Ngu Hanh Sword part: Kim Linh Truc NA.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "epic",
+    "effects": {
+      "ngu_hanh_tier": 4,
+      "ngu_hanh_part_type": "kim_linh_truc"
+    }
+  },
+  {
+    "id": "1da0ddb0-3ab2-4884-b9a6-977cbe11106a",
+    "code": "kim_linh_truc_ht",
+    "name": "Kim Linh Truc (HT)",
+    "description": "Ngu Hanh Sword part: Kim Linh Truc HT.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "legendary",
+    "effects": {
+      "ngu_hanh_tier": 5,
+      "ngu_hanh_part_type": "kim_linh_truc"
+    }
+  },
+  {
+    "id": "ba045971-c043-4617-ad12-f46e14378869",
+    "code": "kim_linh_truc_lh",
+    "name": "Kim Linh Truc (LH)",
+    "description": "Ngu Hanh Sword part: Kim Linh Truc LH.",
+    "item_type": "ngu_hanh_part",
+    "rarity": "mythic",
+    "effects": {
+      "ngu_hanh_tier": 6,
+      "ngu_hanh_part_type": "kim_linh_truc"
+    }
+  },
+  {
+    "id": "53879cb3-634e-49d1-b1b1-eb8ccb5b393b",
+    "code": "pill_lk_hp",
+    "name": "LK HP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_hp": 500
+    }
+  },
+  {
+    "id": "29901770-5649-4f80-8a6f-718d1138e4af",
+    "code": "pill_tc_hp",
+    "name": "TC HP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_hp": 2000
+    }
+  },
+  {
+    "id": "af198fab-8657-4552-871f-1cf4c94e2176",
+    "code": "pill_kd_hp",
+    "name": "KD HP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_hp": 8000
+    }
+  },
+  {
+    "id": "54a924cf-4cb0-4b8a-a252-89044e3bca3b",
+    "code": "pill_lk_mp",
+    "name": "LK MP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_mp": 50
+    }
+  },
+  {
+    "id": "017893c9-85eb-4915-a283-b0ee939e1f60",
+    "code": "pill_tc_mp",
+    "name": "TC MP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_mp": 150
+    }
+  },
+  {
+    "id": "6b37b91f-f845-4ae6-8d78-c2999cc1c982",
+    "code": "pill_kd_mp",
+    "name": "KD MP Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "heal_mp": 500
+    }
+  },
+  {
+    "id": "41fedf2a-4f29-4073-861b-3aa01bf9526c",
+    "code": "pill_lk_minor",
+    "name": "LK Minor Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "luyen_khi"
+      },
+      "break_minor": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "e5f8fcf2-23a0-42d7-aa86-977e7ef21f19",
+    "code": "pill_lk_major",
+    "name": "LK Major Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "luyen_khi"
+      },
+      "break_major": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "5ccea77e-0693-46f6-ac3d-e240ffa78bf1",
+    "code": "pill_lk_realm",
+    "name": "LK→TC Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "truc_co"
+      },
+      "break_realm": "lk_tc",
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "b13faf9a-91cf-4740-b5a7-339ecfc1fde1",
+    "code": "pill_tc_minor",
+    "name": "TC Minor Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "truc_co"
+      },
+      "break_minor": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "37aa9b41-a05a-4a7c-9397-caa1725b7652",
+    "code": "pill_tc_major",
+    "name": "TC Major Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "truc_co"
+      },
+      "break_major": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "6448e5b7-156f-48e5-8d76-0769eeacc314",
+    "code": "pill_tc_realm",
+    "name": "TC→KD Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "kim_dan"
+      },
+      "break_realm": "tc_kd",
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "deda5a3f-e9d8-4fc6-8881-a9318974f921",
+    "code": "pill_kd_minor",
+    "name": "KD Minor Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "kim_dan"
+      },
+      "break_minor": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "b1bd6f61-b74a-4f7f-a5d1-f774c271e8c5",
+    "code": "pill_kd_major",
+    "name": "KD Major Break Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "kim_dan"
+      },
+      "break_major": 1,
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "65ac4840-3540-4a78-890f-0658875c8d4e",
+    "code": "pill_kd_realm",
+    "name": "KD Realm Pill",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "nguyen_anh"
+      },
+      "break_realm": "kd_next",
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "013f28c8-94f6-4421-9096-e4f9d8d184a3",
+    "code": "breakthrough_pill_lk_mid",
+    "name": "Phá Cảnh Đan (Luyện Khí Trung Kỳ)",
+    "description": "Hỗ trợ đột phá Luyện Khí trung kỳ.",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "luyen_khi",
+        "realm_code": "qi_refining",
+        "break_bonus_pct": 10
+      },
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ],
+        "breakthrough_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "c6c6a3a2-ce52-4595-a525-75aa0597c008",
+    "code": "breakthrough_pill_lk_late",
+    "name": "Phá Cảnh Đan (Luyện Khí Hậu Kỳ)",
+    "description": "Hỗ trợ đột phá Luyện Khí hậu kỳ.",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "luyen_khi",
+        "realm_code": "qi_refining",
+        "break_bonus_pct": 15
+      },
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ],
+        "breakthrough_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "44a6ba51-7a7e-442b-a30e-9871218588c3",
+    "code": "breakthrough_pill_tb_mid",
+    "name": "Phá Cảnh Đan (Trúc Cơ Trung Kỳ)",
+    "description": "Hỗ trợ đột phá Trúc Cơ trung kỳ.",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "mid",
+        "realm": "truc_co",
+        "realm_code": "foundation",
+        "break_bonus_pct": 15
+      },
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ],
+        "breakthrough_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "7d5128f7-ef5d-40da-bbec-ba81eb6b3c3e",
+    "code": "breakthrough_pill_tb_late",
+    "name": "Phá Cảnh Đan (Trúc Cơ Hậu Kỳ)",
+    "description": "Hỗ trợ đột phá Trúc Cơ hậu kỳ.",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "late",
+        "realm": "truc_co",
+        "realm_code": "foundation",
+        "break_bonus_pct": 20
+      },
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ],
+        "breakthrough_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "ccf3cc87-f943-4503-94f1-c9a34692be05",
+    "code": "foundation_establishment_pill",
+    "name": "Trúc Cơ Đan",
+    "description": "Đan dược hỗ trợ đột phá Trúc Cơ.",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "truc_co",
+        "realm_code": "foundation",
+        "break_bonus_pct": 30
+      },
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ],
+        "breakthrough_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "e9d2f882-b385-495e-a85d-dde12111010c",
+    "code": "golden_core_breakthrough_pill",
+    "name": "Phá Kết Đan",
+    "description": "Đan dược hỗ trợ đột phá Kim Đan.",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "kim_dan",
+        "realm_code": "core_formation",
+        "break_bonus_pct": 40
+      },
+      "roll_ranges": {
+        "break_bonus_pct": [
+          10,
+          30
+        ],
+        "breakthrough_bonus_pct": [
+          10,
+          30
+        ]
+      }
+    }
+  },
+  {
+    "id": "e01ba7aa-80b3-4947-97a0-40986d4ae0b4",
+    "code": "chest_silver_lk_hp",
+    "name": "Rương Hồi Huyết I",
+    "description": "Mở nhận 100 Hồi Huyết Đan I.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "d3b80c84-58c7-4819-a9ce-2e58d94e05db",
+    "code": "chest_silver_lk_mp",
+    "name": "Rương Hồi Khí I",
+    "description": "Mở nhận 100 Hồi Khí Đan I.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e9fe69ee-a1eb-4ea4-8351-91ca9788dce5",
+    "code": "chest_silver_lk_spirit",
+    "name": "Rương Hồi Thần Hồn I",
+    "description": "Mở nhận 100 Hồi Hồn Đan I.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "9489d162-9b99-4a24-8ee6-22ba7a2f8eae",
+    "code": "chest_silver_lk_sta",
+    "name": "Rương Hồi Thể Lực I",
+    "description": "Mở nhận 100 Hồi Thể Đan I.",
+    "item_type": "container",
+    "rarity": "common",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "59c151d6-7c6d-46be-8060-1d30d47e48c2",
+    "code": "chest_silver_tc_hp",
+    "name": "Rương Hồi Huyết II",
+    "description": "Mở nhận 100 Hồi Huyết Đan II.",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f29454f6-51f9-46cd-8782-9457d5ddfade",
+    "code": "chest_silver_tc_mp",
+    "name": "Rương Hồi Khí II",
+    "description": "Mở nhận 100 Hồi Khí Đan II.",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8d5e6f39-29aa-4a5b-b4b3-b1831a26118e",
+    "code": "pill_lk_realm_10",
+    "name": "Trúc Cơ Đan 10%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "truc_co",
+        "break_bonus_pct": 10
+      },
+      "break_bonus_pct": 10
+    }
+  },
+  {
+    "id": "bd24238e-40a3-4406-8d30-481c85cfa10c",
+    "code": "pill_lk_realm_30",
+    "name": "Trúc Cơ Đan 30%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "truc_co",
+        "break_bonus_pct": 30
+      },
+      "break_bonus_pct": 30
+    }
+  },
+  {
+    "id": "fa41e662-447e-4231-beed-07f8d49859f6",
+    "code": "pill_tc_realm_10",
+    "name": "Ngọc Thanh Đan 10%",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "pill": {
+        "kind": "breakthrough",
+        "step": "major",
+        "realm": "kim_dan",
+        "break_bonus_pct": 10
+      },
+      "break_bonus_pct": 10
+    }
+  },
+  {
+    "id": "14687064-8ace-4299-acd4-83f943a2555d",
+    "code": "pill_kd_tu_vi",
+    "name": "Tu Vi Đan III",
+    "description": null,
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "exp_delta": 20000
+    }
+  },
+  {
+    "id": "acc44d47-025b-4c5d-86a6-6f2de4488859",
+    "code": "talisman_lk_atk",
+    "name": "LK Talisman: ATK",
+    "description": "Phù tăng ATK (LK) 60s",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "atk": 500,
+      "duration_sec": 60
+    }
+  },
+  {
+    "id": "2999dc1f-53e4-436e-a065-61223bae16c5",
+    "code": "talisman_tc_atk",
+    "name": "TC Talisman: ATK",
+    "description": "Phù tăng ATK (TC) 90s",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "atk": 1500,
+      "duration_sec": 90
+    }
+  },
+  {
+    "id": "847c30f1-3bcb-4c99-ab3f-5c612845e69d",
+    "code": "talisman_kd_atk",
+    "name": "KD Talisman: ATK",
+    "description": "Phù tăng ATK (KD) 120s",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "atk": 5000,
+      "duration_sec": 120
+    }
+  },
+  {
+    "id": "c5dd98a8-171d-4c7d-aa81-67f91f3e2302",
+    "code": "talisman_lk_def",
+    "name": "LK Talisman: DEF",
+    "description": "Phù tăng DEF (LK) 60s",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "def": 300,
+      "duration_sec": 60
+    }
+  },
+  {
+    "id": "c1d775a5-77de-46b9-a12d-df7a52a6034b",
+    "code": "talisman_tc_def",
+    "name": "TC Talisman: DEF",
+    "description": "Phù tăng DEF (TC) 90s",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "def": 800,
+      "duration_sec": 90
+    }
+  },
+  {
+    "id": "2e3e075f-437a-44cc-a7cb-1fece2a5cff2",
+    "code": "talisman_kd_def",
+    "name": "KD Talisman: DEF",
+    "description": "Phù tăng DEF (KD) 120s",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "def": 3000,
+      "duration_sec": 120
+    }
+  },
+  {
+    "id": "2ab9e7fc-1f53-4ff8-a5a6-af102230fa03",
+    "code": "talisman_lk_hp",
+    "name": "LK Talisman: HP",
+    "description": "Phù tăng HP (LK) 60s",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "hp": 1000,
+      "duration_sec": 60
+    }
+  },
+  {
+    "id": "578c5f08-2774-4f3f-972a-83efe1d5a5b9",
+    "code": "talisman_tc_hp",
+    "name": "TC Talisman: HP",
+    "description": "Phù tăng HP (TC) 90s",
+    "item_type": "consumable",
+    "rarity": "common",
+    "effects": {
+      "hp": 3000,
+      "duration_sec": 90
+    }
+  },
+  {
+    "id": "88de899c-b0d0-410a-844b-02e89f7d6863",
+    "code": "talisman_kd_hp",
+    "name": "KD Talisman: HP",
+    "description": "Phù tăng HP (KD) 120s",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "hp": 10000,
+      "duration_sec": 120
+    }
+  },
+  {
+    "id": "24277f04-4002-47ca-8202-b5b6da971501",
+    "code": "talisman_lk_crit",
+    "name": "LK Talisman: CRIT",
+    "description": "Phù tăng CRIT (LK) 60s",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "hp": 500,
+      "atk": 300,
+      "def": 200,
+      "duration_sec": 60
+    }
+  },
+  {
+    "id": "9a2db855-5b85-423e-ad84-72442b302bac",
+    "code": "talisman_tc_crit",
+    "name": "TC Talisman: CRIT",
+    "description": "Phù tăng CRIT (TC) 90s",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "hp": 2000,
+      "atk": 1000,
+      "def": 500,
+      "duration_sec": 90
+    }
+  },
+  {
+    "id": "9b243291-4b24-45bb-b2f8-eafa89d9fdc9",
+    "code": "talisman_kd_crit",
+    "name": "KD Talisman: CRIT",
+    "description": "Phù tăng CRIT (KD) 120s",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 7000,
+      "atk": 3000,
+      "def": 2000,
+      "duration_sec": 120
+    }
+  },
+  {
+    "id": "b5bb4505-6674-4626-a097-4c9b56763a70",
+    "code": "chest_silver_tc_spirit",
+    "name": "Rương Hồi Thần Hồn II",
+    "description": "Mở nhận 100 Hồi Hồn Đan II.",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "7034c2c9-dcbc-489d-a850-1dbf54f72bee",
+    "code": "chest_silver_tc_sta",
+    "name": "Rương Hồi Thể Lực II",
+    "description": "Mở nhận 100 Hồi Thể Đan II.",
+    "item_type": "container",
+    "rarity": "uncommon",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8306f071-3ffd-4b04-8b3e-87a126d650fe",
+    "code": "formation_lk_tiger",
+    "name": "LK Formation: Tiger",
+    "description": "Trận công (LK) 1h",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "def": 300,
+      "duration_sec": 3600
+    }
+  },
+  {
+    "id": "adbd9ea6-f16a-4af7-bc6d-3b869383257b",
+    "code": "formation_tc_tiger",
+    "name": "TC Formation: Tiger",
+    "description": "Trận công (TC) 2h",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "def": 800,
+      "duration_sec": 7200
+    }
+  },
+  {
+    "id": "e88368b9-2b2d-4392-8980-1f5572628755",
+    "code": "formation_kd_tiger",
+    "name": "KD Formation: Tiger",
+    "description": "Trận công (KD) 4h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "def": 3000,
+      "duration_sec": 14400
+    }
+  },
+  {
+    "id": "a281fd2b-25ca-446f-ad4d-8bb2479ae45e",
+    "code": "formation_lk_turtle",
+    "name": "LK Formation: Turtle",
+    "description": "Trận thủ (LK) 1h",
+    "item_type": "consumable",
+    "rarity": "rare",
+    "effects": {
+      "hp": 1000,
+      "duration_sec": 3600
+    }
+  },
+  {
+    "id": "d7505bc1-6474-482c-bd0f-de6ef87438a2",
+    "code": "formation_tc_turtle",
+    "name": "TC Formation: Turtle",
+    "description": "Trận thủ (TC) 2h",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "hp": 3000,
+      "duration_sec": 7200
+    }
+  },
+  {
+    "id": "51b09901-acf4-4893-90fc-b79a02c67638",
+    "code": "formation_kd_turtle",
+    "name": "KD Formation: Turtle",
+    "description": "Trận thủ (KD) 4h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "hp": 10000,
+      "duration_sec": 14400
+    }
+  },
+  {
+    "id": "16d61e82-0807-4e36-b8a3-45f2e6f97935",
+    "code": "formation_lk_dragon",
+    "name": "LK Formation: Dragon",
+    "description": "Trận bạo kích (LK) 1h",
+    "item_type": "consumable",
+    "rarity": "epic",
+    "effects": {
+      "atk": 500,
+      "duration_sec": 3600
+    }
+  },
+  {
+    "id": "dae17ee8-3b19-4381-9731-122d9955672b",
+    "code": "formation_tc_dragon",
+    "name": "TC Formation: Dragon",
+    "description": "Trận bạo kích (TC) 2h",
+    "item_type": "consumable",
+    "rarity": "mythic",
+    "effects": {
+      "atk": 1000,
+      "duration_sec": 7200
+    }
+  },
+  {
+    "id": "bf33456b-dae1-4273-8d25-81ff1dbc06e7",
+    "code": "formation_kd_dragon",
+    "name": "KD Formation: Dragon",
+    "description": "Trận bạo kích (KD) 4h",
+    "item_type": "consumable",
+    "rarity": "legendary",
+    "effects": {
+      "atk": 5000,
+      "duration_sec": 14400
+    }
+  },
+  {
+    "id": "ac9679b5-9473-4fcf-9463-91848a5ac895",
+    "code": "chest_silver_kd_hp",
+    "name": "Rương Hồi Huyết III",
+    "description": "Mở nhận 100 Hồi Huyết Đan III.",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "6abf9061-5769-4931-b5e5-1ac13c7fde5a",
+    "code": "chest_silver_kd_mp",
+    "name": "Rương Hồi Khí III",
+    "description": "Mở nhận 100 Hồi Khí Đan III.",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "a4d8e40a-f3da-47e3-a1da-ec81db69a452",
+    "code": "chest_silver_kd_spirit",
+    "name": "Rương Hồi Thần Hồn III",
+    "description": "Mở nhận 100 Hồi Hồn Đan III.",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "e46824fe-6468-4768-86b1-c30f4327ef8a",
+    "code": "chest_silver_kd_sta",
+    "name": "Rương Hồi Thể Lực III",
+    "description": "Mở nhận 100 Hồi Thể Đan III.",
+    "item_type": "container",
+    "rarity": "rare",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "367a3012-30f3-408e-8fbf-b8d2a18c2d00",
+    "code": "chest_silver_na_hp",
+    "name": "Rương Hồi Huyết IV",
+    "description": "Mở nhận 100 Hồi Huyết Đan IV.",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "4a0f410c-b419-4109-a15b-a49bb7b786fc",
+    "code": "chest_silver_na_mp",
+    "name": "Rương Hồi Khí IV",
+    "description": "Mở nhận 100 Hồi Khí Đan IV.",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "f55eb0aa-1067-4efe-b886-300503fd3013",
+    "code": "chest_silver_na_spirit",
+    "name": "Rương Hồi Thần Hồn IV",
+    "description": "Mở nhận 100 Hồi Hồn Đan IV.",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "cc6bf160-4b4c-432a-8a2d-3795afde9057",
+    "code": "chest_silver_na_sta",
+    "name": "Rương Hồi Thể Lực IV",
+    "description": "Mở nhận 100 Hồi Thể Đan IV.",
+    "item_type": "container",
+    "rarity": "epic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "1dc08471-67ad-403d-b1fd-32f23458ccf1",
+    "code": "chest_silver_ht_hp",
+    "name": "Rương Hồi Huyết V",
+    "description": "Mở nhận 100 Hồi Huyết Đan V.",
+    "item_type": "container",
+    "rarity": "legendary",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "69289793-c77d-41a2-9977-592897160a45",
+    "code": "chest_silver_ht_mp",
+    "name": "Rương Hồi Khí V",
+    "description": "Mở nhận 100 Hồi Khí Đan V.",
+    "item_type": "container",
+    "rarity": "legendary",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "8e769e12-a7c5-4e08-ace6-9b03e5b8eca0",
+    "code": "chest_silver_ht_spirit",
+    "name": "Rương Hồi Thần Hồn V",
+    "description": "Mở nhận 100 Hồi Hồn Đan V.",
+    "item_type": "container",
+    "rarity": "legendary",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "517735b2-50f6-46c6-8f17-67497f001919",
+    "code": "chest_silver_ht_sta",
+    "name": "Rương Hồi Thể Lực V",
+    "description": "Mở nhận 100 Hồi Thể Đan V.",
+    "item_type": "container",
+    "rarity": "legendary",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "378dc91e-9422-4bd3-a835-abb6b4fe40d3",
+    "code": "chest_silver_lh_hp",
+    "name": "Rương Hồi Huyết VI",
+    "description": "Mở nhận 100 Hồi Huyết Đan VI.",
+    "item_type": "container",
+    "rarity": "mythic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "ab2215ab-6bef-41cb-a790-e0b4fb366375",
+    "code": "chest_silver_lh_mp",
+    "name": "Rương Hồi Khí VI",
+    "description": "Mở nhận 100 Hồi Khí Đan VI.",
+    "item_type": "container",
+    "rarity": "mythic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "600264f3-6005-45f9-bc40-2dae202b00f8",
+    "code": "chest_silver_lh_spirit",
+    "name": "Rương Hồi Thần Hồn VI",
+    "description": "Mở nhận 100 Hồi Hồn Đan VI.",
+    "item_type": "container",
+    "rarity": "mythic",
+    "effects": {
+      "rolls": 1
+    }
+  },
+  {
+    "id": "0b46ec86-1c52-40a3-9627-d7ba32dbd0c2",
+    "code": "chest_silver_lh_sta",
+    "name": "Rương Hồi Thể Lực VI",
+    "description": "Mở nhận 100 Hồi Thể Đan VI.",
+    "item_type": "container",
+    "rarity": "mythic",
+    "effects": {
+      "rolls": 1
+    }
+  }
+]
