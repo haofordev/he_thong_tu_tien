@@ -330,8 +330,6 @@ async function start() {
         const loginData = await loginAndGetInfo(accountIndex);
         Object.assign(auth, loginData, { accountIndex });
 
-        // ✅ GỌI AFK NGAY KHI START
-        await goOffline();
 
         if (Array.isArray(auth.userData.map_sequence)) {
             mapSequence = auth.userData.map_sequence;
@@ -467,6 +465,10 @@ async function start() {
             if (realmAfkRes && (realmAfkRes.reward || realmAfkRes.message)) {
                 console.log(`    > [BÍ CẢNH] Nhận : ${realmAfkRes.message || JSON.stringify(realmAfkRes.reward)}`);
             }
+
+
+            // ✅ GỌI AFK NGAY KHI START
+            await goOffline();
         } catch (e) { }
 
         // 2. KHỞI ĐỘNG REALTIME SOCKET
