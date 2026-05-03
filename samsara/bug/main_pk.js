@@ -49,29 +49,10 @@ async function startPK() {
 
         let currentTargetIdx = 0;
         let count = 0;
-        let liveTargetIds = []; // Danh sách các clone thực sự đang có mặt trong map
+        let failedAttempts = 0;
 
-        const interval = setInterval(async () => {
-            // Cứ mỗi 5 lần đánh hoặc khi liveTargetIds trống, quét lại snapshot một lần
-            if (count % 5 === 0 || liveTargetIds.length === 0) {
-                const snapshot = await bicanh.getRealmSnapshot(token, charId, config, realmId);
-                const playersInMap = snapshot?.participants || snapshot?.top_players || [];
-                const playerIdsInMap = new Set(playersInMap.map(p => p.character_id));
-
-                // Chỉ giữ lại những ID clone nào thực sự đang đứng trong map
-                liveTargetIds = targetIds.filter(id => playerIdsInMap.has(id));
-
-                if (liveTargetIds.length === 0) {
-                    process.stdout.write(`\r[MAIN] Đang đợi dàn clone xuất hiện trong map... (${new Date().toLocaleTimeString()})`);
-                    return;
-                } else {
-                    console.log(`\n[MAIN] Phát hiện ${liveTargetIds.length} clone đang online. Bắt đầu PK...`);
-                }
-            }
-
-            // Chọn mục tiêu từ danh sách "sống"
-            const targetId = liveTargetIds[currentTargetIdx % liveTargetIds.length];
-            if (!targetId) return;
+        while (count < 110) {
+            const targetId = targetIds[currentTargetIdx % targetIds.length];
 
             // Thực hiện PK - Ưu tiên dùng Đánh Tay (slot 0) để ổn định
             const res = await tracker.rpcCall(token, charId, config, 'rpc_attack_realm_player_v2', {
@@ -89,15 +70,22 @@ async function startPK() {
                     const waitSec = (res.remain_sec || 1);
                     console.log(`    > [HỒI CHIÊU] Đợi ${waitSec}s...`);
                     await new Promise(r => setTimeout(r, waitSec * 1000));
-                    return;
+                    continue;
                 }
 
-                // 2. Xử lý Mất dấu mục tiêu
-                if (reason === 'target_not_found' || reason === 'not_found' || reason === 'target_is_dead') {
-                    console.log(`    > [MẤT DẤU] Mục tiêu ${targetId.substring(0, 8)} không còn ở đây. Đang tìm lại...`);
-                    liveTargetIds = [];
-                    await new Promise(r => setTimeout(r, 3000)); // Đợi 3s để snapshot kịp cập nhật
-                    return;
+                // 2. Xử lý Mất dấu mục tiêu hoặc quá xa
+                if (reason === 'target_not_found' || reason === 'not_found' || reason === 'target_is_dead' || reason === 'out_of_range') {
+                    failedAttempts++;
+                    currentTargetIdx++;
+                    if (failedAttempts >= targetIds.length) {
+                        process.stdout.write(`\r[MAIN] Đang đợi dàn clone xuất hiện trong map... (${new Date().toLocaleTimeString()})`);
+                        await new Promise(r => setTimeout(r, 3000));
+                        failedAttempts = 0;
+                    } else {
+                        // Thử clone tiếp theo nhanh hơn nếu clone này không có mặt
+                        await new Promise(r => setTimeout(r, 200));
+                    }
+                    continue;
                 }
 
                 // 3. Xử lý Hết Mana
@@ -105,24 +93,20 @@ async function startPK() {
                     console.log(`    > [HẾT MANA] Đang sử dụng thuốc MP...`);
                     await tracker.useItem(token, charId, config, 'pill_lk_mp');
                     await new Promise(r => setTimeout(r, 1000));
-                    return;
+                    continue;
                 }
 
-                // 4. Xử lý Khoảng cách
-                if (reason === 'out_of_range') {
-                    console.log(`    > [QUÁ XA] Không thể chạm tới ${targetId.substring(0, 8)}. Quét lại map...`);
-                    liveTargetIds = [];
-                    return;
-                }
-
-                // 5. Nếu có lỗi khác (mà không phải các lỗi trên)
+                // 4. Nếu có lỗi khác
                 if (!res.ok && reason) {
                     console.log(`    > [LỖI PK] ${reason}`);
-                    return;
+                    await new Promise(r => setTimeout(r, 1000));
+                    currentTargetIdx++;
+                    continue;
                 }
 
-                // 6. CHỈ KHI ĐẾN ĐÂY MỚI TÍNH LÀ 1 LẦN ĐÁNH HỢP LỆ
+                // 5. CHỈ KHI ĐẾN ĐÂY MỚI TÍNH LÀ 1 LẦN ĐÁNH HỢP LỆ
                 count++;
+                failedAttempts = 0; // Reset failed attempts since we hit someone
                 const damage = res.damage || 0;
                 console.log(`[PK] Lần ${count}: Đánh ${targetId.substring(0, 8)}... Dame: ${damage}`);
                 
@@ -130,17 +114,16 @@ async function startPK() {
                     console.log(`    > [GHI CHÚ] Dame 0 (Né tránh hoặc Bảo vệ).`);
                 }
 
-                if (count >= 110) {
-                    console.log('✅ Đã hoàn thành mục tiêu PK! Dừng máy.');
-                    clearInterval(interval);
-                    process.exit(0);
-                }
                 currentTargetIdx++;
+                await new Promise(r => setTimeout(r, 2200)); // Đợi delay mặc định của game
             } else {
                 console.log(`\n[PK] Không có phản hồi từ server...`);
                 await new Promise(r => setTimeout(r, 2000));
             }
-        }, 2200);
+        }
+
+        console.log('✅ Đã hoàn thành mục tiêu PK! Dừng máy.');
+        process.exit(0);
 
     } catch (e) {
         console.error('[MAIN ERROR]', e.message);

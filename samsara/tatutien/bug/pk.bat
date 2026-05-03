@@ -4,7 +4,7 @@
 start cmd /k "node multi_clone_bc.js"
 
 :: Delay 10 giây
-timeout /t 10 /nobreak >nul
+timeout /t 30 /nobreak >nul
 
 
 :: CMD 1 chạy ngay

@@ -21,7 +21,7 @@ async function startMultiClone() {
         const failedLines = new Set();
 
         let currentIndex = 0;
-        while (successfulAccounts.length < 10 && currentIndex < lines.length) {
+        while (successfulAccounts.length < 20 && currentIndex < lines.length) {
             const line = lines[currentIndex];
             const parts = line.split(':');
 
@@ -55,7 +55,7 @@ async function startMultiClone() {
                 monitorClone(token, charId, charName, config, MAP_CODE);
 
                 await new Promise(r => setTimeout(r, 1500));
-                if (successfulAccounts.length >= 10) {
+                if (successfulAccounts.length >= 20) {
                     currentIndex++;
                     break;
                 }
@@ -216,7 +216,7 @@ async function monitorClone(token, charId, charName, config, mapCode) {
             clonesStatus[charId].lastError = e.message;
         }
 
-        await new Promise(r => setTimeout(r, 8000)); // Giãn cách 8s để tránh spam
+        await new Promise(r => setTimeout(r, 5000)); // Giãn cách 8s để tránh spam
     }
 }
 
