@@ -469,6 +469,21 @@ async function start() {
 
             // ✅ GỌI AFK NGAY KHI START
             await goOffline();
+
+            // KIỂM TRA AFK MỖI 30S
+            setInterval(async () => {
+                try {
+                    const previewRes = await bicanh.previewSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
+                    if (previewRes && previewRes.ok) {
+                        if (previewRes.elapsed_sec >= previewRes.max_duration_sec) {
+                            console.log(`\n[HỆ THỐNG] Đã đạt giới hạn AFK Bí cảnh (${previewRes.max_duration_sec}s), đang nhận thưởng...`);
+                            await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
+                            await goOffline();
+                        }
+                    }
+                } catch (e) {}
+            }, 30000);
+
         } catch (e) { }
 
         // 2. KHỞI ĐỘNG REALTIME SOCKET

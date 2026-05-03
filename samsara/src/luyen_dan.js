@@ -2,7 +2,7 @@ import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
 import * as tracker from './track.js';
 
 
-const TIME_RUN = 270
+const TIME_RUN = 566
 
 async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");

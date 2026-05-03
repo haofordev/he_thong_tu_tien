@@ -52,6 +52,32 @@ export async function claimSecretRealmOfflineAFK(token, charId, config) {
     return null;
 }
 
+/**
+ * Xem trước thưởng AFK
+ */
+export async function previewSecretRealmOfflineAFK(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_preview_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId
+            })
+        });
+        const data = await res.json();
+        return data;
+    } catch (e) {
+        console.error('[PREVIEW AFK ERROR]', e.message);
+    }
+    return null;
+}
+
 
 /**
  * Quét Snapshot Bí Cảnh (Các thực thể trên bản đồ)
