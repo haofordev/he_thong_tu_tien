@@ -52,6 +52,32 @@ export async function claimSecretRealmOfflineAFK(token, charId, config) {
     return null;
 }
 
+/**
+ * Xem trước thưởng AFK
+ */
+export async function previewSecretRealmOfflineAFK(token, charId, config) {
+    try {
+        const res = await fetch(`${config.SUPABASE_URL}/rest/v1/rpc/rpc_preview_offline_afk`, {
+            method: 'POST',
+            headers: {
+                'apikey': config.API_KEY,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'content-profile': 'public',
+                'x-client-info': 'supabase-flutter/2.12.0',
+            },
+            body: JSON.stringify({
+                p_character_id: charId
+            })
+        });
+        const data = await res.json();
+        return data;
+    } catch (e) {
+        console.error('[PREVIEW AFK ERROR]', e.message);
+    }
+    return null;
+}
+
 
 /**
  * Quét Snapshot Bí Cảnh (Các thực thể trên bản đồ)
@@ -145,7 +171,7 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
     aliveMobs.forEach(m => {
         m.distance = Math.sqrt(Math.pow(myX - m.x, 2) + Math.pow(myY - m.y, 2));
         m.inRange = true;
-    })
+    });
 
     // Ưu tiên Boss > Elite > Normal
     const bossMobs = aliveMobs.filter(m => m.mob_kind === 'boss').sort((a, b) => a.distance - b.distance);
@@ -154,11 +180,11 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
         return { id: target.id, inRange: true, distance: target.distance, mobKind: 'boss', hp: target.hp, totalMobs: totalCount };
     }
 
-    const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
-    if (eliteMobs.length > 0) {
-        const target = eliteMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', hp: target.hp, totalMobs: totalCount };
-    }
+    // const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
+    // if (eliteMobs.length > 0) {
+    //     const target = eliteMobs[0];
+    //     return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', hp: target.hp, totalMobs: totalCount };
+    // }
 
     const target = aliveMobs.sort((a, b) => a.distance - b.distance)[0];
     return { id: target.id, inRange: true, distance: target.distance, mobKind: target.mobKind || 'normal', hp: target.hp, totalMobs: totalCount };

@@ -10,7 +10,5 @@
   "exclude": [
     "node_modules",
     "main.dart.js",
-    "bug",
-    "tatutien"
   ]
 }

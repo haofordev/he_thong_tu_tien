@@ -306,7 +306,7 @@ async function manageChests() {
 async function manageAlchemy() {
     const { token, charId, config } = auth;
     try {
-        const recipeCode = "r_pill_lk_sta"; 
+        const recipeCode = "r_pill_lk_sta";
         const res = await tracker.rpcCall(token, charId, config, 'rpc_craft_auto', {
             p_character_id: charId,
             p_recipe_code: recipeCode,
@@ -475,6 +475,8 @@ async function start() {
                             await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
                             await goOffline();
                         }
+                    } else {
+                        await goOffline();
                     }
                 } catch (e) { }
             }, 30000);
@@ -504,10 +506,6 @@ async function start() {
 
         setInterval(() => manageChests(), 60000); // 1 phút check rương một lần
         manageChests();
-
-        setInterval(() => manageAlchemy(), 10000); // 10 giây check chế tạo một lần
-        manageAlchemy();
-
 
         // Farm automation - use auth object to keep token fresh
         setInterval(async () => {
@@ -541,7 +539,7 @@ async function start() {
 
                     state.ranking.rank = myRank || 0;
                     state.ranking.score = myScore;
-                    
+
                     if (myIndex > 0) {
                         const nextPlayer = topArray[myIndex - 1];
                         state.ranking.gapNext = Number((nextPlayer.score || nextPlayer.my_score || 0)) - myScore;

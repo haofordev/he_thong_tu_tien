@@ -1,3 +1,3 @@
 @echo off
-node main.js 0
+start "Tai Khoan 1" node src/main.js 0
 pause

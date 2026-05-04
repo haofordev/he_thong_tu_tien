@@ -185,9 +185,9 @@ export async function startOfflineAFK(token, charId, config, realmCode = "starte
                 'Content-Type': 'application/json',
                 'content-profile': 'public',
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 p_character_id: charId,
-                p_realm_code: realmCode 
+                p_realm_code: realmCode
             })
         });
         return await res.json();
@@ -466,7 +466,7 @@ export async function harvestCrop(token, charId, config, slot) {
     }
     return null;
 }
- 
+
 export async function getWeeklyContestStatus(token, charId, config, type = "mob_kill") {
     try {
         return await rpcCall(token, charId, config, 'rpc_weekly_contest_get_status', {
@@ -546,3 +546,4 @@ export async function getRebirthQuestProgress(token, charId, config) {
     }
     return null;
 }
+
