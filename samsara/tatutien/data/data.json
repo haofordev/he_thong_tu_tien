@@ -1,0 +1,17 @@
+[
+  {
+    "email": "daohuu00165178231@gmail.com",
+    "password": "Daohuu0016519981.",
+    "user_id": "",
+    "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU0MjZlNDI2LWMzNTEtNDE0MC04OGIwLWU2NTc4NTczMmQ1YyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2plYXNzZWZtbHByZm5sc3pndmJzLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJhZjEyODAwNS00NjA4LTQ0NjEtOTU2NS1jNWM3YWRmZTQ3YWIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc3ODgwMDE3LCJpYXQiOjE3Nzc4NzY0MTcsImVtYWlsIjoiZGFvaHV1MDAxNjUxNzgyMzFAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6ImRhb2h1dTAwMTY1MTc4MjMxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6ImFmMTI4MDA1LTQ2MDgtNDQ2MS05NTY1LWM1YzdhZGZlNDdhYiJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzc3ODcyNjQ3fV0sInNlc3Npb25faWQiOiIwNzA1MGU5OS0yMWJhLTRhZDYtOThkMC1mNDE3YmRiMmU2ZTYiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.yorNtOVRe8JPilSKQkZoCyyaU8Vf6gl0fk_zuC6vsO8s1C0TwxA3mWRHK1PWuoEjPYrqxTio0s7ol1669SOPJQ",
+    "refresh_token": "cci3rjcex2jm",
+    "char_id": "c68d60fd-1b3b-4d3e-8f9a-2326bf6ad662",
+    "char_name": "",
+    "map_sequence": [
+      "sect_lk_c08",
+      "sect_lk_c07"
+    ],
+    "offline_map": "bf_dong_bac_c01",
+    "expires_at": 1777879717262
+  }
+]
