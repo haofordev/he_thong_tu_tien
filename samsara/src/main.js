@@ -17,6 +17,7 @@ let latestMsg = "Đang khởi tạo...";
 let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
+let rebirthMsg = "Đang tải...";
 let currentRealmId = null;
 let activeMapCode = "sect_lk_c01";
 let bodyPriority = "top_cp"; // Ưu tiên leo Top Tăng Lực Chiến
@@ -344,9 +345,26 @@ async function start() {
         mapIndex = mapSequence.indexOf(activeMapCode);
         if (mapIndex === -1) mapIndex = 0;
 
-        const charName = auth.userData.char_name || "Đạo hữu";
 
         // 1. CHẠY DASHBOARD
+        setInterval(async () => {
+            try {
+                const res = await tracker.getRebirthQuestProgress(auth.token, auth.charId, auth.config);
+                if (res && res.quest) {
+                    const q = res.quest;
+                    rebirthMsg = `level: ${q.progress.levels_gained}/${q.realm_max_level}   Đánh quái ${q.progress.mobs_killed}/${q.targets.mobs_killed}  Tinh anh ${q.progress.elites_killed}/${q.targets.elites_killed}  Boss ${q.progress.bosses_killed}/${q.targets.bosses_killed}  PvP ${q.progress.pvp_kills}/${q.targets.pvp_kills}  Chế tạo ${q.progress.craft_successes}/${q.targets.craft_successes}`;
+                }
+            } catch (e) { }
+        }, 10000);
+
+        // Chạy lần đầu ngay lập tức
+        tracker.getRebirthQuestProgress(auth.token, auth.charId, auth.config).then(res => {
+            if (res && res.quest) {
+                const q = res.quest;
+                rebirthMsg = `level: ${q.total_score}/${q.realm_max_level}   Đánh quái ${q.progress.mobs_killed}/${q.targets.mobs_killed}  Tinh anh ${q.progress.elites_killed}/${q.targets.elites_killed}  Boss ${q.progress.bosses_killed}/${q.targets.bosses_killed}  PvP ${q.progress.pvp_kills}/${q.targets.pvp_kills}  Chế tạo ${q.progress.craft_successes}/${q.targets.craft_successes}`;
+            }
+        }).catch(() => { });
+
         setInterval(async () => {
             try {
                 // Kiểm tra và refresh token nếu cần
@@ -402,7 +420,7 @@ async function start() {
                     console.log(` [TOP DIỆT QUÁI]: ${killMsg}`);
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
 
-                    console.log(` [WORLD BOSS]: ${wbMsg}`);
+                    console.log(` [NHIỆM VỤ TRÙNG SINH]: ${rebirthMsg}`);
                     console.log(`-----------------------------------------------------------`);
 
                     if (latestHP < 1000 && inventoryCounts['pill_lk_hp'] > 0) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_hp');
@@ -475,13 +493,21 @@ async function start() {
                 try {
                     const previewRes = await bicanh.previewSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
                     if (previewRes && previewRes.ok) {
+                        const fmt = (s) => {
+                            const h = Math.floor(s / 3600).toString().padStart(2, '0');
+                            const m = Math.floor((s % 3600) / 60).toString().padStart(2, '0');
+                            const sc = Math.floor(s % 60).toString().padStart(2, '0');
+                            return `${h}:${m}:${sc}`;
+                        };
+                        console.log(`[BÍ CẢNH] Tiến độ AFK: ${fmt(previewRes.elapsed_sec)}/${fmt(previewRes.max_duration_sec)}`);
+
                         if (previewRes.elapsed_sec >= previewRes.max_duration_sec) {
                             console.log(`\n[HỆ THỐNG] Đã đạt giới hạn AFK Bí cảnh (${previewRes.max_duration_sec}s), đang nhận thưởng...`);
                             await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
                             await goOffline();
                         }
                     }
-                } catch (e) {}
+                } catch (e) { }
             }, 30000);
 
         } catch (e) { }

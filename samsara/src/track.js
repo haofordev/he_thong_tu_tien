@@ -537,3 +537,12 @@ export async function deleteReadMails(token, charId, config) {
     }
     return null;
 }
+
+export async function getRebirthQuestProgress(token, charId, config) {
+    try {
+        return await rpcCall(token, charId, config, 'rpc_get_rebirth_quest_progress', { p_character_id: charId });
+    } catch (e) {
+        console.error('[REBIRTH PROGRESS ERROR]', e.message);
+    }
+    return null;
+}
