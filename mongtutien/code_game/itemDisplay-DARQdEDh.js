@@ -1,1 +1,0 @@
-import{i as t,j as a,k as u}from"./index-DjugjTyU.js";import{a as n}from"./itemConfig-Bpae0xn3.js";function g(r,e=""){return n(r)?.name??a(r,e)}function y(r,e=""){return n(r)?.icon??t(r,e)}function i(r,e=""){return n(r)?.quality??u(r,e)}export{y as a,i as b,g};

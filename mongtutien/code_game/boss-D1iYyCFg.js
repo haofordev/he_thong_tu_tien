@@ -1,1 +1,0 @@
-import{m as r}from"./index-DjugjTyU.js";const i={low:"Phàm Giới",high:"Cao Nhân",mythic:"Thượng Cổ Dị Thú",primordial:"Thái Cổ Cấm Kỵ",transcendent:"Siêu Thoát Thánh Cảnh",legendary:"Thần Thoại"};function m(n){return n in i?i[n]:r.find(h=>h.key==n)?.name}export{m as f};

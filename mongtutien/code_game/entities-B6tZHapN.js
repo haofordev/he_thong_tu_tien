@@ -1,1 +1,0 @@
-import{g as s}from"./wife-DTVpfNQc.js";const e=a=>{const t=a?.avatar?.trim();if(t)return t.startsWith("http://")||t.startsWith("https://")||t.startsWith("/")||t.startsWith("data:")||t.startsWith("blob:")?t:`/wife/${t}`;const r=s(a?.wifeId??"")?.avatar||"";return r?`/wife/${r}`:""},n=a=>a?.avatar?a.avatar:"";export{e as a,n as g};

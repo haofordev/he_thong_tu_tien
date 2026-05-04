@@ -1,1 +1,0 @@
-import{q as e}from"./quality-BH_aoiN8.js";const o={label:"Phàm phẩm",color:"#999999"};function a(t,l=o){return t?e[t]??l:l}function u(t,l=o.label){return a(t,{...o,label:l}).label}function n(t,l=o.color){return a(t,{...o,color:l}).color}export{u as a,a as b,n as g};

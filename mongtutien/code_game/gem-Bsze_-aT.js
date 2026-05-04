@@ -1,1 +1,0 @@
-import{g,b as s}from"./itemConfig-Bpae0xn3.js";const t=n=>s(n);function o(n){return g(n)}const e=n=>typeof n=="string"?t(n)?.icon??"":o(n)?.icon??"",r=n=>typeof n=="string"?t(n)?.name??n:o(n)?.name??n?.name??n?.itemId??"";export{o as a,e as b,r as g};
