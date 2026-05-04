@@ -18,6 +18,7 @@ let killMsg = "Đang tải BXH...";
 let bossMsg = "Đang tìm mục tiêu...";
 let wbMsg = "Đang ở Bí Cảnh (Không săn Boss TG)";
 let rebirthMsg = "Đang tải...";
+let afkMsg = "Đang tải...";
 let currentRealmId = null;
 let activeMapCode = "sect_lk_c01";
 let bodyPriority = "top_cp"; // Ưu tiên leo Top Tăng Lực Chiến
@@ -39,6 +40,13 @@ function logCombat(msg) {
 let lastMPCheck = 0;
 let mpRecoveredLastMinute = 0;
 let mpCheckTime = Date.now();
+
+const fmtTime = (s) => {
+    const h = Math.floor(s / 3600).toString().padStart(2, '0');
+    const m = Math.floor((s % 3600) / 60).toString().padStart(2, '0');
+    const sc = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${h}:${m}:${sc}`;
+};
 
 
 let mapSequence = [];
@@ -421,6 +429,7 @@ async function start() {
                     console.log(` [KỲ NGỘ]: ${latestMsg}`);
 
                     console.log(` [NHIỆM VỤ TRÙNG SINH]: ${rebirthMsg}`);
+                    console.log(` [AFK BÍ CẢNH]: ${afkMsg}`);
                     console.log(`-----------------------------------------------------------`);
 
                     if (latestHP < 1000 && inventoryCounts['pill_lk_hp'] > 0) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_hp');
@@ -493,16 +502,10 @@ async function start() {
                 try {
                     const previewRes = await bicanh.previewSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
                     if (previewRes && previewRes.ok) {
-                        const fmt = (s) => {
-                            const h = Math.floor(s / 3600).toString().padStart(2, '0');
-                            const m = Math.floor((s % 3600) / 60).toString().padStart(2, '0');
-                            const sc = Math.floor(s % 60).toString().padStart(2, '0');
-                            return `${h}:${m}:${sc}`;
-                        };
-                        console.log(`[BÍ CẢNH] Tiến độ AFK: ${fmt(previewRes.elapsed_sec)}/${fmt(previewRes.max_duration_sec)}`);
+                        afkMsg = `${fmtTime(previewRes.elapsed_sec)} / ${fmtTime(previewRes.max_duration_sec)}`;
 
                         if (previewRes.elapsed_sec >= previewRes.max_duration_sec) {
-                            console.log(`\n[HỆ THỐNG] Đã đạt giới hạn AFK Bí cảnh (${previewRes.max_duration_sec}s), đang nhận thưởng...`);
+                            latestMsg = `[HỆ THỐNG] Đạt giới hạn AFK Bí cảnh, đang nhận thưởng...`;
                             await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
                             await goOffline();
                         }
