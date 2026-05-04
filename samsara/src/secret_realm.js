@@ -180,11 +180,11 @@ export function findNewTarget(snapshot, charId, blockedMobId = null) {
         return { id: target.id, inRange: true, distance: target.distance, mobKind: 'boss', hp: target.hp, totalMobs: totalCount };
     }
 
-    const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
-    if (eliteMobs.length > 0) {
-        const target = eliteMobs[0];
-        return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', hp: target.hp, totalMobs: totalCount };
-    }
+    // const eliteMobs = aliveMobs.filter(m => m.mob_kind === 'elite').sort((a, b) => a.distance - b.distance);
+    // if (eliteMobs.length > 0) {
+    //     const target = eliteMobs[0];
+    //     return { id: target.id, inRange: true, distance: target.distance, mobKind: 'elite', hp: target.hp, totalMobs: totalCount };
+    // }
 
     const target = aliveMobs.sort((a, b) => a.distance - b.distance)[0];
     return { id: target.id, inRange: true, distance: target.distance, mobKind: target.mobKind || 'normal', hp: target.hp, totalMobs: totalCount };
