@@ -1,5 +1,5 @@
-import { loginAndGetInfo, refreshTokenIfNeeded } from './login.js';
-import * as tracker from './track.js';
+import { loginAndGetInfo, refreshTokenIfNeeded } from '../src/login.js';
+import * as tracker from '../src/track.js';
 
 let auth = {
     token: null,
@@ -14,7 +14,7 @@ async function manageMail() {
     process.stdout.write(`\r[${new Date().toLocaleTimeString()}] [HỆ THỐNG] Đang kiểm tra hòm thư...`);
     try {
         const mails = await tracker.listMailbox(token, charId, config);
-        
+
         // Theo dữ liệu thực tế, mails là một mảng trực tiếp
         if (!Array.isArray(mails) || mails.length === 0) {
             process.stdout.write(`\r[${new Date().toLocaleTimeString()}] [HỆ THỐNG] Hòm thư trống.                  \n`);
@@ -32,7 +32,7 @@ async function manageMail() {
                     count++;
                 }
             }
-            
+
             // 2. Đọc thư (nếu có thuộc tính is_read và chưa đọc)
             if (mail.is_read === false) {
                 await tracker.readMail(token, charId, config, mail.id);

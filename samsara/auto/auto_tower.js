@@ -1,5 +1,4 @@
-import { loginAndGetInfo } from './login.js';
-import * as tracker from './track.js';
+import { loginAndGetInfo } from '../src/login.js';
 
 async function autoTower() {
     const accountIndex = parseInt(process.argv[2] || "0");
