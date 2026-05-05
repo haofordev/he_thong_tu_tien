@@ -8,7 +8,7 @@ async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");
     let auth = await loginAndGetInfo(accountIndex);
 
-    const recipeCode = "r_forge_eq_accessory_lk_1";
+    const recipeCode = "r_talisman_lk_def";
 
     let time = 0;
     let successCount = 0;
@@ -66,7 +66,7 @@ async function luyenDanLoop() {
             failCount++;
         }
 
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 300));
     }
 }
 

@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { loginAndGetInfo, refreshTokenIfNeeded } from '../src/login.js';
 import * as tracker from '../src/track.js';
 
@@ -46,6 +47,12 @@ async function luyenDanLoop() {
             // 🚀 CHECK DỪNG
             if (isMaxTalentReached(talent)) {
                 console.log(`🎉 Đã đạt >= 30 ở một hệ → DỪNG AUTO`);
+                break;
+            }
+
+            if (talent.wood >= 25) {
+
+                console.log(chalk.yellow("\n🌳 Dừng do Wood >= 25"));
                 break;
             }
 

@@ -591,6 +591,7 @@ async function start() {
 }
 
 function connectRealtime(config) {
+    return
     const wsUrl = `wss://${config.SUPABASE_URL.split('//')[1]}/realtime/v1/websocket?apikey=${config.API_KEY}&vsn=1.0.0`;
     let ws = new WebSocket(wsUrl);
     let heartbeatInterval;
