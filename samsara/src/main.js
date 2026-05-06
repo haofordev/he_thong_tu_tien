@@ -113,10 +113,11 @@ async function startCombatLoop() {
             logCombat(state.messages.boss);
 
             // Tối ưu thời gian chờ dựa trên Atk Speed từ server
-            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) : 2000;
+            const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) : 3000;
 
-            // Bù trừ latency: lấy thời gian hồi chiêu trừ đi thời gian mạng đã trôi qua
-            nextWait = Math.max(100, serverWait - latency + 80); // 80ms buffer an toàn
+            // Cooldown bắt đầu từ lúc server xử lý xong. Khi ta nhận được response thì đã trôi qua ~ 1/2 RTT (latency/2).
+            // Trừ đi latency/2 để tính đúng thời gian cần chờ tiếp theo. Buffer 150ms để chống mạng lag đột biến.
+            nextWait = Math.max(100, serverWait - (latency / 2) + 150); 
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;

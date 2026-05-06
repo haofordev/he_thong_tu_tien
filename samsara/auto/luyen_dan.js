@@ -8,7 +8,7 @@ async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");
     let auth = await loginAndGetInfo(accountIndex);
 
-    const recipeCode = "r_talisman_lk_def";
+    const recipeCode = "r_pill_lk_sta";
 
     let time = 0;
     let successCount = 0;
