@@ -51,9 +51,10 @@ async function startPK() {
         let count = 0;
         let failedAttempts = 0;
 
-        while (count < 110) {
+        while (count < 200) {
             const targetId = targetIds[currentTargetIdx % targetIds.length];
 
+            const startTime = Date.now();
             // Thực hiện PK - Ưu tiên dùng Đánh Tay (slot 0) để ổn định
             const res = await tracker.rpcCall(token, charId, config, 'rpc_attack_realm_player_v2', {
                 p_character_id: charId,
@@ -61,6 +62,7 @@ async function startPK() {
                 p_target_character_id: targetId,
                 p_skill_slot: 0
             });
+            const latency = Date.now() - startTime;
 
             if (res) {
                 const reason = res.reason || res.message;
@@ -109,16 +111,21 @@ async function startPK() {
                 failedAttempts = 0; // Reset failed attempts since we hit someone
                 const damage = res.damage || 0;
                 console.log(`[PK] Lần ${count}: Đánh ${targetId.substring(0, 8)}... Dame: ${damage}`);
-                
+
                 if (damage === 0) {
                     console.log(`    > [GHI CHÚ] Dame 0 (Né tránh hoặc Bảo vệ).`);
                 }
 
                 currentTargetIdx++;
-                await new Promise(r => setTimeout(r, 2200)); // Đợi delay mặc định của game
+
+                // Tính toán thời gian chờ dựa trên Atk Speed từ server và bù trừ một nửa latency
+                const serverWait = res.atk_speed_sec ? (res.atk_speed_sec * 1000) : 3000;
+                const nextWait = Math.max(100, serverWait - (latency / 2) + 150);
+
+                await new Promise(r => setTimeout(r, nextWait));
             } else {
                 console.log(`\n[PK] Không có phản hồi từ server...`);
-                await new Promise(r => setTimeout(r, 2000));
+                await new Promise(r => setTimeout(r, 3000));
             }
         }
 
