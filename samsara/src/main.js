@@ -156,7 +156,12 @@ async function startCombatLoop() {
                 currentMobId = null;
                 currentMobKind = null;
                 nextWait = 200;
-            } else {
+            } else if (res?.reason === 'online_afk_exceeded') {
+                attackFailureCount = 0;
+                state.messages.boss = `Hết thời gian đánh online ...`;
+                nextWait = 5 * 60 * 1000
+            }
+            else {
                 const reason = res?.reason || res?.message || 'Không có phản hồi';
                 state.messages.boss = `[LỖI] ${reason}`;
                 if (res?.status) state.messages.boss += ` (HTTP ${res.status})`;
