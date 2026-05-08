@@ -2,13 +2,13 @@ import chalk from 'chalk';
 import { loginAndGetInfo, refreshTokenIfNeeded } from '../src/login.js';
 import * as tracker from '../src/track.js';
 
-const TIME_RUN = 600;
+const TIME_RUN = 1;
 
 async function luyenDanLoop() {
     const accountIndex = parseInt(process.argv[2] || "0");
     let auth = await loginAndGetInfo(accountIndex);
 
-    const recipeCode = "r_pill_lk_sta";
+    const recipeCode = "r_pill_tc_mp";
 
     let time = 0;
     let successCount = 0;
@@ -32,6 +32,7 @@ async function luyenDanLoop() {
                 }
             );
 
+            console.log("🚀 ~ luyenDanLoop ~ res:", res)
             if (res && res.success) {
                 successCount++;
                 time++;
@@ -85,7 +86,7 @@ function renderDashboard({ time, successCount, failCount, total, email, startTim
     const filled = Math.round((time / total) * barLength);
     const bar = '█'.repeat(filled) + '░'.repeat(barLength - filled);
 
-    console.clear();
+    //  console.clear();
 
     console.log(chalk.magenta("==============================================="));
     console.log(chalk.bold.yellow("        🔥 LUYỆN ĐAN DASHBOARD 🔥"));

@@ -80,9 +80,12 @@ async function startCombatLoop() {
 
     try {
         // TỰ ĐỘNG CẮN THUỐC TRONG CHIẾN ĐẤU (MP)
-        if (state.mp < 60 && state.inventory['pill_lk_mp'] > 0) {
-            await tracker.useItem(token, charId, config, 'pill_lk_mp');
-            state.mp += 50; // Ước tính hồi 100 MP
+        if (state.mp < 60) {
+            const mpPill = ['pill_lk_mp', 'pill_tc_mp', 'pill_kd_mp'].find(p => state.inventory[p] > 0);
+            if (mpPill) {
+                await tracker.useItem(token, charId, config, mpPill);
+                state.mp += 50; // Ước tính hồi 100 MP
+            }
         }
 
         // CHIẾN THUẬT LAI: 
@@ -434,10 +437,22 @@ async function start() {
 
                     renderUI();
 
-                    if (state.hp < 1000 && state.inventory['pill_lk_hp'] > 0) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_hp');
-                    if (state.stamina < 30 && state.inventory['pill_lk_sta'] > 0) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_sta');
-                    if (state.spirit < 30 && (state.inventory['pill_lk_spirit'] || 0) >= 5) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_spirit');
-                    if (state.mp < 50 && (state.inventory['pill_lk_mp'] || 0) >= 1) await tracker.useItem(auth.token, auth.charId, auth.config, 'pill_lk_mp');
+                    if (state.hp < 1000) {
+                        const pill = ['pill_lk_hp', 'pill_tc_hp', 'pill_kd_hp'].find(p => state.inventory[p] > 0);
+                        if (pill) await tracker.useItem(auth.token, auth.charId, auth.config, pill);
+                    }
+                    if (state.stamina < 30) {
+                        const pill = ['pill_lk_sta', 'pill_tc_sta', 'pill_kd_sta'].find(p => state.inventory[p] > 0);
+                        if (pill) await tracker.useItem(auth.token, auth.charId, auth.config, pill);
+                    }
+                    if (state.spirit < 30) {
+                        const pill = ['pill_lk_spirit', 'pill_tc_spirit', 'pill_kd_spirit'].find(p => p === 'pill_lk_spirit' ? (state.inventory[p] >= 5) : (state.inventory[p] > 0));
+                        if (pill) await tracker.useItem(auth.token, auth.charId, auth.config, pill);
+                    }
+                    if (state.mp < 50) {
+                        const pill = ['pill_lk_mp', 'pill_tc_mp', 'pill_kd_mp'].find(p => state.inventory[p] > 0);
+                        if (pill) await tracker.useItem(auth.token, auth.charId, auth.config, pill);
+                    }
 
                     if (parseFloat(state.exp.percent) >= 100 && ![10, 20, 30].includes(status.level)) {
                         if (status.claimable_exp > 0) await tracker.claimExp(auth.token, auth.charId, auth.config);
