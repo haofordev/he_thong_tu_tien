@@ -120,7 +120,7 @@ async function startCombatLoop() {
 
             // Cooldown bắt đầu từ lúc server xử lý xong. Khi ta nhận được response thì đã trôi qua ~ 1/2 RTT (latency/2).
             // Trừ đi latency/2 để tính đúng thời gian cần chờ tiếp theo. Buffer 150ms để chống mạng lag đột biến.
-            nextWait = Math.max(100, serverWait - (latency / 2) + 150); 
+            nextWait = Math.max(100, serverWait - (latency / 2) + 150);
 
             if (res.mob_hp_after !== undefined && res.mob_hp_after <= 0) {
                 currentMobId = null;
@@ -468,41 +468,29 @@ async function start() {
         }, 3000);
 
         // 1. NHẬN THƯỞNG OFFLINE (Nếu có)
-        try {
-            // state.messages.latest = `[HỆ THỐNG] Đang kiểm tra quà Offline...`;
-            // const afkRes = await tracker.claimOfflineAFK(auth.token, auth.charId, auth.config);
-            // if (afkRes && afkRes.reward) {
-            //     state.messages.latest = `[AFK] Nhận quà cơ bản: ${JSON.stringify(afkRes.reward)}`;
-            // }
+        // try {
+        //     // ✅ GỌI AFK NGAY KHI START
+        //     await goOffline();
 
-            // const realmAfkRes = await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
-            // if (realmAfkRes && (realmAfkRes.reward || realmAfkRes.message)) {
-            //     state.messages.latest = `[AFK Bí Cảnh] ${realmAfkRes.message || JSON.stringify(realmAfkRes.reward)}`;
-            // }
+        //     // KIỂM TRA AFK MỖI 30S
+        //     setInterval(async () => {
+        //         try {
+        //             const previewRes = await bicanh.previewSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
+        //             if (previewRes && previewRes.ok) {
+        //                 state.messages.afk = `${fmtTime(previewRes.elapsed_sec)} / ${fmtTime(previewRes.max_duration_sec)}`;
 
+        //                 if (previewRes.elapsed_sec >= previewRes.max_duration_sec) {
+        //                     state.messages.latest = `[HỆ THỐNG] Đạt giới hạn AFK Bí cảnh, đang nhận thưởng...`;
+        //                     await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
+        //                     await goOffline();
+        //                 }
+        //             } else {
+        //                 await goOffline();
+        //             }
+        //         } catch (e) { }
+        //     }, 30000);
 
-            // ✅ GỌI AFK NGAY KHI START
-            await goOffline();
-
-            // KIỂM TRA AFK MỖI 30S
-            setInterval(async () => {
-                try {
-                    const previewRes = await bicanh.previewSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
-                    if (previewRes && previewRes.ok) {
-                        state.messages.afk = `${fmtTime(previewRes.elapsed_sec)} / ${fmtTime(previewRes.max_duration_sec)}`;
-
-                        if (previewRes.elapsed_sec >= previewRes.max_duration_sec) {
-                            state.messages.latest = `[HỆ THỐNG] Đạt giới hạn AFK Bí cảnh, đang nhận thưởng...`;
-                            await bicanh.claimSecretRealmOfflineAFK(auth.token, auth.charId, auth.config);
-                            await goOffline();
-                        }
-                    } else {
-                        await goOffline();
-                    }
-                } catch (e) { }
-            }, 30000);
-
-        } catch (e) { }
+        // } catch (e) { }
 
         // 2. KHỞI ĐỘNG REALTIME SOCKET
         connectRealtime(auth.config);
